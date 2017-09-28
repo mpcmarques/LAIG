@@ -1438,29 +1438,29 @@ MySceneGraph.prototype.renderNode = function (node) {
     // get current transform matrix
     var matrix = node.transformMatrix;
 
+    console.log(this.nodes['chao']);
+
     for (var i = 0; i < node.leaves.length; i++) {
 
         var leafNode = node.leaves[i];
 
         // Render leaf
         if (leafNode instanceof MyGraphLeaf) {
-            this.renderLeaf(leafNode, matrix, i);
+            this.renderLeaf(leafNode, matrix);
         }
 
         // Go to next node
         else {
             var currentNode = this.nodes[leafNode];
 
-            mat4.multiply(currentNode.transformMatrix, matrix, currentNode.transformMatrix);
+            //mat4.multiply(currentNode.transformMatrix, matrix, currentNode.transformMatrix);
 
             this.renderNode(currentNode);
         }
     }
 };
 
-MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, i) {
-    console.log(i);
-
+MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix) {
     var renderPrimitive;
 
     switch (leaf.type) {
@@ -1480,9 +1480,7 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, i) {
     if(renderPrimitive != null) {
         //console.log(renderPrimitive);
          this.scene.pushMatrix();
-            //this.scene.multMatrix(transformMatrix);
-            console.log(i);
-            this.scene.translate(i+1,0,0);
+            this.scene.multMatrix(transformMatrix);
             renderPrimitive.display();
         this.scene.popMatrix();
     }
@@ -1498,9 +1496,6 @@ MySceneGraph.prototype.displayScene = function () {
 
     const rootNode = this.nodes[this.idRoot];
 
-    this.scene.pushMatrix();
-        //this.scene.multMatrix(this.initialTransforms);
-        //this.materials[this.defaultMaterialID].apply();
-        this.renderNode(rootNode);
-    this.scene.popMatrix();
+    //this.materials[this.defaultMaterialID].apply();
+    this.renderNode(rootNode);
 };
