@@ -1434,11 +1434,30 @@ MySceneGraph.generateRandomString = function (length) {
     return String.fromCharCode.apply(null, numbers);
 };
 
-MySceneGraph.prototype.renderNode = function (node) {
+MySceneGraph.prototype.renderNode = function (node, transformMatrix) {
     // get current transform matrix
-    var matrix = node.transformMatrix;
+    //var matrix = node.transformMatrix;
+    var appearance = this.materials[node.materialID];
+    var texture = this.textures[node.textureID];
 
-    console.log(this.nodes['chao']);
+    // apply node texture and/or appearance
+    if(texture!= null && appearance != null) {
+        // modify appearance if there is a texture
+        var newAppearance = new CGFappearance(this.scene);
+        newAppearance.ambient = appearance.ambient;
+        newAppearance.diffuse = appearance.diffuse;
+        newAppearance.emission = appearance.emission;
+        newAppearance.specular = appearance.specular;
+        newAppearance.shineness = appearance.shineness;
+        newAppearance.setTexture(texture[0]);
+        newAppearance.apply();
+    } else if(appearance != null && texture == null) {
+        appearance.apply();
+    } else if (texture != null && appearance == null) {
+        var textureAppearance = new CGFappearance(this.scene);
+        textureAppearance.setTexture(texture[0]);
+        textureAppearance.apply();
+    }
 
     for (var i = 0; i < node.leaves.length; i++) {
 
@@ -1446,16 +1465,17 @@ MySceneGraph.prototype.renderNode = function (node) {
 
         // Render leaf
         if (leafNode instanceof MyGraphLeaf) {
-            this.renderLeaf(leafNode, matrix);
+            this.renderLeaf(leafNode, transformMatrix);
         }
 
         // Go to next node
         else {
             var currentNode = this.nodes[leafNode];
-
-            //mat4.multiply(currentNode.transformMatrix, matrix, currentNode.transformMatrix);
-
-            this.renderNode(currentNode);
+            // calculate children transform matrix
+            var newMatrix = mat4.create();
+            mat4.multiply(newMatrix, transformMatrix, currentNode.transformMatrix);
+            // render children node
+            this.renderNode(currentNode, newMatrix);
         }
     }
 };
@@ -1465,7 +1485,9 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix) {
 
     switch (leaf.type) {
         case 'rectangle':
-            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
+            // top left: minS, maxT
+            // top right: maxS, minT
+            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[2], leaf.args[3], leaf.args[1]);
             break;
         case 'triangle':
             renderPrimitive = new MyTriangle(this.scene, leaf.args);
@@ -1478,7 +1500,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix) {
     }
 
     if(renderPrimitive != null) {
-        //console.log(renderPrimitive);
          this.scene.pushMatrix();
             this.scene.multMatrix(transformMatrix);
             renderPrimitive.display();
@@ -1496,6 +1517,5 @@ MySceneGraph.prototype.displayScene = function () {
 
     const rootNode = this.nodes[this.idRoot];
 
-    //this.materials[this.defaultMaterialID].apply();
-    this.renderNode(rootNode);
+    this.renderNode(rootNode, rootNode.transformMatrix);
 };

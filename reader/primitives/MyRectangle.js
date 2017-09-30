@@ -10,6 +10,10 @@ function MyRectangle(scene, minS, maxS, minT, maxT) {
     this.minT = minT || 0;
     this.maxT = maxT || 1;
 
+    //	Add texture
+    this.addTextureCoords(minS, maxS, minT, maxT);
+
+    // init buffers
     this.initBuffers();
 }
 
@@ -19,10 +23,10 @@ MyRectangle.prototype.constructor = MyRectangle;
 MyRectangle.prototype.initBuffers = function() {
 
     this.vertices = [
-        -0.5, -0.5, 0,
-        0.5, -0.5, 0,
-        -0.5, 0.5, 0,
-        0.5, 0.5, 0,
+        -this.minS, -this.minT, 0,
+        this.maxS, -this.minT, 0,
+        -this.minS, this.maxT, 0,
+        this.maxS, this.maxT, 0
     ];
 
     this.indices = [
@@ -39,4 +43,13 @@ MyRectangle.prototype.initBuffers = function() {
 
     this.primitiveType=this.scene.gl.TRIANGLES;
     this.initGLBuffers();
+};
+
+MyRectangle.prototype.addTextureCoords = function(minS, maxS, minT, maxT){
+
+    this.texCoords = [minS,minT,
+        maxS,minT,
+        minS,maxT,
+        maxS,maxT];
+
 };

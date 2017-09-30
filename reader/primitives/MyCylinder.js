@@ -5,6 +5,7 @@
 function MyCylinder(scene, height , bottomRadius , topRadius, stacks, slices) {
     CGFobject.call(this,scene);
 
+    this.height = height;
     this.slices = slices;
     this.stacks = stacks;
     this.topRadius = topRadius;
