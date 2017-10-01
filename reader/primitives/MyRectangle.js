@@ -2,16 +2,19 @@
  * MyRectangle
  * @constructor
  */
-function MyRectangle(scene, minS, maxS, minT, maxT) {
+function MyRectangle(scene, minX, maxY, maxX, minY, deltaS, deltaT) {
     CGFobject.call(this,scene);
 
-    this.minS = minS || 0;
-    this.maxS = maxS || 1;
-    this.minT = minT || 0;
-    this.maxT = maxT || 1;
+    //MINX = MINX
+    this.minX = minX || 0;
+    this.maxX = maxX || 1;
+    this.minY = minY || 0;
+    this.maxY = maxY || 1;
+    this.deltaS = deltaS || 1;
+    this.deltaT = deltaT || 1;
 
-    //	Add texture
-    this.addTextureCoords(minS, maxS, minT, maxT);
+
+    this.setTextureCoords();
 
     // init buffers
     this.initBuffers();
@@ -23,15 +26,15 @@ MyRectangle.prototype.constructor = MyRectangle;
 MyRectangle.prototype.initBuffers = function() {
 
     this.vertices = [
-        -this.minS, -this.minT, 0,
-        this.maxS, -this.minT, 0,
-        -this.minS, this.maxT, 0,
-        this.maxS, this.maxT, 0
+        -this.minX, -this.minY, 0,
+        this.maxX, -this.minY, 0,
+        -this.minX, this.maxY, 0,
+        this.maxX, this.maxY, 0
     ];
 
     this.indices = [
         0, 1, 2,
-        3, 2, 1,
+        3, 2, 1
     ];
 
     this.normals = [
@@ -45,11 +48,11 @@ MyRectangle.prototype.initBuffers = function() {
     this.initGLBuffers();
 };
 
-MyRectangle.prototype.addTextureCoords = function(minS, maxS, minT, maxT){
-
-    this.texCoords = [minS,minT,
-        maxS,minT,
-        minS,maxT,
-        maxS,maxT];
-
+MyRectangle.prototype.setTextureCoords = function(){
+    this.texCoords = [
+        0,  0,
+        this.deltaS, 0,
+        0,  this.deltaT,
+        this.deltaS, this.deltaT
+    ]
 };
