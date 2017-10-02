@@ -2,7 +2,7 @@
  * MyRectangle
  * @constructor
  */
-function MyRectangle(scene, minX, maxY, maxX, minY, deltaS, deltaT) {
+function MyRectangle(scene, minX, maxY, maxX, minY) {
     CGFobject.call(this,scene);
 
     //MINX = MINX
@@ -10,8 +10,6 @@ function MyRectangle(scene, minX, maxY, maxX, minY, deltaS, deltaT) {
     this.maxX = maxX || 1;
     this.minY = minY || 0;
     this.maxY = maxY || 1;
-    this.deltaS = deltaS || 1;
-    this.deltaT = deltaT || 1;
 
 
     this.setTextureCoords();
@@ -51,8 +49,16 @@ MyRectangle.prototype.initBuffers = function() {
 MyRectangle.prototype.setTextureCoords = function(){
     this.texCoords = [
         0,  0,
-        this.deltaS, 0,
-        0,  this.deltaT,
-        this.deltaS, this.deltaT
+        1, 0,
+        0,  1,
+        1, 1
     ]
+};
+
+MyRectangle.prototype.scaleTexCoords = function(ampS, ampT) {
+    this.texCoords[2] = this.texCoords[2] / ampS;
+    this.texCoords[5] = this.texCoords[5] / ampT;
+    this.texCoords[6] = this.texCoords[6] / ampS;
+    this.texCoords[7] = this.texCoords[7] / ampT;
+    this.updateTexCoordsGLBuffers();
 };

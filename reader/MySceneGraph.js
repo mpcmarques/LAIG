@@ -1346,7 +1346,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
                     //  Parse arguments
                     var unsplit = this.reader.getString(descendants[j], 'args');
-                    if (unsplit == null )
+                    if (unsplit == null)
                         return "failed to retrieve list of arguments";
 
                     var args = unsplit.split(/ +/);
@@ -1434,7 +1434,7 @@ MySceneGraph.generateRandomString = function (length) {
     return String.fromCharCode.apply(null, numbers);
 };
 
-MySceneGraph.prototype.parseNodeAppearance = function(appearance, texture) {
+MySceneGraph.prototype.parseNodeAppearance = function (appearance, texture) {
     // apply node appearance and/or texture
     if (texture != null && appearance != null) {
         // modify appearance if there is a texture
@@ -1446,7 +1446,7 @@ MySceneGraph.prototype.parseNodeAppearance = function(appearance, texture) {
         newAppearance.shineness = appearance.shineness;
         newAppearance.setTexture(texture[0]);
         return newAppearance;
-    } else if(appearance != null && texture == null) {
+    } else if (appearance != null && texture == null) {
         return appearance;
     } else if (texture != null && appearance == null) {
         var textureAppearance = new CGFappearance(this.scene);
@@ -1461,7 +1461,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 
     // Apply node appearance
     var nodeAppearance = this.parseNodeAppearance(appearance, texture);
-    if(nodeAppearance != null)
+    if (nodeAppearance != null)
         nodeAppearance.apply();
 
     for (var i = 0; i < node.leaves.length; i++) {
@@ -1488,7 +1488,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance, texture) {
     var renderPrimitive = this.parsePrimitive(leaf, texture);
 
-    if(renderPrimitive != null) {
+    if (renderPrimitive != null) {
         this.scene.pushMatrix();
         this.scene.multMatrix(transformMatrix);
         renderPrimitive.display();
@@ -1496,30 +1496,28 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance,
     }
 };
 
-MySceneGraph.prototype.parsePrimitive = function(leaf, texture) {
+MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
     var renderPrimitive;
 
     switch (leaf.type) {
         case 'rectangle':
-            if(texture == null)
-                renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
-            else{
-
-                renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], texture[1], texture[2]);
-            }
+            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
             break;
         case 'triangle':
-            if(texture == null)
-                renderPrimitive = new MyTriangle(this.scene, leaf.args);
-            else
-                renderPrimitive = new MyTriangle(this.scene, leaf.args, texture[1], texture[2]);
+            renderPrimitive = new MyTriangle(this.scene, leaf.args, texture[1], texture[2]);
             break;
         case 'cylinder':
             renderPrimitive = new MyCylinder(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
             break;
+        case 'sphere':
+            renderPrimitive = new MySphere(this.scene, leaf.args);
+            break;
         default:
             break;
     }
+
+    if (texture != null && renderPrimitive != null)
+        renderPrimitive.scaleTexCoords(texture[1], texture[2]);
 
     return renderPrimitive;
 };

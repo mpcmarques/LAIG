@@ -1,9 +1,9 @@
 /**
- * MyCilinder
+ * MyCylinder
  * @constructor
  */
-function MyCylinder(scene, height , bottomRadius , topRadius, stacks, slices) {
-    CGFobject.call(this,scene);
+function MyCylinder(scene, height, bottomRadius, topRadius, stacks, slices) {
+    CGFobject.call(this, scene);
 
     this.height = height;
     this.slices = slices;
@@ -17,14 +17,7 @@ function MyCylinder(scene, height , bottomRadius , topRadius, stacks, slices) {
 MyCylinder.prototype = Object.create(CGFobject.prototype);
 MyCylinder.prototype.constructor = MyCylinder;
 
-MyCylinder.prototype.initBuffers = function() {
-    /*
-     * TODO:
-     * Replace the following lines in order to build a prism with a **single mesh**.
-     *
-     * How can the vertices, indices and normals arrays be defined to
-     * build a prism with varying number of slices and stacks?
-     */
+MyCylinder.prototype.initBuffers = function () {
 
     //	Init with empty arrays
     this.vertices = [];
@@ -32,49 +25,73 @@ MyCylinder.prototype.initBuffers = function() {
     this.normals = [];
     this.texCoords = [];
 
-    //	Calculate vertice coordinate
-    var ang = 0;
-    var rotation = (2 * Math.PI)/this.slices;
-    var indCounter = 0;
+    //	Calculate vertice coordinate;
+    var radius = this.bottomRadius;
+    var deltaRadius = (this.topRadius - this.bottomRadius) / this.stacks;
+    var rotation = 2 * Math.PI / this.slices;
+    var deltaHeight = this.height / this.stacks;
+    var m = this.height / (this.bottomRadius - this.topRadius);
+    var maxHeight;
+    if (this.bottomRadius > this.topRadius)
+        maxHeight = this.topRadius * m + this.height;
+    else maxHeight = this.bottomRadius * m + this.height;
 
-    for (var j = 0; j < this.stacks; j++) {
-        for(var i = 0; i < this.slices; i++){
-            //	Calculate vertices
+    for (var i = 0; i <= this.stacks; i++) {
+        for (var j = 0; j <= this.slices; j++) {
+            this.vertices.push(
+                radius * Math.cos(j * rotation),
+                radius * Math.sin(j * rotation),
+                i * deltaHeight
+            );
+            if (Math.abs(this.bottomRadius - this.topRadius) < 0.0001) {
+                this.normals.push(
+                    Math.cos(j * rotation),
+                    Math.sin(j * rotation),
+                    0);
+            }
+            else if (this.bottomRadius > this.topRadius) {
+                this.normals.push(
+                    maxHeight * Math.cos(j * rotation) / Math.sqrt(Math.pow(this.bottomRadius, 2) + Math.pow(maxHeight, 2)),
+                    maxHeight * Math.sin(j * rotation) / Math.sqrt(Math.pow(this.bottomRadius, 2) + Math.pow(maxHeight, 2)),
+                    this.bottomRadius / Math.sqrt(Math.pow(this.bottomRadius, 2) + Math.pow(maxHeight, 2))
+                );
+            }
+            else {
+                this.normals.push(
+                    maxHeight * Math.cos(j * rotation) / Math.sqrt(Math.pow(this.topRadius, 2) + Math.pow(maxHeight, 2)),
+                    maxHeight * Math.sin(j * rotation) / Math.sqrt(Math.pow(this.topRadius, 2) + Math.pow(maxHeight, 2)),
+                    this.topRadius / Math.sqrt(Math.pow(this.topRadius, 2) + Math.pow(maxHeight, 2))
+                );
+            }
 
-            //	Vertice 0 do retangulo
-            this.vertices.push(this.bottomRadius * Math.cos(ang), this.bottomRadius * Math.sin(ang),j);
-            this.normals.push( this.bottomRadius * Math.cos(ang), this.bottomRadius * Math.sin(ang),0);
-            this.texCoords.push( i / this.slices, 0);
+            this.texCoords.push(j / this.slices, i / this.stacks);
+        }
+        radius = (i + 1) * deltaRadius + this.bottomRadius;
+    }
 
-            //	Vertice 2 do retangulo
-            this.vertices.push( this.bottomRadius * Math.cos(ang),  this.bottomRadius * Math.sin(ang),j + 1);
-            this.normals.push( this.bottomRadius * Math.cos(ang), this.bottomRadius * Math.sin(ang),0);
-            this.texCoords.push( i / this.slices, 1);
-
-            ang = ang + rotation;
-
-            //	Vertice 1 do retangulo
-            this.vertices.push( this.bottomRadius * Math.cos(ang),  this.bottomRadius * Math.sin(ang),j);
-            this.normals.push( this.bottomRadius * Math.cos(ang),  this.bottomRadius * Math.sin(ang),0);
-            this.texCoords.push( (i+1)/ this.slices, 0);
-
-            //	Vertice 3 do retangulo
-            this.vertices.push( this.bottomRadius * Math.cos(ang),  this.bottomRadius * Math.sin(ang),j + 1);
-            this.normals.push( this.bottomRadius * Math.cos(ang),  this.bottomRadius * Math.sin(ang),0);
-            this.texCoords.push( (i+1)/this.slices, 1);
-
-            //	Indices
-            this.indices.push(indCounter+1);
-            this.indices.push(indCounter);
-            this.indices.push(indCounter+2);
-            this.indices.push(indCounter+2);
-            this.indices.push(indCounter+3);
-            this.indices.push(indCounter+1);
-            indCounter += 4;
+    for (var i = 0; i < this.stacks; i++) {
+        for (var j = 0; j < this.slices; j++) {
+            this.indices.push(
+                i * (this.slices + 1) + j,
+                i * (this.slices + 1) + (j + 1),
+                (i + 1) * (this.slices + 1) + (j + 1)
+            );
+            this.indices.push(
+                (i + 1) * (this.slices + 1) + (j + 1),
+                (i + 1) * (this.slices + 1) + j,
+                i * (this.slices + 1) + j
+            );
         }
     }
 
-
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
+};
+
+MyCylinder.prototype.scaleTexCoords = function(ampS, ampT) {
+    for (var i = 0; i < this.texCoords.length; i += 2) {
+        this.texCoords[i] = this.texCoords[i] / ampS;
+        this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
+    }
+    this.updateTexCoordsGLBuffers();
 };

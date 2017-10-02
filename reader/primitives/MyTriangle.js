@@ -2,16 +2,13 @@
  * MyTriangle
  * @constructor
  */
-function MyTriangle(scene, vector, deltaS, deltaT) {
+function MyTriangle(scene, vector) {
     CGFobject.call(this, scene);
 
     this.vector = vector;
 
     if(vector.length !== 9)
         console.warn('The triangle needs to have 9 coords');
-
-    this.deltaS = deltaS || 1;
-    this.deltaT = deltaT || 1;
 
     this.setTextureCoords();
 
@@ -44,9 +41,17 @@ MyTriangle.prototype.initBuffers = function() {
 
 MyTriangle.prototype.setTextureCoords = function () {
     this.texCoords = [
-        0,this.deltaT,
-        this.deltaS,this.deltaT,
+        0, 1,
+        1, 1,
         0, 0
     ];
+};
+
+MyTriangle.prototype.scaleTexCoords = function (ampS, ampT) {
+    this.texCoords[1] = this.texCoords[1] / ampT;
+    this.texCoords[2] = this.texCoords[2] / ampS;
+    this.texCoords[3] = this.texCoords[3] / ampT;
+
+    this.updateTexCoordsGLBuffers();
 };
 
