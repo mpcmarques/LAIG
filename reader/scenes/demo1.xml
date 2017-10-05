@@ -169,6 +169,7 @@
               <NODEREF id="teclado"/>
               <NODEREF id="rato"/>
               <NODEREF id="cadeira"/>
+              <NODEREF id="chao"/>
             </DESCENDANTS>
         </NODE>
 
@@ -282,6 +283,25 @@
     </NODE>
 
 
+    <NODE id="cubeTeclado">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+
+        <SCALE sx="1" sy="1" sz="1"/>
+
+        <DESCENDANTS>
+
+            <NODEREF id="TfaceCubo1"/>
+            <NODEREF id="TfaceCubo2"/>
+            <NODEREF id="TfaceCubo3"/>
+            <NODEREF id="TfaceCubo4"/>
+            <NODEREF id="TfaceCubo5"/>
+            <NODEREF id="TfaceCubo6"/>
+        </DESCENDANTS>
+    </NODE>
+
+
 
     <!-- A cube face -->
     <NODE id="faceCubo1">
@@ -371,12 +391,102 @@
     </NODE>
 
 
+
+
+    <NODE id="TfaceCubo1">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="-0.5" y="-0.5" z="0.5"/>
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="TfaceCubo2">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="-0.5" y="-0.5" z="-0.5"/>
+        <ROTATION axis="y" angle="-90"/>
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="TfaceCubo3">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="0.5" y="-0.5" z="0.5"/>
+        <ROTATION axis="y" angle="90"/>
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="TfaceCubo4">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="0.5" y="-0.5" z="-0.5"/>
+        <ROTATION axis="y" angle="180"/>
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="TfaceCubo5">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+
+        <TRANSLATION x="-0.5" y="0.5" z="0.5"/>
+        <ROTATION axis="x" angle="-90"/>
+
+
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="TfaceCubo6">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="-0.5" y="-0.5" z="-0.5"/>
+        <ROTATION axis="x" angle="90"/>
+
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 1 1 0"/>
+        </DESCENDANTS>
+
+    </NODE>
+
+
     <NODE id="monitor">
       <MATERIAL id="null"/>
       <TEXTURE id="null"/>
 
         <DESCENDANTS>
           <NODEREF id="tela"/>
+          <NODEREF id="tela2"/>
           <NODEREF id="suporte"/>
           <NODEREF id="base"/>
         </DESCENDANTS>
@@ -394,6 +504,17 @@
         </DESCENDANTS>
         </NODE>
 
+        <NODE id="tela2">
+          <MATERIAL id="null"/>
+          <TEXTURE id="null"/>
+
+          <TRANSLATION x="3.5" y="6" z="0.95"/>
+          <SCALE sx="3.1" sy="2.1" sz="0.0.5"/>
+
+          <DESCENDANTS>
+            <NODEREF id="cube"/>
+          </DESCENDANTS>
+          </NODE>
 
         <NODE id="suporte">
           <MATERIAL id="null"/>
@@ -420,6 +541,8 @@
             </DESCENDANTS>
             </NODE>
 
+
+
             <NODE id="teclado">
               <MATERIAL id="null"/>
               <TEXTURE id="null"/>
@@ -428,9 +551,12 @@
               <SCALE sx="2" sy="0.1" sz="1"/>
 
               <DESCENDANTS>
-                <NODEREF id="cube"/>
+                <NODEREF id="cubeTeclado"/>
               </DESCENDANTS>
               </NODE>
+
+
+
 
 
               <!-- Rato-->
@@ -551,6 +677,21 @@
                   <NODEREF id="cube"/>
                 </DESCENDANTS>
                 </NODE>
+
+
+
+                <NODE id="chao">
+                  <MATERIAL id="null"/>
+                  <TEXTURE id="null"/>
+
+                  <TRANSLATION x="5" y="0" z="5"/>
+                  <SCALE sx="10" sy="0.1" sz="10"/>
+
+                  <DESCENDANTS>
+                    <NODEREF id="cube"/>
+                  </DESCENDANTS>
+                  </NODE>
+
 
 
     </NODES>
