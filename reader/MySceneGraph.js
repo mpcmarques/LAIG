@@ -1496,8 +1496,39 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance,
     }
 };
 
+MySceneGraph.prototype.checkAgrs = function(args, type) {
+    var numArgs;
+
+    for (var j = 0; j < args.length; j++) {
+        if (args[j] < 0)
+            return "all arguments for a " + type + " must be positive";
+    }
+
+    // Checks valid parameters
+    switch (type) {
+        case 'cylinder':
+            numArgs = 5;
+            break;
+        case 'sphere':
+            numArgs = 3;
+            break;
+        case 'triangle':
+            numArgs  = 9;
+            break;
+        case 'rectangle':
+            numArgs = 4;
+            break;
+    }
+
+    // Checks for a correct number of arguments.
+    if (args.length != numArgs)
+        return "incorrect number of arguments for type " + type + "";
+};
+
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
     var renderPrimitive;
+
+    this.checkAgrs(leaf.args, leaf.type);
 
     switch (leaf.type) {
         case 'rectangle':
