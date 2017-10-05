@@ -1395,11 +1395,11 @@ MySceneGraph.prototype.onXMLError = function (message) {
  */
 MySceneGraph.prototype.onXMLMinorError = function (message) {
     console.warn("Warning: " + message);
-}
+};
 
 MySceneGraph.prototype.log = function (message) {
     console.log("   " + message);
-}
+};
 
 /**
  * Generates a default material, with a random name. This material will be passed onto the root node, which
@@ -1419,7 +1419,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function () {
     while (this.materials[this.defaultMaterialID] != null);
 
     this.materials[this.defaultMaterialID] = materialDefault;
-}
+};
 
 /**
  * Generates a random string of the specified length.
@@ -1458,6 +1458,7 @@ MySceneGraph.prototype.parseNodeAppearance = function (appearance, texture) {
 MySceneGraph.prototype.renderNode = function (node, transformMatrix, textureParam, appearanceParam) {
     var texture = this.textures[node.textureID] || textureParam;
     var appearance = this.materials[node.materialID] || appearanceParam;
+    var currentTransformMatrix = transformMatrix || node.transformMatrix;
 
     // Apply node appearance
     var nodeAppearance = this.parseNodeAppearance(appearance, texture);
@@ -1465,12 +1466,11 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         nodeAppearance.apply();
 
     for (var i = 0; i < node.leaves.length; i++) {
-
         var leafNode = node.leaves[i];
 
         // Leaf primitive
         if (leafNode instanceof MyGraphLeaf) {
-            this.renderLeaf(leafNode, transformMatrix, appearance, texture);
+            this.renderLeaf(leafNode, currentTransformMatrix, appearance, texture);
         }
 
         // Leaf node
@@ -1478,7 +1478,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
             var currentNode = this.nodes[leafNode];
             // calculate children transform matrix
             var newMatrix = mat4.create();
-            mat4.multiply(newMatrix, transformMatrix, currentNode.transformMatrix);
+            mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
             // render children node
             this.renderNode(currentNode, newMatrix, texture, appearance);
         }
@@ -1496,7 +1496,7 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance,
     }
 };
 
-MySceneGraph.prototype.checkAgrs = function(args, type) {
+MySceneGraph.prototype.checkArgs = function (args, type) {
     var numArgs;
 
     for (var j = 0; j < args.length; j++) {
@@ -1513,7 +1513,7 @@ MySceneGraph.prototype.checkAgrs = function(args, type) {
             numArgs = 3;
             break;
         case 'triangle':
-            numArgs  = 9;
+            numArgs = 9;
             break;
         case 'rectangle':
             numArgs = 4;
@@ -1528,14 +1528,14 @@ MySceneGraph.prototype.checkAgrs = function(args, type) {
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
     var renderPrimitive;
 
-    this.checkAgrs(leaf.args, leaf.type);
+    this.checkArgs(leaf.args, leaf.type);
 
     switch (leaf.type) {
         case 'rectangle':
             renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
             break;
         case 'triangle':
-            renderPrimitive = new MyTriangle(this.scene, leaf.args, texture[1], texture[2]);
+            renderPrimitive = new MyTriangle(this.scene, leaf.args);
             break;
         case 'cylinder':
             renderPrimitive = new MyCylinder(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
@@ -1558,10 +1558,8 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
-    // entry point for graph rendering
-    // remove log below to avoid performance issues
-
+    // entry point for graph rendering.
     const rootNode = this.nodes[this.idRoot];
-
-    this.renderNode(rootNode, rootNode.transformMatrix);
+    // render starting from root.
+    this.renderNode(rootNode);
 };

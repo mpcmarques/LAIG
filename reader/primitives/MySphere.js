@@ -63,7 +63,7 @@ MySphere.prototype.initBuffers = function()
 };
 
 MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
-    for(var i = 0; i <= this.texCoords.length; i++) {
+   /* for(var i = 0; i <= this.texCoords.length; i++) {
         if(i == 0)
             this.texCoords[i] = this.texCoords[i] / ampS;
 
@@ -75,7 +75,7 @@ MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
             this.texCoords[i] = this.texCoords[i] / ampS;
     }
 
-    this.updateTexCoordsGLBuffers();
+    this.updateTexCoordsGLBuffers();*/
 };
 
 
