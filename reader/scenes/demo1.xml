@@ -57,33 +57,33 @@
 
     <!-- Textures -->
     <TEXTURES>
-        <!-- Tree trunk -->
-        <TEXTURE id="trunk">
-            <file path="images/trunk-image.jpg" />
+        <!-- Desk -->
+        <TEXTURE id="desk">
+            <file path="images/desk.jpg" />
             <amplif_factor s="2" t="2" />
         </TEXTURE>
 
-        <!-- Tree leaves -->
-        <TEXTURE id="folhas">
-            <file path="images/leaves.jpg" />
-            <amplif_factor s="3" t="4" />
-        </TEXTURE>
-
-        <!-- Rocks -->
-        <TEXTURE id="rocks">
-            <file path="images/rocks.jpg" />
+        <!-- Screen -->
+        <TEXTURE id="pc-screen">
+            <file path="images/pc-screen.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
 
-        <!-- Glass work -->
-        <TEXTURE id="vidral">
-            <file path="images/vidral.jpg" />
-            <amplif_factor s="15" t="10" />
+        <!-- Keyboard -->
+        <TEXTURE id="keyboard">
+            <file path="images/keyboard.png" />
+            <amplif_factor s="1" t="1" />
         </TEXTURE>
 
-        <!-- Street bench -->
-        <TEXTURE id="banco">
-            <file path="images/bank.jpg" />
+        <!-- Floor -->
+        <TEXTURE id="floor">
+            <file path="images/floor.jpg" />
+            <amplif_factor s="0.5" t="0.5" />
+        </TEXTURE>
+
+        <!-- Leather -->
+        <TEXTURE id="leather">
+            <file path="images/leather.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
 
@@ -176,7 +176,7 @@
         <!-- The table -->
         <NODE id="mesa">
           <MATERIAL id="null"/>
-          <TEXTURE id="null"/>
+          <TEXTURE id="desk"/>
 
           <DESCENDANTS>
             <NODEREF id="leg1"/>
@@ -387,10 +387,7 @@
         <DESCENDANTS>
             <LEAF type="rectangle" args="0 1 1 0"/>
         </DESCENDANTS>
-
     </NODE>
-
-
 
 
     <NODE id="TfaceCubo1">
@@ -450,7 +447,7 @@
     <!-- Another cube face -->
     <NODE id="TfaceCubo5">
         <MATERIAL id="null"/>
-        <TEXTURE id="null"/>
+        <TEXTURE id="keyboard"/>
 
 
         <TRANSLATION x="-0.5" y="0.5" z="0.5"/>
@@ -494,7 +491,7 @@
 
       <NODE id="tela">
         <MATERIAL id="null"/>
-        <TEXTURE id="null"/>
+        <TEXTURE id="pc-screen"/>
 
         <TRANSLATION x="3.5" y="6" z="0.95"/>
         <SCALE sx="3" sy="2" sz="0.1"/>
@@ -508,8 +505,8 @@
           <MATERIAL id="null"/>
           <TEXTURE id="null"/>
 
-          <TRANSLATION x="3.5" y="6" z="0.95"/>
-          <SCALE sx="3.1" sy="2.1" sz="0.0.5"/>
+          <TRANSLATION x="3.5" y="6" z="0.85"/>
+          <SCALE sx="3.1" sy="2.1" sz="0.1"/>
 
           <DESCENDANTS>
             <NODEREF id="cube"/>
@@ -542,7 +539,6 @@
             </NODE>
 
 
-
             <NODE id="teclado">
               <MATERIAL id="null"/>
               <TEXTURE id="null"/>
@@ -554,9 +550,6 @@
                 <NODEREF id="cubeTeclado"/>
               </DESCENDANTS>
               </NODE>
-
-
-
 
 
               <!-- Rato-->
@@ -653,7 +646,7 @@
 
             <NODE id="tampocadeira">
               <MATERIAL id="null"/>
-              <TEXTURE id="null"/>
+              <TEXTURE id="leather"/>
 
               <TRANSLATION x="4" y="2" z="6"/>
               <SCALE sx="2.3" sy="0.1" sz="2.3"/>
@@ -665,9 +658,7 @@
 
               <NODE id="costascadeira">
                 <MATERIAL id="null"/>
-                <TEXTURE id="null"/>
-
-
+                <TEXTURE id="leather"/>
 
                 <TRANSLATION x="4" y="3.1" z="7.1"/>
                 <ROTATION axis="x" angle="-90"/>
@@ -682,7 +673,7 @@
 
                 <NODE id="chao">
                   <MATERIAL id="null"/>
-                  <TEXTURE id="null"/>
+                  <TEXTURE id="floor"/>
 
                   <TRANSLATION x="5" y="0" z="5"/>
                   <SCALE sx="10" sy="0.1" sz="10"/>
