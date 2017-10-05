@@ -83,8 +83,8 @@
 
         <!-- Street bench -->
         <TEXTURE id="banco">
-            <file path="images/bank.jpg"/>
-            <amplif_factor s="0.3" t="0.4"/>
+            <file path="images/desk.jpg"/>
+            <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
     </TEXTURES>

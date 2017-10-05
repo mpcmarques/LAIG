@@ -1476,11 +1476,13 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         // Leaf node
         else {
             var currentNode = this.nodes[leafNode];
-            // calculate children transform matrix
-            var newMatrix = mat4.create();
-            mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
-            // render children node
-            this.renderNode(currentNode, newMatrix, texture, appearance);
+            if (currentNode != null) {
+                // calculate children transform matrix
+                var newMatrix = mat4.create();
+                mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
+                // render children node
+                this.renderNode(currentNode, newMatrix, texture, appearance);
+            }
         }
     }
 };
@@ -1532,16 +1534,16 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
 
     switch (leaf.type) {
         case 'rectangle':
-            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
+            //renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
             break;
         case 'triangle':
-            renderPrimitive = new MyTriangle(this.scene, leaf.args);
+            //renderPrimitive = new MyTriangle(this.scene, leaf.args);
             break;
         case 'cylinder':
-            renderPrimitive = new MyCylinder(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
+            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
             break;
         case 'sphere':
-            renderPrimitive = new MySphere(this.scene, leaf.args);
+            //renderPrimitive = new MySphere(this.scene, leaf.args);
             break;
         default:
             break;
