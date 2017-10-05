@@ -1534,16 +1534,16 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
 
     switch (leaf.type) {
         case 'rectangle':
-            //renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
+            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
             break;
         case 'triangle':
-            //renderPrimitive = new MyTriangle(this.scene, leaf.args);
+            renderPrimitive = new MyTriangle(this.scene, leaf.args);
             break;
         case 'cylinder':
             renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
             break;
         case 'sphere':
-            //renderPrimitive = new MySphere(this.scene, leaf.args);
+            renderPrimitive = new MySphere(this.scene, leaf.args);
             break;
         default:
             break;
