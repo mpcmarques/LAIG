@@ -173,12 +173,23 @@
             <TEXTURE id="null"/>
 
             <DESCENDANTS>
+                <NODEREF id="workplace"/>
+                <NODEREF id="chao"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="workplace">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="6" y="0" z="6" />
+
+            <DESCENDANTS>
                 <NODEREF id="mesa"/>
                 <NODEREF id="monitor"/>
                 <NODEREF id="teclado"/>
                 <NODEREF id="rato"/>
                 <NODEREF id="cadeira"/>
-                <NODEREF id="chao"/>
             </DESCENDANTS>
         </NODE>
 
@@ -573,6 +584,8 @@
         <NODE id="cadeira">
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
+
+            <TRANSLATION x="-0.5" y="0" z="0" />
 
             <DESCENDANTS>
                 <NODEREF id="chairleg1"/>
