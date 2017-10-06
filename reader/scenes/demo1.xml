@@ -106,7 +106,7 @@
             <specular r="0.2" g="0.2" b="0.2" a="1"/>
             <diffuse r="0.0" g="0.207" b="0.0" a="1"/>
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
-            <emission r="0.0" g="0.0" b="0.0" a="1"/>
+            <emission r="1" g="1" b="1" a="1"/>
         </MATERIAL>
 
         <!-- Metal material -->
@@ -118,22 +118,31 @@
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
-        <!-- Lamp post material -->
-        <MATERIAL id="lightPostMaterial">
-            <shininess value="100"/>
-            <specular r="0.0" g="0.0" b="0.0" a="1"/>
-            <diffuse r="0.447" g="0.416" b="0.416" a="1"/>
-            <ambient r="0.0" g="0.0" b="0.0" a="1"/>
+        <!-- Black plastic -->
+        <MATERIAL id="blackPlasticMaterial">
+            <shininess value="32"/>
+            <specular r="0.5" g="0.5" b="0.5" a="1"/>
+            <diffuse r="0.01" g="0.01" b="0.01" a="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
-        <!-- Light bulb material -->
-        <MATERIAL id="lightMaterial">
-            <shininess value="100"/>
-            <specular r="0.5" g="0.5" b="0.5" a="1"/>
-            <diffuse r="0.5" g="0.5" b="0.5" a="1"/>
-            <ambient r="0.0" g="0.0" b="0.0" a="1"/>
+        <!-- Red rubber -->
+        <MATERIAL id="redRubberMaterial">
+            <shininess value="10"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+            <diffuse r="0.5" g="0.4" b="0.4" a="1"/>
+            <ambient r="0.5" g="0.0" b="0.0" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
+        </MATERIAL>
+
+        <!-- Desk material -->
+        <MATERIAL id="deskMaterial">
+            <shininess value="12.8"/>
+            <specular r="0.5" g="0.5" b="0.5" a="0.5"/>
+            <diffuse r="0.5" g="0.5" b="0.5" a="0.5"/>
+            <ambient r="0.0" g="0.0" b="0.0" a="0.5"/>
+            <emission r="0" g="0" b="0" a="0"/>
         </MATERIAL>
 
         <!-- A default material -->
@@ -175,7 +184,7 @@
 
         <!-- The table -->
         <NODE id="mesa">
-            <MATERIAL id="null"/>
+            <MATERIAL id="deskMaterial"/>
             <TEXTURE id="null"/>
 
             <DESCENDANTS>
@@ -248,8 +257,8 @@
 
         <!--TOP -->
         <NODE id="top">
-            <MATERIAL id="null"/>
-            <TEXTURE id="desk"/>
+            <MATERIAL id="deskMaterial"/>
+            <TEXTURE id="null"/>
 
 
             <TRANSLATION x="3.5" y="4" z="2"/>
@@ -472,7 +481,7 @@
 
 
         <NODE id="monitor">
-            <MATERIAL id="null"/>
+            <MATERIAL id="blackPlasticMaterial"/>
             <TEXTURE id="null"/>
 
             <DESCENDANTS>
@@ -534,7 +543,7 @@
 
 
         <NODE id="teclado">
-            <MATERIAL id="null"/>
+            <MATERIAL id="blackPlasticMaterial"/>
             <TEXTURE id="null"/>
 
             <TRANSLATION x="3.5" y="4.1" z="1.9"/>
@@ -549,7 +558,7 @@
 
         <!-- Rato -->
         <NODE id="rato">
-            <MATERIAL id="null"/>
+            <MATERIAL id="blackPlasticMaterial"/>
             <TEXTURE id="null"/>
 
             <TRANSLATION x="4.9" y="4.1" z="1.9"/>
@@ -582,7 +591,6 @@
             <TEXTURE id="null"/>
 
             <TRANSLATION x="3" y="0" z="5"/>
-
 
             <DESCENDANTS>
                 <NODEREF id="chairleg"/>
@@ -639,7 +647,7 @@
 
 
         <NODE id="tampocadeira">
-            <MATERIAL id="null"/>
+            <MATERIAL id="redRubberMaterial"/>
             <TEXTURE id="leather"/>
 
             <TRANSLATION x="4" y="2" z="6"/>
@@ -651,7 +659,7 @@
         </NODE>
 
         <NODE id="costascadeira">
-            <MATERIAL id="null"/>
+            <MATERIAL id="redRubberMaterial"/>
             <TEXTURE id="leather"/>
 
             <TRANSLATION x="4" y="3.1" z="7.1"/>
