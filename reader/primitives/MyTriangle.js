@@ -10,8 +10,6 @@ function MyTriangle(scene, vector) {
     if(vector.length !== 9)
         console.warn('The triangle needs to have 9 coords');
 
-    this.setTextureCoords();
-
     this.initBuffers();
 }
 
@@ -35,22 +33,42 @@ MyTriangle.prototype.initBuffers = function() {
         0,0,1
     ];
 
+    var a = Math.sqrt(
+        Math.pow(this.vector[0] - this.vector[6],2) +
+        Math.pow(this.vector[1] - this.vector[7],2) +
+        Math.pow(this.vector[2] - this.vector[8],2)
+    );
+
+    var b = Math.sqrt(
+        Math.pow(this.vector[3] - this.vector[0],2) +
+        Math.pow(this.vector[4] - this.vector[1],2) +
+        Math.pow(this.vector[5] - this.vector[2],2)
+    );
+
+    var c = Math.sqrt(
+        Math.pow(this.vector[6] - this.vector[3],2) +
+        Math.pow(this.vector[7] - this.vector[4],2) +
+        Math.pow(this.vector[8] - this.vector[5],2)
+    );
+
+    var cosBeta =  (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c,2)) / (2 * a * c);
+    var beta  = Math.acos(cosBeta);
+
+    this.texCoords = [
+        0,0,
+        c,0,
+        c - a * cosBeta, a * Math.sin(beta)
+    ];
+
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };
 
-MyTriangle.prototype.setTextureCoords = function () {
-    this.texCoords = [
-        0, 1,
-        1, 1,
-        0, 0
-    ];
-};
-
 MyTriangle.prototype.scaleTexCoords = function (ampS, ampT) {
-    this.texCoords[1] = this.texCoords[1] / ampT;
-    this.texCoords[2] = this.texCoords[2] / ampS;
-    this.texCoords[3] = this.texCoords[3] / ampT;
+    for(var i = 0; i < this.texCoords.length; i+=2){
+        this.texCoords[i] = this.texCoords[i] / ampS;
+        this.texCoords[i+1] = this.texCoords[i+1] / ampT;
+    }
 
     this.updateTexCoordsGLBuffers();
 };

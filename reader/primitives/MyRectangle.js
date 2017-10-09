@@ -48,17 +48,18 @@ MyRectangle.prototype.initBuffers = function() {
 
 MyRectangle.prototype.setTextureCoords = function(){
     this.texCoords = [
-        0,  0,
-        1, 0,
-        0,  1,
-        1, 1
+        this.minX,  this.minY,
+        this.maxX, this.minY,
+        this.minX,  this.maxY,
+        this.maxX, this.maxY
     ]
 };
 
 MyRectangle.prototype.scaleTexCoords = function(ampS, ampT) {
-    this.texCoords[2] = this.texCoords[2] / ampS;
-    this.texCoords[5] = this.texCoords[5] / ampT;
-    this.texCoords[6] = this.texCoords[6] / ampS;
-    this.texCoords[7] = this.texCoords[7] / ampT;
+    for(var i = 0; i < this.texCoords.length; i+=2){
+        this.texCoords[i] = this.texCoords[i] / ampS;
+        this.texCoords[i+1] = this.texCoords[i+1] / ampT;
+    }
+
     this.updateTexCoordsGLBuffers();
 };

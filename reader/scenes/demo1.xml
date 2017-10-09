@@ -507,7 +507,7 @@
             <TEXTURE id="pc-screen"/>
 
             <TRANSLATION x="3.5" y="6" z="0.95"/>
-            <SCALE sx="3" sy="2" sz="0.1"/>
+            <SCALE sx="3" sy="2" sz="0.05"/>
 
             <DESCENDANTS>
                 <NODEREF id="cube"/>
