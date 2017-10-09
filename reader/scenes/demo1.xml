@@ -47,7 +47,7 @@
 
         <LIGHT id="light3">
             <enable value="1"/>
-            <position x="15" y="10" z="10" w="1"/>
+            <position x="10" y="13" z="10" w="1"/>
             <ambient r="0.2" g="0.2" b="0" a="1.0"/>
             <diffuse r="0.5" g="0.5" b="0" a="1.0"/>
             <specular r="0.5" g="0.5" b="0" a="1.0"/>
@@ -159,6 +159,16 @@
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
+
+        <!-- Ligh bulb Material -->
+        <MATERIAL id="lightMaterial">
+            <shininess value="100"/>
+            <specular r="0.5" g="0.5" b="0.5" a="1"/>
+            <diffuse r="0.5" g="0.5" b="0.5" a="1"/>
+            <ambient r="0.0" g="0.0" b="0.0" a="1"/>
+            <emission r="0.0" g="0.0" b="0.0" a="1"/>
+        </MATERIAL>
+
     </MATERIALS>
 
 
@@ -182,6 +192,7 @@
                 <NODEREF id="chao"/>
                 <NODEREF id="parede1"/>
                 <NODEREF id="parede2"/>
+                <NODEREF id="candeeiro"/>
             </DESCENDANTS>
         </NODE>
 
@@ -733,7 +744,18 @@
             </DESCENDANTS>
         </NODE>
 
+        <NODE id="candeeiro">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
 
+            <TRANSLATION x="10" y="13" z="10"/>
+            <SCALE sx="1" sy="1" sz="1"/>
+
+            <DESCENDANTS>
+                <LEAF id="sphere1" type="sphere" args="2 20 20"/>
+            </DESCENDANTS>
+
+        </NODE>
 
     </NODES>
 
