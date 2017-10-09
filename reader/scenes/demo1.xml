@@ -86,6 +86,12 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
+        <!-- Wall -->
+        <TEXTURE id="wall">
+            <file path="images/wall.jpg"/>
+            <amplif_factor s="0.8" t="0.8"/>
+        </TEXTURE>
+
     </TEXTURES>
 
 
@@ -700,7 +706,7 @@
 
         <NODE id="parede1">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="wall"/>
 
             <TRANSLATION x="10" y="5" z="0"/>
             <ROTATION axis="x" angle="-90"/>
@@ -714,8 +720,8 @@
 
 
         <NODE id="parede2">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <MATERIAL id="defaultMaterial"/>
+            <TEXTURE id="wall"/>
 
             <TRANSLATION x="0" y="5" z="10"/>
             <ROTATION axis="z" angle="-90"/>
