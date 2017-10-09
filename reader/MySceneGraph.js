@@ -1549,9 +1549,12 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
             break;
     }
 
-    if (texture != null && renderPrimitive != null)
+    if (texture != null && renderPrimitive != null) {
         renderPrimitive.scaleTexCoords(texture[1], texture[2]);
-
+        console.log(renderPrimitive);
+        console.log(texture[1]);
+        console.log(texture[2]);
+    }
     return renderPrimitive;
 };
 
