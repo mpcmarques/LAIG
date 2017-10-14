@@ -1363,6 +1363,12 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                             args[k] = numeric;
                     }
 
+                    // update patches with control points as arguments
+                    if(type == 'patch') {
+                        var controlPoints = this.parsePatchControlPoints(descendants[j]);
+                        args.push(controlPoints);
+                    }
+
                     //parse leaf
                     this.nodes[nodeID].addChild(new MyGraphLeaf(this, descendants[j], type, args));
                     sizeChildren++;
@@ -1380,7 +1386,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
     console.log("Parsed nodes");
     return null;
-}
+};
 
 /*
  * Callback to be executed on any read error
@@ -1388,7 +1394,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 MySceneGraph.prototype.onXMLError = function (message) {
     console.error("XML Loading Error: " + message);
     this.loadedOk = false;
-}
+};
 
 /**
  * Callback to be executed on any minor error, showing a warning on the console.
@@ -1401,7 +1407,7 @@ MySceneGraph.prototype.log = function (message) {
     console.log("   " + message);
 };
 
-MySceneGraph.prototype.warn = function(message){
+MySceneGraph.prototype.warn = function (message){
     console.warn("Warning:  " + message)
 };
 
@@ -1527,7 +1533,7 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
             numArgs = 4;
             break;
         case 'patch':
-            numArgs = 2;
+            numArgs = 3;
             break;
         default:
             numArgs = 0;
@@ -1541,6 +1547,32 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
     }
 
     return true;
+};
+
+MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem){
+    var cplines = xmlelem.children;
+    var controlPoints = [];
+
+    for(var i = 0; i < cplines.length; i++){
+        var cpline = cplines[i];
+
+        for(var j = 0; j < cpline.children.length; j++){
+            var cpoint = cpline.children[j];
+            var xx = parseFloat(this.reader.getString(cpoint, "xx", true));
+            var yy = parseFloat(this.reader.getString(cpoint, "yy", true));
+            var zz = parseFloat(this.reader.getString(cpoint, "zz", true));
+            var ww = parseFloat(this.reader.getString(cpoint, "ww", true));
+
+            if(xx == null || yy == null || zz == null || ww == null){
+                this.onXMLError("Failed parsing control points for patch cpline " + j + "\n");
+            }
+
+            else
+                controlPoints.push([xx, yy, zz, ww]);
+        }
+    }
+
+    return controlPoints;
 };
 
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
@@ -1561,6 +1593,9 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
             break;
         case 'sphere':
             renderPrimitive = new MySphere(this.scene, leaf.args);
+            break;
+        case 'patch':
+            renderPrimitive = new MyPatch(this.scene, leaf.args);
             break;
         default:
             break;

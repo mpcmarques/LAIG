@@ -2,31 +2,21 @@
  * MyPatch
  * @constructor
  */
-function MyPatch(scene, uDegree, vDegree) {
+function MyPatch(scene, args) {
     CGFobject.call(this,scene);
 
-    this.uDegree = uDegree;
-    this.vDegree = vDegree;
-    this.surfaces = [];
+    this.cpoints = args[2];
+    this.uDivs = args[0];
+    this.vDivs = args[1];
 
-    this.setTextureCoords();
+    // create surface
+    this.surface = this.makeSurface("1", this.uDivs, this.vDivs, this.cpoints);
 
-    // init buffers
-    this.initBuffers();
+    CGFnurbsObject.call(this, this.scene, this.getSurfacePoint, this.uDivs, this.vDivs);
 }
 
-
-
-MyPatch.prototype = Object.create(CGFobject.prototype);
+MyPatch.prototype = Object.create(CGFnurbsObject.prototype);
 MyPatch.prototype.constructor = MyPatch;
-
-MyPatch.prototype.initBuffers = function() {
-
-
-
-    this.primitiveType=this.scene.gl.TRIANGLES;
-    this.initGLBuffers();
-};
 
 MyPatch.prototype.getKnotsVector = function(degree) { // TODO (CGF 0.19.3): add to CGFnurbsSurface
 
@@ -38,21 +28,20 @@ MyPatch.prototype.getKnotsVector = function(degree) { // TODO (CGF 0.19.3): add 
         v.push(1);
     }
     return v;
-}
+};
 
-MyPatch.prototype.makeSurface = function (id, degree1, degree2, controlvertexes, translation) {
+MyPatch.prototype.getSurfacePoint = function (u,v){
+    return this.surface.getPoint(u,v)
+};
 
+MyPatch.prototype.makeSurface = function (id, degree1, degree2, controlvertexes) {
     var knots1 = this.getKnotsVector(degree1); // to be built inside webCGF in later versions ()
     var knots2 = this.getKnotsVector(degree2); // to be built inside webCGF in later versions
 
-    var nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes); // TODO  (CGF 0.19.3): remove knots1 and knots2 from CGFnurbsSurface method call. Calculate inside method.
-    getSurfacePoint = function(u, v) {
-        return nurbsSurface.getPoint(u, v);
-    };
 
-    var obj = new CGFnurbsObject(this, getSurfacePoint, 20, 20 );
-    this.surfaces.push(obj);
-}
+    // TODO  (CGF 0.19.3): remove knots1 and knots2 from CGFnurbsSurface method call. Calculate inside method.
+    return new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
+};
 
 
 
