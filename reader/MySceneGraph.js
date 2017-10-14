@@ -1511,13 +1511,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance,
 MySceneGraph.prototype.checkArgs = function (args, type) {
     var numArgs;
 
-    for (var j = 0; j < args.length; j++) {
-        if (args[j] < 0) {
-            console.error("all arguments for a " + type + " must be positive");
-            return false;
-        }
-    }
-
     // Checks valid parameters
     switch (type) {
         case 'cylinder':
@@ -1555,6 +1548,7 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem){
 
     for(var i = 0; i < cplines.length; i++){
         var cpline = cplines[i];
+        var cplinePoints = [];
 
         for(var j = 0; j < cpline.children.length; j++){
             var cpoint = cpline.children[j];
@@ -1568,8 +1562,9 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem){
             }
 
             else
-                controlPoints.push([xx, yy, zz, ww]);
+                cplinePoints.push([xx, yy, zz, ww]);
         }
+        controlPoints.push(cplinePoints);
     }
 
     return controlPoints;

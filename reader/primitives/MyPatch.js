@@ -9,8 +9,14 @@ function MyPatch(scene, args) {
     this.uDivs = args[0];
     this.vDivs = args[1];
 
+    this.degree = this.cpoints.length - 1 ;
+    this.degree2 = this.cpoints[0].length - 1;
+
     // create surface
-    this.surface = this.makeSurface("1", this.uDivs, this.vDivs, this.cpoints);
+    var knots1 = this.getKnotsVector(this.degree); // to be built inside webCGF in later versions ()
+    var knots2 = this.getKnotsVector(this.degree2); // to be built inside webCGF in later versions
+
+    this.surface = new CGFnurbsSurface(this.degree, this.degree2, knots1, knots2, this.cpoints);
 
     CGFnurbsObject.call(this, this.scene, this.getSurfacePoint, this.uDivs, this.vDivs);
 }
@@ -34,17 +40,6 @@ MyPatch.prototype.getSurfacePoint = function (u,v){
     return this.surface.getPoint(u,v)
 };
 
-MyPatch.prototype.makeSurface = function (id, degree1, degree2, controlvertexes) {
-    var knots1 = this.getKnotsVector(degree1); // to be built inside webCGF in later versions ()
-    var knots2 = this.getKnotsVector(degree2); // to be built inside webCGF in later versions
-
-
-    // TODO  (CGF 0.19.3): remove knots1 and knots2 from CGFnurbsSurface method call. Calculate inside method.
-    return new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
-};
-
-
-
 MyPatch.prototype.scaleTexCoords = function(ampS, ampT) {
     for(var i = 0; i < this.texCoords.length; i+=2){
         this.texCoords[i] = this.texCoords[i] / ampS;
@@ -52,4 +47,8 @@ MyPatch.prototype.scaleTexCoords = function(ampS, ampT) {
     }
 
     this.updateTexCoordsGLBuffers();
+};
+
+MyPatch.prototype.display = function() {
+    CGFnurbsObject.prototype.display.call(this);
 };
