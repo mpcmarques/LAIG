@@ -330,7 +330,7 @@
             <SCALE sx="0.1" sy="2.00" sz="0.1"/>
             <ROTATION axis="x" angle="-90"/>
             <DESCENDANTS>
-                <LEAF id="cylinder1" type="cylinder" args="2 1 1 10 10"/>
+                <LEAF id="cylinder1" type="cylinder" args="2 1 1 10 10 1 1"/>
             </DESCENDANTS>
         </NODE>
 
@@ -723,7 +723,7 @@
             <SCALE sx="0.1" sy="1.00" sz="0.1"/>
             <ROTATION axis="x" angle="-90"/>
             <DESCENDANTS>
-                <LEAF id="cylinder1" type="cylinder" args="2 1 1 10 10"/>
+                <LEAF id="cylinder1" type="cylinder" args="2 1 1 10 10 1 1"/>
             </DESCENDANTS>
         </NODE>
 

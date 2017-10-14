@@ -1503,13 +1503,13 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
 
     for (var j = 0; j < args.length; j++) {
         if (args[j] < 0)
-            return "all arguments for a " + type + " must be positive";
+            console.error("all arguments for a " + type + " must be positive");
     }
 
     // Checks valid parameters
     switch (type) {
         case 'cylinder':
-            numArgs = 5;
+            numArgs = 7;
             break;
         case 'sphere':
             numArgs = 3;
@@ -1523,8 +1523,9 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
     }
 
     // Checks for a correct number of arguments.
-    if (args.length != numArgs)
-        return "incorrect number of arguments for type " + type + "";
+    if (args.length != numArgs){
+        console.error("incorrect number of arguments for type " + type + "")
+    }
 };
 
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
@@ -1540,7 +1541,7 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
             renderPrimitive = new MyTriangle(this.scene, leaf.args);
             break;
         case 'cylinder':
-            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4]);
+            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
             break;
         case 'sphere':
             renderPrimitive = new MySphere(this.scene, leaf.args);

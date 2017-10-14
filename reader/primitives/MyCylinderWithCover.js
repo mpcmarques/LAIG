@@ -1,9 +1,12 @@
-function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, slices) {
+function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, slices, hasBottomCover, hasTopCover) {
     CGFobject.call(this, scene);
 
     this.height = height;
 
     this.cylinder = new MyCylinder(scene, height, bottomRadius, topRadius, stacks, slices);
+
+    this.hasBottomCover = hasBottomCover;
+    this.hasTopCover = hasTopCover;
 
     this.cover = new MyCircle(scene, slices);
 }
@@ -17,17 +20,23 @@ MyCylinderWithCover.prototype.display = function () {
         this.cylinder.display();
     this.scene.popMatrix();
 
-    this.scene.pushMatrix();
+    // top cover
+    if(this.hasTopCover) {
+        this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
-        this.scene.scale(2,2,2);
+        this.scene.scale(2, 2, 2);
         this.cover.display();
-    this.scene.popMatrix();
+        this.scene.popMatrix();
+    }
 
-    this.scene.pushMatrix();
+    // bottom cover
+    if(this.hasBottomCover) {
+        this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 1, 0, 0);
-        this.scene.scale(2,2,2);
+        this.scene.scale(2, 2, 2);
         this.cover.display();
-    this.scene.popMatrix();
+        this.scene.popMatrix();
+    }
 };
 
 MyCylinderWithCover.prototype.scaleTexCoords = function(ampS, ampT) {
