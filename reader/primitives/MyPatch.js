@@ -7,13 +7,15 @@ function MyPatch(scene, uDegree, vDegree) {
 
     this.uDegree = uDegree;
     this.vDegree = vDegree;
-
+    this.surfaces = [];
 
     this.setTextureCoords();
 
     // init buffers
     this.initBuffers();
 }
+
+
 
 MyPatch.prototype = Object.create(CGFobject.prototype);
 MyPatch.prototype.constructor = MyPatch;
