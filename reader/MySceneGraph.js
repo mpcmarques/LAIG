@@ -1337,7 +1337,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                 }
                 else if (descendants[j].nodeName == "LEAF") {
                     //  Parse type
-                    var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle','patch']);
+                    var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
                     if (type != null)
                         this.log("   Leaf: " + type);
@@ -1399,6 +1399,10 @@ MySceneGraph.prototype.onXMLMinorError = function (message) {
 
 MySceneGraph.prototype.log = function (message) {
     console.log("   " + message);
+};
+
+MySceneGraph.prototype.warn = function(message){
+    console.warn("Warning:  " + message)
 };
 
 /**
@@ -1492,8 +1496,8 @@ MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance,
 
     if (renderPrimitive != null) {
         this.scene.pushMatrix();
-        this.scene.multMatrix(transformMatrix);
-        renderPrimitive.display();
+            this.scene.multMatrix(transformMatrix);
+            renderPrimitive.display();
         this.scene.popMatrix();
     }
 };
@@ -1502,8 +1506,10 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
     var numArgs;
 
     for (var j = 0; j < args.length; j++) {
-        if (args[j] < 0)
+        if (args[j] < 0) {
             console.error("all arguments for a " + type + " must be positive");
+            return false;
+        }
     }
 
     // Checks valid parameters
@@ -1520,18 +1526,28 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
         case 'rectangle':
             numArgs = 4;
             break;
+        case 'patch':
+            numArgs = 2;
+            break;
+        default:
+            numArgs = 0;
+            break;
     }
 
     // Checks for a correct number of arguments.
     if (args.length != numArgs){
-        console.error("incorrect number of arguments for type " + type + "")
+        console.error("incorrect number of arguments for type " + type + "");
+        return false;
     }
+
+    return true;
 };
 
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
     var renderPrimitive;
 
-    this.checkArgs(leaf.args, leaf.type);
+    if(!this.checkArgs(leaf.args, leaf.type))
+        return;
 
     switch (leaf.type) {
         case 'rectangle':

@@ -815,7 +815,7 @@
         	<TEXTURE id="null"/>
 
         	<DESCENDANTS>
-        		<LEAF id="patch1" type="patch" agrs="2 2">
+        		<LEAF id="patch1" type="patch" args="2 2">
 
         		<CPLINE>
         			<CPOINT xx="2" yy="2" zz="2" ww="1" />
