@@ -820,6 +820,8 @@
         		<CPLINE>
         			<CPOINT xx="2" yy="2" zz="2" ww="1" />
         		</CPLINE>
+
+        		</LEAF>
         	</DESCENDANTS>
         </NODE>
 
