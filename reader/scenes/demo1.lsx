@@ -195,6 +195,7 @@
                 <NODEREF id="parede1"/>
                 <NODEREF id="parede2"/>
                 <NODEREF id="candeeiro"/>
+                <NODEREF id="onda"/>
             </DESCENDANTS>
         </NODE>
 
@@ -808,6 +809,19 @@
 
         </NODE>
 
+
+        <NODE id="onda">
+        	<MATERIAL id="null"/>
+        	<TEXTURE id="null"/>
+
+        	<DESCENDANTS>
+        		<LEAF id="patch1" type="patch" agrs="2 2">
+
+        		<CPLINE>
+        			<CPOINT xx="2" yy="2" zz="2" ww="1" />
+        		</CPLINE>
+        	</DESCENDANTS>
+        </NODE>
 
 
     </NODES>
