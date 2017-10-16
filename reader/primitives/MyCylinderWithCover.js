@@ -7,6 +7,8 @@ function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, sli
 
     this.hasBottomCover = hasBottomCover;
     this.hasTopCover = hasTopCover;
+    this.bottomRadius = bottomRadius;
+    this.topRadius = topRadius;
 
     this.cover = new MyCircle(scene, slices);
 }
@@ -24,7 +26,7 @@ MyCylinderWithCover.prototype.display = function () {
     if (this.hasTopCover) {
         this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(this.topRadius * 2, this.topRadius * 2, this.topRadius * 2);
         this.cover.display();
         this.scene.popMatrix();
     }
@@ -33,7 +35,7 @@ MyCylinderWithCover.prototype.display = function () {
     if (this.hasBottomCover) {
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 1, 0, 0);
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(this.bottomRadius * 2, this.bottomRadius * 2, this.bottomRadius * 2);
         this.cover.display();
         this.scene.popMatrix();
     }

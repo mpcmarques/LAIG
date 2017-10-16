@@ -243,7 +243,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="5" z="0"/>
+            <TRANSLATION x="0" y="2" z="0"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>
