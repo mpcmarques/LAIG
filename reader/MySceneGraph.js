@@ -1492,6 +1492,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
                 mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
                 // render children node
                 this.renderNode(currentNode, newMatrix, texture, appearance);
+            } else {
+                this.warn('Can´t find node ' + leafNode);
             }
         }
     }

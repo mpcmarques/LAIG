@@ -73,9 +73,9 @@ MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
         }
         else
             this.texCoords[i] = this.texCoords[i] / ampS;
-    }
+    }*/
 
-    this.updateTexCoordsGLBuffers();*/
+    this.updateTexCoordsGLBuffers();
 };
 
 
