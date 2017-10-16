@@ -92,6 +92,12 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
+        <!--Flag Texture-->
+        <TEXTURE id="flag">
+            <file path="images/flag.png"/>
+            <amplif_factor s="1" t="1"/>
+         </TEXTURE>
+
         <!-- Metal -->
         <TEXTURE id="metal">
             <file path="images/metal.jpg"/>
@@ -103,6 +109,13 @@
             <file path="images/cloth.jpg"/>
             <amplif_factor s="2" t="2"/>
         </TEXTURE>
+
+          <!-- Haste Texture-->
+                 <TEXTURE id="haste">
+                    <file path="images/haste.jpg"/>
+                    <amplif_factor s="1" t="1"/>
+                 </TEXTURE>
+
     </TEXTURES>
 
 
@@ -204,16 +217,30 @@
                 <NODEREF id="parede1"/>
                 <NODEREF id="parede2"/>
                 <NODEREF id="candeeiro"/>
-                <NODEREF id="bandeira"/>
+                <NODEREF id="bandeiraCompleta"/>
             </DESCENDANTS>
         </NODE>
 
+       <NODE id="bandeiraCompleta">
+        <MATERIAL id="defaultMaterial"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="10" y="0" z="3"/>
+
+        <DESCENDANTS>
+            <NODEREF id="bandeira"/>
+            <NODEREF id="haste"/>
+        </DESCENDANTS>
+       </NODE>
+
         <NODE id="bandeira">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="flag"/>
 
-            <TRANSLATION x="7" y="10" z="0.5" />
+            <TRANSLATION x="7" y="4" z="0.5" />
+            <ROTATION axis="z" angle="-180"/>
             <ROTATION axis="x" angle="90"/>
+
 
             <DESCENDANTS>
                 <LEAF type="patch" args="15 10">
@@ -809,11 +836,10 @@
             <MATERIAL id="floorMaterial"/>
             <TEXTURE id="floor"/>
 
-            <TRANSLATION x="10" y="0" z="10"/>
-            <SCALE sx="20" sy="0.1" sz="20"/>
+
 
             <DESCENDANTS>
-                <NODEREF id="cube"/>
+                <LEAF id="sphere1" type="sphere" args="2 20 20"/>
             </DESCENDANTS>
         </NODE>
 
@@ -858,5 +884,21 @@
             </DESCENDANTS>
 
         </NODE>
+
+
+        <NODE id="haste">
+            <MATERIAL id="metalMaterial"/>
+            <TEXTURE id="haste"/>
+
+         <TRANSLATION x="7" y="10" z="0.5" />
+         <ROTATION axis="x" angle="90"/>
+         <SCALE sx="0.1" sy="0.1" sz="5"/>
+
+         <DESCENDANTS>
+            <LEAF id="cylinder2" type="cylinder" args="2 1 1 10 10 1 1"/>
+         </DESCENDANTS>
+         </NODE>
+
+
     </NODES>
 </SCENE>
