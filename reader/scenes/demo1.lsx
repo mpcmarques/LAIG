@@ -221,8 +221,165 @@
                 <NODEREF id="chao"/>
                 <NODEREF id="candeeiro"/>
                 <NODEREF id="bandeiraCompleta"/>
+                <NODEREF id="apollo11"/>
                 <NODEREF id="background"/>
             </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <NODEREF id="apollo11-top"/>
+                <NODEREF id="apollo11-bottom"/>
+                <NODEREF id="apollo11-legs"/>
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="apollo11-top">
+             <MATERIAL id="null"/>
+             <TEXTURE id="null" />
+
+             <TRANSLATION x="0" y="5" z="0"/>
+
+             <DESCENDANTS>
+                <LEAF id="sphere" type="sphere" args="5 20 20"/>
+             </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-bottom">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="0" z="0" />
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                <LEAF id="cylinder1" type="cylinder" args="4 5 5 6 6 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-legs">
+            <MATERIAL id="metalMaterial"/>
+            <TEXTURE id="metal"/>
+
+            <DESCENDANTS>
+               <NODEREF id="apollo11-leg"/>
+               <NODEREF id="apollo11-leg2"/>
+               <NODEREF id="apollo11-leg3"/>
+               <NODEREF id="apollo11-leg4"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg2">
+            <MATERIAL id="null"/>
+              <TEXTURE id="null"/>
+
+              <ROTATION axis="y" angle="180"/>
+
+              <DESCENDANTS>
+                 <NODEREF id="apollo11-leg"/>
+              </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg3">
+          <MATERIAL id="null"/>
+          <TEXTURE id="null"/>
+
+          <ROTATION axis="y" angle="60"/>
+
+          <DESCENDANTS>
+            <NODEREF id="apollo11-leg"/>
+          </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg4">
+           <MATERIAL id="null"/>
+           <TEXTURE id="null"/>
+
+           <ROTATION axis="y" angle="-120"/>
+
+          <DESCENDANTS>
+            <NODEREF id="apollo11-leg"/>
+          </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="8" y="-2" z="8" />
+            <ROTATION axis="y" angle="-140"/>
+
+            <DESCENDANTS>
+                <NODEREF id="apollo11-leg_base"/>
+                <NODEREF id="apollo11-leg_pole"/>
+                <NODEREF id="apollo11-leg_suports"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_suports">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="0" y="0" z="1.5" />
+
+                 <DESCENDANTS>
+                     <NODEREF id="apollo11-leg_support"/>
+                     <NODEREF id="apollo11-leg_support2"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support2">
+              <MATERIAL id="null"/>
+              <TEXTURE id="null" />
+
+              <TRANSLATION x="2" y="0" z="0"/>
+              <ROTATION axis="y" angle="-90"/>
+
+              <DESCENDANTS>
+                  <NODEREF id="apollo11-leg_support"/>
+              </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="apollo11-leg_support">
+                <MATERIAL id="null"/>
+                <TEXTURE id="null" />
+
+                <TRANSLATION x="1" y="2.5" z="1" />
+                <ROTATION axis="y" angle="45"/>
+
+                 <DESCENDANTS>
+                    <LEAF id="cylinder1" type="cylinder" args="5 0.2 0.2 20 20 0 0"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_pole">
+            <MATERIAL id="null"/>
+           <TEXTURE id="null" />
+
+            <TRANSLATION x="1" y="1" z="1"/>
+            <ROTATION axis="x" angle="-50"/>
+
+           <DESCENDANTS>
+               <LEAF id="cylinder1" type="cylinder" args="7 0.3 0.3 20 20 0 0"/>
+           </DESCENDANTS>
+         </NODE>
+
+        <NODE id="apollo11-leg_base">
+               <MATERIAL id="null"/>
+               <TEXTURE id="null" />
+
+               <TRANSLATION x="1" y="0.9" z="1"/>
+               <ROTATION axis="x" angle="-90"/>
+               <SCALE sx="1" sy="1" sz="0.3"/>
+
+               <DESCENDANTS>
+                 <LEAF id="cylinder1" type="cylinder" args="1 1 1 20 20 1 1"/>
+               </DESCENDANTS>
         </NODE>
 
        <NODE id="bandeiraCompleta">
@@ -326,7 +483,7 @@
             <TEXTURE id="soundBox"/>
 
             <TRANSLATION x="-0.25" y="-0.5" z="0.28"/>
-            <SCALE sx="0.5" sy="1" sz="0"/>
+            <SCALE sx="0.5" sy="1" sz="1"/>
 
             <DESCENDANTS>
                 <LEAF type="rectangle" args="0 1 1 0"/>
@@ -918,8 +1075,6 @@
                 <LEAF type="rectangle" args="0 1 1 0"/>
            </DESCENDANTS>
          </NODE>
-
-
 
 
     </NODES>
