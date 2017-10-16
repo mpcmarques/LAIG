@@ -122,7 +122,7 @@
 
          <TEXTURE id="aluminium">
             <file path="images/aluminium.jpg"/>
-            <amplif_factor s="0.5" t="0.5"/>
+            <amplif_factor s="1" t="1"/>
          </TEXTURE>
 
     </TEXTURES>
@@ -240,7 +240,7 @@
         </NODE>
 
         <NODE id="apollo11">
-            <MATERIAL id="metal"/>
+            <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
             <TRANSLATION x="0" y="5" z="0"/>
@@ -254,13 +254,38 @@
         </NODE>
 
         <NODE id="apollo11-top">
-             <MATERIAL id="null"/>
+             <MATERIAL id="metal"/>
              <TEXTURE id="aluminium" />
 
              <TRANSLATION x="0" y="5" z="0"/>
 
              <DESCENDANTS>
-                <LEAF id="sphere" type="sphere" args="4.8 20 20"/>
+                <NODEREF id="apollo11-cockpit1"/>
+                <NODEREF id="apollo11-cockpit2"/>
+             </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-cockpit2">
+             <MATERIAL id="null"/>
+             <TEXTURE id="null" />
+
+             <TRANSLATION x="-3" y="0" z="1.5"/>
+             <ROTATION axis="y" angle="115"/>
+
+             <DESCENDANTS>
+                <LEAF id="cylinder1" type="cylinder" args="7 2.5 2.5 6 8 1 1"/>
+             </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-cockpit1">
+             <MATERIAL id="null"/>
+             <TEXTURE id="null" />
+
+             <ROTATION axis="y" angle="115"/>
+             <SCALE sx="5" sy="5" sz="5"/>
+
+             <DESCENDANTS>
+                <NODEREF id="cube"/>
              </DESCENDANTS>
         </NODE>
 
