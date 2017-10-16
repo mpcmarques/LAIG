@@ -89,9 +89,9 @@ MyCylinder.prototype.initBuffers = function () {
 };
 
 MyCylinder.prototype.scaleTexCoords = function(ampS, ampT) {
-    /*for (var i = 0; i < this.texCoords.length; i += 2) {
+    for (var i = 0; i < this.texCoords.length; i += 2) {
         this.texCoords[i] = this.texCoords[i] / ampS;
         this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
     }
-    this.updateTexCoordsGLBuffers();*/
+    this.updateTexCoordsGLBuffers();
 };

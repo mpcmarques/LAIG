@@ -80,12 +80,6 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
-        <!-- Wall -->
-        <TEXTURE id="wall">
-            <file path="images/wall.jpg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
-
         <!-- Sound Box -->
         <TEXTURE id="soundBox">
             <file path="images/soundBox.jpg"/>
@@ -121,6 +115,16 @@
               <amplif_factor s="1" t="1"/>
          </TEXTURE>
 
+         <TEXTURE id="tin_foil">
+            <file path="images/tin_foil.jpg"/>
+            <amplif_factor s="0.5" t="0.5"/>
+         </TEXTURE>
+
+         <TEXTURE id="aluminium">
+            <file path="images/aluminium.jpg"/>
+            <amplif_factor s="0.5" t="0.5"/>
+         </TEXTURE>
+
     </TEXTURES>
 
 
@@ -144,11 +148,20 @@
         </MATERIAL>
 
         <!-- Metal material -->
-        <MATERIAL id="metalMaterial">
+        <MATERIAL id="metal">
             <shininess value="0.4"/>
             <specular r="0.508273" g="0.508273" b="0.508273" a="1"/>
             <diffuse r="0.50754" g="0.50754" b="0.50754" a="1"/>
             <ambient r="0.19225" g="0.19225" b="0.19225" a="1"/>
+            <emission r="0.0" g="0.0" b="0.0" a="1"/>
+        </MATERIAL>
+
+        <!-- Gold material -->
+        <MATERIAL id="gold">
+            <shininess value="0.4"/>
+            <specular r="0.628281" g="0.555802" b="0.366065" a="1"/>
+            <diffuse r="0.75164" g="0.60648" b="0.22648" a="1"/>
+            <ambient r="0.24725" g="0.1995" b="0.0745" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -227,8 +240,10 @@
         </NODE>
 
         <NODE id="apollo11">
-            <MATERIAL id="null"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="5" z="0"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>
@@ -240,7 +255,7 @@
 
         <NODE id="apollo11-top">
              <MATERIAL id="null"/>
-             <TEXTURE id="null" />
+             <TEXTURE id="aluminium" />
 
              <TRANSLATION x="0" y="5" z="0"/>
 
@@ -250,8 +265,8 @@
         </NODE>
 
         <NODE id="apollo11-bottom">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null" />
+            <MATERIAL id="gold"/>
+            <TEXTURE id="tin_foil" />
 
             <TRANSLATION x="0" y="0" z="0" />
             <ROTATION axis="x" angle="-90"/>
@@ -262,8 +277,8 @@
         </NODE>
 
         <NODE id="apollo11-legs">
-            <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="metal"/>
+            <MATERIAL id="gold"/>
+            <TEXTURE id="tin_foil"/>
 
             <DESCENDANTS>
                <NODEREF id="apollo11-leg"/>
@@ -310,8 +325,8 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <TRANSLATION x="8" y="-2" z="8" />
-            <ROTATION axis="y" angle="-140"/>
+            <TRANSLATION x="6.5" y="-2" z="7.5" />
+            <ROTATION axis="y" angle="-145"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-leg_base"/>
@@ -336,11 +351,11 @@
               <MATERIAL id="null"/>
               <TEXTURE id="null" />
 
-              <TRANSLATION x="2" y="0" z="0"/>
-              <ROTATION axis="y" angle="-90"/>
+              <TRANSLATION x="1" y="2.5" z="1"/>
+              <ROTATION axis="y" angle="30"/>
 
               <DESCENDANTS>
-                  <NODEREF id="apollo11-leg_support"/>
+                  <LEAF id="cylinder1" type="cylinder" args="5 0.2 0.2 20 20 0 0"/>
               </DESCENDANTS>
         </NODE>
 
@@ -350,7 +365,7 @@
                 <TEXTURE id="null" />
 
                 <TRANSLATION x="1" y="2.5" z="1" />
-                <ROTATION axis="y" angle="45"/>
+                <ROTATION axis="y" angle="-30"/>
 
                  <DESCENDANTS>
                     <LEAF id="cylinder1" type="cylinder" args="5 0.2 0.2 20 20 0 0"/>
@@ -908,7 +923,7 @@
 
 
         <NODE id="chairleg1">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="metal"/>
 
             <TRANSLATION x="3" y="0" z="5"/>
@@ -920,7 +935,7 @@
 
 
         <NODE id="chairleg2">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="metal"/>
 
             <TRANSLATION x="5" y="0" z="5"/>
@@ -932,7 +947,7 @@
         </NODE>
 
         <NODE id="chairleg3">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="metal"/>
 
             <TRANSLATION x="5" y="0" z="7"/>
@@ -944,7 +959,7 @@
         </NODE>
 
         <NODE id="chairleg4">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="metal"/>
 
             <TRANSLATION x="3" y="0" z="7"/>
@@ -956,7 +971,7 @@
         </NODE>
 
         <NODE id="chairleg">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="metal"/>
 
             <SCALE sx="0.1" sy="1.00" sz="0.1"/>
@@ -1006,34 +1021,7 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="parede1">
-            <MATERIAL id="null"/>
-            <TEXTURE id="wall"/>
 
-            <TRANSLATION x="10" y="5" z="0"/>
-            <ROTATION axis="x" angle="-90"/>
-            <SCALE sx="20" sy="0.1" sz="10"/>
-
-
-            <DESCENDANTS>
-                <NODEREF id="cube"/>
-            </DESCENDANTS>
-        </NODE>
-
-
-        <NODE id="parede2">
-            <MATERIAL id="defaultMaterial"/>
-            <TEXTURE id="wall"/>
-
-            <TRANSLATION x="0" y="5" z="10"/>
-            <ROTATION axis="z" angle="-90"/>
-            <SCALE sx="10" sy="0.1" sz="20"/>
-
-
-            <DESCENDANTS>
-                <NODEREF id="cube"/>
-            </DESCENDANTS>
-        </NODE>
 
         <NODE id="candeeiro">
             <MATERIAL id="lightMaterial"/>
@@ -1050,7 +1038,7 @@
 
 
         <NODE id="haste">
-            <MATERIAL id="metalMaterial"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="haste"/>
 
          <TRANSLATION x="7" y="10" z="0.5" />
