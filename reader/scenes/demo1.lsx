@@ -159,12 +159,12 @@
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
-        <!-- Red rubber -->
-        <MATERIAL id="redRubberMaterial">
+        <!-- rubber -->
+        <MATERIAL id="rubber">
             <shininess value="10"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
-            <diffuse r="0.5" g="0.4" b="0.4" a="1"/>
-            <ambient r="0.5" g="0.0" b="0.0" a="1"/>
+            <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
+            <ambient r="0.2" g="0.2" b="0.2" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -567,7 +567,7 @@
        </NODE>
 
         <NODE id="bandeira">
-            <MATERIAL id="null"/>
+            <MATERIAL id="rubber"/>
             <TEXTURE id="flag"/>
 
             <TRANSLATION x="7" y="6" z="0.5" />
@@ -855,7 +855,6 @@
             </DESCENDANTS>
         </NODE>
 
-
         <NODE id="teclado">
             <MATERIAL id="blackPlasticMaterial"/>
             <TEXTURE id="null"/>
@@ -870,125 +869,6 @@
                 <NODEREF id="cubeTeclado"/>
             </DESCENDANTS>
         </NODE>
-
-
-        <!-- Rato -->
-        <NODE id="rato">
-            <MATERIAL id="blackPlasticMaterial"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="4.9" y="4.1" z="1.9"/>
-            <SCALE sx="0.07" sy="0.02" sz="0.1"/>
-
-            <DESCENDANTS>
-                <LEAF id="sphere1" type="sphere" args="2 20 20"/>
-            </DESCENDANTS>
-
-        </NODE>
-
-        <NODE id="cadeira">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="-0.5" y="0" z="0" />
-
-            <DESCENDANTS>
-                <NODEREF id="chairleg1"/>
-                <NODEREF id="chairleg2"/>
-                <NODEREF id="chairleg3"/>
-                <NODEREF id="chairleg4"/>
-                <NODEREF id="tampocadeira"/>
-                <NODEREF id="costascadeira"/>
-            </DESCENDANTS>
-
-        </NODE>
-
-
-        <NODE id="chairleg1">
-            <MATERIAL id="metal"/>
-            <TEXTURE id="metal"/>
-
-            <TRANSLATION x="3" y="0" z="5"/>
-
-            <DESCENDANTS>
-                <NODEREF id="chairleg"/>
-            </DESCENDANTS>
-        </NODE>
-
-
-        <NODE id="chairleg2">
-            <MATERIAL id="metal"/>
-            <TEXTURE id="metal"/>
-
-            <TRANSLATION x="5" y="0" z="5"/>
-
-
-            <DESCENDANTS>
-                <NODEREF id="chairleg"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="chairleg3">
-            <MATERIAL id="metal"/>
-            <TEXTURE id="metal"/>
-
-            <TRANSLATION x="5" y="0" z="7"/>
-
-
-            <DESCENDANTS>
-                <NODEREF id="chairleg"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="chairleg4">
-            <MATERIAL id="metal"/>
-            <TEXTURE id="metal"/>
-
-            <TRANSLATION x="3" y="0" z="7"/>
-
-
-            <DESCENDANTS>
-                <NODEREF id="chairleg"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="chairleg">
-            <MATERIAL id="metal"/>
-            <TEXTURE id="metal"/>
-
-            <SCALE sx="0.1" sy="1.00" sz="0.1"/>
-            <ROTATION axis="x" angle="-90"/>
-            <DESCENDANTS>
-                <LEAF id="cylinder1" type="cylinder" args="2 1 1 10 10 1 1"/>
-            </DESCENDANTS>
-        </NODE>
-
-
-        <NODE id="tampocadeira">
-            <MATERIAL id="redRubberMaterial"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="4" y="2" z="6"/>
-            <SCALE sx="2.3" sy="0.1" sz="2.3"/>
-
-            <DESCENDANTS>
-                <NODEREF id="cube"/>
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="costascadeira">
-            <MATERIAL id="redRubberMaterial"/>
-            <TEXTURE id="null"/>
-
-            <TRANSLATION x="4" y="3.1" z="7.1"/>
-            <ROTATION axis="x" angle="-90"/>
-            <SCALE sx="2.3" sy="0.1" sz="2.3"/>
-
-            <DESCENDANTS>
-                <NODEREF id="cube"/>
-            </DESCENDANTS>
-        </NODE>
-
 
         <NODE id="chao">
             <MATERIAL id="floorMaterial"/>
@@ -1016,8 +896,6 @@
          </DESCENDANTS>
          </NODE>
 
-
-
          <NODE id="background">
             <MATERIAL id="null"/>
             <TEXTURE id="space"/>
@@ -1029,7 +907,6 @@
                 <LEAF type="rectangle" args="0 1 1 0"/>
            </DESCENDANTS>
          </NODE>
-
 
     </NODES>
 </SCENE>
