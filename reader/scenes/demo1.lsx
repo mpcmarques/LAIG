@@ -159,9 +159,9 @@
         <!-- Gold material -->
         <MATERIAL id="gold">
             <shininess value="0.4"/>
-            <specular r="0.628281" g="0.555802" b="0.366065" a="1"/>
-            <diffuse r="0.75164" g="0.60648" b="0.22648" a="1"/>
-            <ambient r="0.24725" g="0.1995" b="0.0745" a="1"/>
+            <specular r="0.75" g="0.555802" b="0.366065" a="1"/>
+            <diffuse r="0.85" g="0.60648" b="0.22648" a="1"/>
+            <ambient r="0.3" g="0.1995" b="0.0745" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -260,19 +260,19 @@
              <TRANSLATION x="0" y="5" z="0"/>
 
              <DESCENDANTS>
-                <LEAF id="sphere" type="sphere" args="5 20 20"/>
+                <LEAF id="sphere" type="sphere" args="4.8 20 20"/>
              </DESCENDANTS>
         </NODE>
 
         <NODE id="apollo11-bottom">
             <MATERIAL id="gold"/>
-            <TEXTURE id="tin_foil" />
+            <TEXTURE id="metal" />
 
             <TRANSLATION x="0" y="0" z="0" />
             <ROTATION axis="x" angle="-90"/>
 
             <DESCENDANTS>
-                <LEAF id="cylinder1" type="cylinder" args="4 5 5 6 6 1 1"/>
+                <LEAF id="cylinder1" type="cylinder" args="4 5 5 6 8 1 1"/>
             </DESCENDANTS>
         </NODE>
 
@@ -303,7 +303,7 @@
           <MATERIAL id="null"/>
           <TEXTURE id="null"/>
 
-          <ROTATION axis="y" angle="60"/>
+          <ROTATION axis="y" angle="90"/>
 
           <DESCENDANTS>
             <NODEREF id="apollo11-leg"/>
@@ -314,7 +314,7 @@
            <MATERIAL id="null"/>
            <TEXTURE id="null"/>
 
-           <ROTATION axis="y" angle="-120"/>
+           <ROTATION axis="y" angle="-90"/>
 
           <DESCENDANTS>
             <NODEREF id="apollo11-leg"/>
@@ -325,25 +325,137 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <TRANSLATION x="6.5" y="-2" z="7.5" />
-            <ROTATION axis="y" angle="-145"/>
+            <TRANSLATION x="6" y="-2.7" z="10" />
+            <ROTATION axis="y" angle="208"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-leg_base"/>
                 <NODEREF id="apollo11-leg_pole"/>
-                <NODEREF id="apollo11-leg_suports"/>
+                <NODEREF id="apollo11-leg_supports"/>
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="apollo11-leg_suports">
+        <NODE id="apollo11-leg_supports">
                  <MATERIAL id="null"/>
                  <TEXTURE id="null" />
 
-                 <TRANSLATION x="0" y="0" z="1.5" />
+                 <TRANSLATION x="0" y="0.2" z="1.5" />
 
                  <DESCENDANTS>
-                     <NODEREF id="apollo11-leg_support"/>
+                     <NODEREF id="apollo11-leg_support1"/>
                      <NODEREF id="apollo11-leg_support2"/>
+                     <NODEREF id="apollo11-leg_support3"/>
+                     <NODEREF id="apollo11-leg_support4"/>
+                     <NODEREF id="apollo11-leg_support5"/>
+                     <NODEREF id="apollo11-leg_support6"/>
+                     <NODEREF id="apollo11-leg_support7"/>
+                     <NODEREF id="apollo11-leg_support8"/>
+                     <NODEREF id="apollo11-leg_support9"/>
+                     <NODEREF id="apollo11-leg_support10"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support10">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="2.475" y="2.5" z="3.5"/>
+                 <ROTATION axis="x" angle="-62"/>
+                 <SCALE sx="0.5" sy="0.5" sz="1.4"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support9">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="-0.47" y="2.5" z="3.5"/>
+                 <ROTATION axis="x" angle="-62"/>
+                 <SCALE sx="0.5" sy="0.5" sz="1.4"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support8">
+          <MATERIAL id="null"/>
+          <TEXTURE id="null" />
+
+          <TRANSLATION x="-0.47" y="2.5" z="3.5"/>
+          <ROTATION axis="y" angle="52"/>
+          <SCALE sx="1" sy="1" sz="1.5"/>
+
+          <DESCENDANTS>
+              <NODEREF id="apollo11-leg_support"/>
+          </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support7">
+          <MATERIAL id="null"/>
+          <TEXTURE id="null" />
+
+          <TRANSLATION x="2.45" y="2.5" z="3.5"/>
+          <ROTATION axis="y" angle="-55"/>
+          <SCALE sx="1" sy="1" sz="1.5"/>
+
+          <DESCENDANTS>
+              <NODEREF id="apollo11-leg_support"/>
+          </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support6">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="1.05" y="6.4" z="3.8"/>
+                 <ROTATION axis="y" angle="-43"/>
+                 <ROTATION axis="x" angle="5"/>
+                 <SCALE sx="1.5" sy="1.5" sz="1"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support5">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="0.9" y="6.4" z="3.8"/>
+                 <ROTATION axis="y" angle="40"/>
+                 <ROTATION axis="x" angle="5"/>
+                 <SCALE sx="1.5" sy="1.5" sz="1"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="apollo11-leg_support4">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="2.475" y="2.5" z="3.5"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="apollo11-leg_support3">
+                 <MATERIAL id="null"/>
+                 <TEXTURE id="null" />
+
+                 <TRANSLATION x="-0.47" y="2.5" z="3.5"/>
+
+                 <DESCENDANTS>
+                    <NODEREF id="apollo11-leg_support"/>
                  </DESCENDANTS>
         </NODE>
 
@@ -355,12 +467,12 @@
               <ROTATION axis="y" angle="30"/>
 
               <DESCENDANTS>
-                  <LEAF id="cylinder1" type="cylinder" args="5 0.2 0.2 20 20 0 0"/>
+                  <NODEREF id="apollo11-leg_support"/>
               </DESCENDANTS>
         </NODE>
 
 
-        <NODE id="apollo11-leg_support">
+        <NODE id="apollo11-leg_support1">
                 <MATERIAL id="null"/>
                 <TEXTURE id="null" />
 
@@ -368,7 +480,16 @@
                 <ROTATION axis="y" angle="-30"/>
 
                  <DESCENDANTS>
-                    <LEAF id="cylinder1" type="cylinder" args="5 0.2 0.2 20 20 0 0"/>
+                    <NODEREF id="apollo11-leg_support"/>
+                 </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-leg_support">
+                <MATERIAL id="null"/>
+                <TEXTURE id="null" />
+
+                 <DESCENDANTS>
+                    <LEAF id="cylinder1" type="cylinder" args="3 0.15 0.15 20 20 0 0"/>
                  </DESCENDANTS>
         </NODE>
 
