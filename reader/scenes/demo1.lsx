@@ -15,7 +15,7 @@
     <!-- Illumination and clear colour -->
     <ILLUMINATION>
         <ambient r="0.2" g="0.2" b="0.2" a="1"/>
-        <background r="0" g="0" b="0" a="1"/>
+        <background r="0" g="0" b="0" a="1" />
     </ILLUMINATION>
 
 
@@ -70,8 +70,8 @@
 
         <!-- Floor -->
         <TEXTURE id="floor">
-            <file path="images/floor.jpg"/>
-            <amplif_factor s="0.5" t="0.5"/>
+            <file path="images/moon.jpg"/>
+            <amplif_factor s="0.5" t="1"/>
         </TEXTURE>
 
         <!-- Leather -->
@@ -111,10 +111,15 @@
         </TEXTURE>
 
           <!-- Haste Texture-->
-                 <TEXTURE id="haste">
-                    <file path="images/haste.jpg"/>
-                    <amplif_factor s="1" t="1"/>
-                 </TEXTURE>
+        <TEXTURE id="haste">
+             <file path="images/haste.jpg"/>
+             <amplif_factor s="1" t="1"/>
+        </TEXTURE>
+
+         <TEXTURE id="space">
+              <file path="images/space.jpg"/>
+              <amplif_factor s="1" t="1"/>
+         </TEXTURE>
 
     </TEXTURES>
 
@@ -214,10 +219,9 @@
             <DESCENDANTS>
                 <NODEREF id="workplace"/>
                 <NODEREF id="chao"/>
-                <NODEREF id="parede1"/>
-                <NODEREF id="parede2"/>
                 <NODEREF id="candeeiro"/>
                 <NODEREF id="bandeiraCompleta"/>
+                <NODEREF id="background"/>
             </DESCENDANTS>
         </NODE>
 
@@ -836,10 +840,12 @@
             <MATERIAL id="floorMaterial"/>
             <TEXTURE id="floor"/>
 
+            <TRANSLATION x="5" y="-140" z="5"/>
+            <SCALE sx="70" sy="70" sz="70"/>
 
 
             <DESCENDANTS>
-                <LEAF id="sphere1" type="sphere" args="2 20 20"/>
+                <LEAF id="sphere1" type="sphere" args="2 200 200"/>
             </DESCENDANTS>
         </NODE>
 
@@ -895,9 +901,25 @@
          <SCALE sx="0.1" sy="0.1" sz="5"/>
 
          <DESCENDANTS>
-            <LEAF id="cylinder2" type="cylinder" args="2 1 1 10 10 1 1"/>
+            <LEAF id="cylinder2" type="cylinder" args="2 1 1 20 20 1 1"/>
          </DESCENDANTS>
          </NODE>
+
+
+
+         <NODE id="background">
+            <MATERIAL id="null"/>
+            <TEXTURE id="space"/>
+
+           <TRANSLATION x="-1000" y="-1000" z="-300" />
+           <SCALE sx="2000" sy="2000" sz="0"/>
+
+           <DESCENDANTS>
+                <LEAF type="rectangle" args="0 1 1 0"/>
+           </DESCENDANTS>
+         </NODE>
+
+
 
 
     </NODES>
