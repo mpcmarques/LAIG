@@ -262,6 +262,19 @@
              <DESCENDANTS>
                 <NODEREF id="apollo11-cockpit1"/>
                 <NODEREF id="apollo11-cockpit2"/>
+                <NODEREF id="apollo11-cockpit3"/>
+             </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-cockpit3">
+             <MATERIAL id="null"/>
+             <TEXTURE id="null" />
+
+             <TRANSLATION x="-3" y="-0.5" z="-2"/>
+             <ROTATION axis="y" angle="115"/>
+
+             <DESCENDANTS>
+                <LEAF id="cylinder1" type="cylinder" args="4 1.5 1.5 5 5 1 1"/>
              </DESCENDANTS>
         </NODE>
 
@@ -290,8 +303,8 @@
         </NODE>
 
         <NODE id="apollo11-bottom">
-            <MATERIAL id="blackPlasticMaterial"/>
-            <TEXTURE id="metal" />
+            <MATERIAL id="gold"/>
+            <TEXTURE id="tin_foil" />
 
             <TRANSLATION x="0" y="0" z="0" />
             <ROTATION axis="x" angle="-90"/>
