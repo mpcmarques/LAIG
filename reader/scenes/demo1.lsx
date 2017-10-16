@@ -91,6 +91,18 @@
             <file path="images/soundBox.jpg"/>
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
+
+        <!-- Metal -->
+        <TEXTURE id="metal">
+            <file path="images/metal.jpg"/>
+            <amplif_factor s="1" t="1"/>
+        </TEXTURE>
+
+        <!-- Cloth -->
+        <TEXTURE id="cloth">
+            <file path="images/cloth.jpg"/>
+            <amplif_factor s="2" t="2"/>
+        </TEXTURE>
     </TEXTURES>
 
 
@@ -115,10 +127,10 @@
 
         <!-- Metal material -->
         <MATERIAL id="metalMaterial">
-            <shininess value="76.8"/>
-            <specular r="0.7745" g="0.7745" b="0.7745" a="1"/>
-            <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
-            <ambient r="0.25" g="0.25" b="0.25" a="1"/>
+            <shininess value="0.4"/>
+            <specular r="0.508273" g="0.508273" b="0.508273" a="1"/>
+            <diffuse r="0.50754" g="0.50754" b="0.50754" a="1"/>
+            <ambient r="0.19225" g="0.19225" b="0.19225" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -161,10 +173,10 @@
 
         <!-- Ligh bulb Material -->
         <MATERIAL id="lightMaterial">
-            <shininess value="100"/>
-            <specular r="0.5" g="0.5" b="0.5" a="1"/>
-            <diffuse r="0.5" g="0.5" b="0.5" a="1"/>
-            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <shininess value="0.6"/>
+            <specular r="0.774597" g="0.774597" b="0.774597" a="1"/>
+            <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
+            <ambient r="0.05" g="0.05" b="0.05" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -318,7 +330,7 @@
         <!-- LEG 1 -->
         <NODE id="leg1">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <DESCENDANTS>
                 <NODEREF id="leg"/>
@@ -328,7 +340,7 @@
         <!-- LEG 2 -->
         <NODE id="leg2">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="0" y="0" z="4"/>
 
@@ -340,7 +352,7 @@
         <!-- LEG 3 -->
         <NODE id="leg3">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="7" y="0" z="4"/>
 
@@ -352,7 +364,7 @@
         <!-- LEG 4 -->
         <NODE id="leg4">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="7" y="0" z="0"/>
 
@@ -364,7 +376,7 @@
 
         <NODE id="leg">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <SCALE sx="0.1" sy="2.00" sz="0.1"/>
             <ROTATION axis="x" angle="-90"/>
@@ -709,7 +721,7 @@
 
         <NODE id="chairleg1">
             <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="3" y="0" z="5"/>
 
@@ -721,7 +733,7 @@
 
         <NODE id="chairleg2">
             <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="5" y="0" z="5"/>
 
@@ -733,7 +745,7 @@
 
         <NODE id="chairleg3">
             <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="5" y="0" z="7"/>
 
@@ -745,7 +757,7 @@
 
         <NODE id="chairleg4">
             <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <TRANSLATION x="3" y="0" z="7"/>
 
@@ -757,7 +769,7 @@
 
         <NODE id="chairleg">
             <MATERIAL id="metalMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="metal"/>
 
             <SCALE sx="0.1" sy="1.00" sz="0.1"/>
             <ROTATION axis="x" angle="-90"/>
@@ -836,7 +848,7 @@
 
         <NODE id="candeeiro">
             <MATERIAL id="lightMaterial"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="cloth"/>
 
             <TRANSLATION x="10" y="13" z="10"/>
             <ROTATION axis="x" angle="90"/>
