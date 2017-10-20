@@ -1,3 +1,15 @@
+/**
+ * MyCylinderWithCover
+ * @param scene             Scene.
+ * @param height            Height.
+ * @param bottomRadius      Bottom radius.
+ * @param topRadius         Top radius.
+ * @param stacks            Stacks.
+ * @param slices            Slices.
+ * @param hasBottomCover    Cylinder has bottom cover.
+ * @param hasTopCover       Cylinder has top cover.
+ * @constructor
+ */
 function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, slices, hasBottomCover, hasTopCover) {
     CGFobject.call(this, scene);
 
@@ -41,12 +53,18 @@ MyCylinderWithCover.prototype.display = function () {
     }
 };
 
+
+/**
+ * Scale the texture.
+ * @param ampS Amplify factor S.
+ * @param ampT Amplify factor T.
+ */
 MyCylinderWithCover.prototype.scaleTexCoords = function (ampS, ampT) {
     this.cylinder.scaleTexCoords(ampS, ampT);
     /*for (var i = 0; i < this.texCoords.length; i += 2) {
      this.texCoords[i] = this.texCoords[i] / ampS;
      this.texCoords[i + 1] = this.texCoords[i+1] / ampT;
      }
-     */
-    this.updateTexCoordsGLBuffers();
+
+    this.updateTexCoordsGLBuffers();*/
 };

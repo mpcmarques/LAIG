@@ -1364,7 +1364,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                     }
 
                     // update patches with control points as arguments
-                    if(type == 'patch') {
+                    if (type == 'patch') {
                         var controlPoints = this.parsePatchControlPoints(descendants[j]);
                         args.push(controlPoints);
                     }
@@ -1403,11 +1403,19 @@ MySceneGraph.prototype.onXMLMinorError = function (message) {
     console.warn("Warning: " + message);
 };
 
+/**
+ * Prints a log to the console.
+ * @param message Message to be printed.
+ */
 MySceneGraph.prototype.log = function (message) {
     console.log("   " + message);
 };
 
-MySceneGraph.prototype.warn = function (message){
+/**
+ * Prints a warn to the console.
+ * @param message   Message to be printed.
+ */
+MySceneGraph.prototype.warn = function (message) {
     console.warn("Warning:  " + message)
 };
 
@@ -1444,7 +1452,13 @@ MySceneGraph.generateRandomString = function (length) {
     return String.fromCharCode.apply(null, numbers);
 };
 
-MySceneGraph.prototype.parseNodeAppearance = function (appearance, texture) {
+/**
+ * This function mixes the appearance and texture
+ * @param appearance    Appearance to be mixed.
+ * @param texture       Texture to be mixed.
+ * @returns CGFappearance   A new appearance mixed with the texture.
+ */
+MySceneGraph.prototype.mixNodeAppearance = function (appearance, texture) {
     // apply node appearance and/or texture
     if (texture != null && appearance != null) {
         // modify appearance if there is a texture
@@ -1465,13 +1479,20 @@ MySceneGraph.prototype.parseNodeAppearance = function (appearance, texture) {
     }
 };
 
+/**
+ * Render a node, this function is call recursively.
+ * @param node  Node to be rendered.
+ * @param transformMatrix   Transformation matrix.
+ * @param textureParam      Texture parameter.
+ * @param appearanceParam   Appearance parameter.
+ */
 MySceneGraph.prototype.renderNode = function (node, transformMatrix, textureParam, appearanceParam) {
     var texture = this.textures[node.textureID] || textureParam;
     var appearance = this.materials[node.materialID] || appearanceParam;
     var currentTransformMatrix = transformMatrix || node.transformMatrix;
 
     // Apply node appearance
-    var nodeAppearance = this.parseNodeAppearance(appearance, texture);
+    var nodeAppearance = this.mixNodeAppearance(appearance, texture);
     if (nodeAppearance != null)
         nodeAppearance.apply();
 
@@ -1483,7 +1504,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
             this.renderLeaf(leafNode, currentTransformMatrix, appearance, texture);
         }
 
-        // Leaf node
+        // Intermediate node
         else {
             var currentNode = this.nodes[leafNode];
             if (currentNode != null) {
@@ -1499,17 +1520,32 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     }
 };
 
+/**
+ * Renders a leaf.
+ * @param leaf              Leaf to be rendered.
+ * @param transformMatrix   Transformation matrix.
+ * @param appearance        Appearance.
+ * @param texture           Texture.
+ */
 MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance, texture) {
     var renderPrimitive = this.parsePrimitive(leaf, texture);
 
     if (renderPrimitive != null) {
         this.scene.pushMatrix();
-            this.scene.multMatrix(transformMatrix);
-            renderPrimitive.display();
+        this.scene.multMatrix(transformMatrix);
+        renderPrimitive.display();
         this.scene.popMatrix();
+    } else {
+        this.onXMLError("Couldn't parse leaf, probably because of wrong arguments or type.");
     }
 };
 
+/**
+ * Check leaf arguments.
+ * @param args  Arguments.
+ * @param type  Leaf type,
+ * @returns {boolean}   True if the arguments are correct.
+ */
 MySceneGraph.prototype.checkArgs = function (args, type) {
     var numArgs;
 
@@ -1536,7 +1572,7 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
     }
 
     // Checks for a correct number of arguments.
-    if (args.length != numArgs){
+    if (args.length != numArgs) {
         console.error("incorrect number of arguments for type " + type + "");
         return false;
     }
@@ -1544,22 +1580,27 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
     return true;
 };
 
-MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem){
+/**
+ * Parses the patch control points based on the xml(lsx) element.
+ * @param xmlelem   LSX element.
+ * @returns {Array} Patch control points.
+ */
+MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
     var cplines = xmlelem.children;
     var controlPoints = [];
 
-    for(var i = 0; i < cplines.length; i++){
+    for (var i = 0; i < cplines.length; i++) {
         var cpline = cplines[i];
         var cplinePoints = [];
 
-        for(var j = 0; j < cpline.children.length; j++){
+        for (var j = 0; j < cpline.children.length; j++) {
             var cpoint = cpline.children[j];
             var xx = parseFloat(this.reader.getString(cpoint, "xx", true));
             var yy = parseFloat(this.reader.getString(cpoint, "yy", true));
             var zz = parseFloat(this.reader.getString(cpoint, "zz", true));
             var ww = parseFloat(this.reader.getString(cpoint, "ww", true));
 
-            if(xx == null || yy == null || zz == null || ww == null){
+            if (xx == null || yy == null || zz == null || ww == null) {
                 this.onXMLError("Failed parsing control points for patch cpline " + j + "\n");
             }
 
@@ -1572,10 +1613,16 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem){
     return controlPoints;
 };
 
+/**
+ * Parses a primitive based on the leaf type.
+ * @param leaf  Leaf.
+ * @param texture   Texture.
+ * @returns {*} Primitive if the arguments are correct, and the type matches.
+ */
 MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
     var renderPrimitive;
 
-    if(!this.checkArgs(leaf.args, leaf.type))
+    if (!this.checkArgs(leaf.args, leaf.type))
         return;
 
     switch (leaf.type) {

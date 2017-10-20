@@ -1,5 +1,10 @@
 /**
  * MyRectangle
+ * @param scene     Scene.
+ * @param minX      Min x coord.
+ * @param maxY      Max y coord.
+ * @param maxX      Max x coord.
+ * @param minY      Min y coord.
  * @constructor
  */
 function MyRectangle(scene, minX, maxY, maxX, minY) {
@@ -46,6 +51,9 @@ MyRectangle.prototype.initBuffers = function() {
     this.initGLBuffers();
 };
 
+/**
+ * Sets initial texture coords.
+ */
 MyRectangle.prototype.setTextureCoords = function(){
     this.texCoords = [
         this.minX,  this.minY,
@@ -55,6 +63,11 @@ MyRectangle.prototype.setTextureCoords = function(){
     ]
 };
 
+/**
+ * Scale the texture.
+ * @param ampS Amplify factor S.
+ * @param ampT Amplify factor T.
+ */
 MyRectangle.prototype.scaleTexCoords = function(ampS, ampT) {
     for(var i = 0; i < this.texCoords.length; i+=2){
         this.texCoords[i] = this.texCoords[i] / ampS;

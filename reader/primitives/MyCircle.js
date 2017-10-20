@@ -1,9 +1,9 @@
 /**
  * MyCircle
- * @param gl {WebGLRenderingContext}
+ * @param scene     Scene.
+ * @param slices    Circle slices.
  * @constructor
  */
-
 function MyCircle(scene, slices) {
     CGFobject.call(this,scene);
 
@@ -11,7 +11,7 @@ function MyCircle(scene, slices) {
     this.slices = slices;
 
     this.initBuffers();
-};
+}
 
 MyCircle.prototype = Object.create(CGFobject.prototype);
 MyCircle.prototype.constructor=MyCircle;

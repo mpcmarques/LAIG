@@ -1,9 +1,9 @@
 /**
- * MyLamp
+ * MySphere
+ * @param scene Scene.
+ * @param arg   MySphere arguments.
  * @constructor
  */
-
-
 function MySphere(scene,arg) {
     CGFobject.call(this,scene);
 
@@ -13,7 +13,7 @@ function MySphere(scene,arg) {
 
 
     this.initBuffers();
-};
+}
 
 MySphere.prototype = Object.create(CGFobject.prototype);
 MySphere.prototype.constructor = MySphere;
@@ -62,8 +62,14 @@ MySphere.prototype.initBuffers = function()
     this.initGLBuffers();
 };
 
+
+/**
+ * Scale the texture.
+ * @param ampS Amplify factor S.
+ * @param ampT Amplify factor T.
+ */
 MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
-   /* for(var i = 0; i <= this.texCoords.length; i++) {
+    /*for(var i = 0; i <= this.texCoords.length; i++) {
         if(i == 0)
             this.texCoords[i] = this.texCoords[i] / ampS;
 

@@ -1,5 +1,7 @@
 /**
  * MyTriangle
+ * @param scene     Scene.
+ * @param vector    Arguments vector.
  * @constructor
  */
 function MyTriangle(scene, vector) {
@@ -64,6 +66,12 @@ MyTriangle.prototype.initBuffers = function() {
     this.initGLBuffers();
 };
 
+
+/**
+ * Scale the texture.
+ * @param ampS Amplify factor S.
+ * @param ampT Amplify factor T.
+ */
 MyTriangle.prototype.scaleTexCoords = function (ampS, ampT) {
     for(var i = 0; i < this.texCoords.length; i+=2){
         this.texCoords[i] = this.texCoords[i] / ampS;

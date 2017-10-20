@@ -18,7 +18,6 @@
         <background r="0" g="0" b="0" a="1" />
     </ILLUMINATION>
 
-
     <!-- Lights -->
     <LIGHTS>
         <LIGHT id="light0">
@@ -44,8 +43,6 @@
             <diffuse r="0.2" g="0.2" b="0.2" a="1.0"/>
             <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
         </LIGHT>
-
-
     </LIGHTS>
 
     <!-- Textures -->
@@ -81,13 +78,7 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
-        <!-- Cloth -->
-        <TEXTURE id="cloth">
-            <file path="images/cloth.jpg"/>
-            <amplif_factor s="2" t="2"/>
-        </TEXTURE>
-
-          <!-- Haste Texture-->
+         <!-- Haste Texture-->
         <TEXTURE id="haste">
              <file path="images/haste.jpg"/>
              <amplif_factor s="1" t="1"/>

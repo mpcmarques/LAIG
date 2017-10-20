@@ -6,7 +6,6 @@ function MyInterface() {
     //call CGFinterface constructor 
     CGFinterface.call(this);
 }
-;
 
 MyInterface.prototype = Object.create(CGFinterface.prototype);
 MyInterface.prototype.constructor = MyInterface;
@@ -46,5 +45,5 @@ MyInterface.prototype.addLightsGroup = function(lights) {
             group.add(this.scene.lightValues, key);
         }
     }
-}
+};
 

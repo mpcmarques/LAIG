@@ -1,5 +1,7 @@
 /**
- * MyPatch
+ * My Patch
+ * @param scene     Scene.
+ * @param args      Patch arguments.
  * @constructor
  */
 function MyPatch(scene, args) {
@@ -40,6 +42,11 @@ MyPatch.prototype.getSurfacePoint = function (u,v){
     return this.surface.getPoint(u,v)
 };
 
+/**
+ * Scale the texture.
+ * @param ampS Amplify factor S.
+ * @param ampT Amplify factor T.
+ */
 MyPatch.prototype.scaleTexCoords = function(ampS, ampT) {
     for(var i = 0; i < this.texCoords.length; i+=2){
         this.texCoords[i] = this.texCoords[i] / ampS;

@@ -1,8 +1,9 @@
 /**
  * MyGraphNode class, representing an intermediate node in the scene graph.
+ * @param graph     Scene graph.
+ * @param nodeID    Node identifier.
  * @constructor
-**/
-
+ */
 function MyGraphNode(graph, nodeID) {
     this.graph = graph;
 
