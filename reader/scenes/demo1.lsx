@@ -237,7 +237,54 @@
                 <NODEREF id="apollo11-cockpit1"/>
                 <NODEREF id="apollo11-cockpit2"/>
                 <NODEREF id="apollo11-cockpit3"/>
+                <NODEREF id="apollo11-cockpit4"/>
+                <NODEREF id="apollo11-antena"/>
              </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-antena">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <DESCENDANTS>
+                <NODEREF id="apollo11-antena-base"/>
+                <NODEREF id="apollo11-antena-top"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-antena-base">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="2.5" z="0"/>
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                 <LEAF id="cylinder1" type="cylinder" args="2 0.2 0.2 20 20 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="apollo11-antena-top">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="4" z="0"/>
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                 <LEAF id="cylinder1" type="cylinder" args="2 0.5 0 20 20 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="apollo11-cockpit4">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.95" y="-1.5" z="2"/>
+            <DESCENDANTS>
+                <LEAF type="sphere" args="2.5 20 20" />
+            </DESCENDANTS>
         </NODE>
 
         <NODE id="apollo11-cockpit3">
@@ -256,7 +303,7 @@
              <MATERIAL id="null"/>
              <TEXTURE id="null" />
 
-             <TRANSLATION x="-3" y="0" z="1.3"/>
+             <TRANSLATION x="-3.3" y="0" z="1.3"/>
              <ROTATION axis="y" angle="115"/>
 
              <DESCENDANTS>
