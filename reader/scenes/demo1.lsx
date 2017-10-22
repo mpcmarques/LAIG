@@ -63,7 +63,7 @@
         <!-- Floor -->
         <TEXTURE id="floor">
             <file path="images/moon.jpg"/>
-            <amplif_factor s="0.5" t="1"/>
+            <amplif_factor s="0.1" t="0.2"/>
         </TEXTURE>
 
         <!--Flag Texture-->
@@ -201,6 +201,8 @@
                 <NODEREF id="bandeiraCompleta"/>
                 <NODEREF id="apollo11"/>
                 <NODEREF id="background"/>
+                <NODEREF id="background2"/>
+                <NODEREF id="background3"/>
             </DESCENDANTS>
         </NODE>
 
@@ -935,7 +937,7 @@
          </NODE>
 
          <NODE id="background">
-            <MATERIAL id="null"/>
+            <MATERIAL id="rubber"/>
             <TEXTURE id="space"/>
 
            <TRANSLATION x="-1000" y="-1000" z="-300" />
@@ -945,6 +947,36 @@
                 <LEAF type="rectangle" args="0 1 1 0"/>
            </DESCENDANTS>
          </NODE>
+
+
+         <NODE id="background2">
+                     <MATERIAL id="rubber"/>
+                     <TEXTURE id="space"/>
+
+
+                    <ROTATION axis="y" angle="90"/>
+                    <TRANSLATION x="-1000" y="-1000" z="-300" />
+                    <SCALE sx="2000" sy="2000" sz="0"/>
+
+                    <DESCENDANTS>
+                         <LEAF type="rectangle" args="0 1 1 0"/>
+                    </DESCENDANTS>
+                  </NODE>
+
+
+          <NODE id="background3">
+                <MATERIAL id="rubber"/>
+                <TEXTURE id="space"/>
+
+
+                 <ROTATION axis="x" angle="90"/>
+                 <TRANSLATION x="-1000" y="-1000" z="-300" />
+                 <SCALE sx="2000" sy="2000" sz="0"/>
+
+                 <DESCENDANTS>
+                  <LEAF type="rectangle" args="0 1 1 0"/>
+                   </DESCENDANTS>
+          </NODE>
 
     </NODES>
 </SCENE>

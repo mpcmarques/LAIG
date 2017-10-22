@@ -34,7 +34,7 @@ MySphere.prototype.initBuffers = function()
 
     var angHor = Math.PI / this.stacks;
 
-    var verticeNumber=0;
+    var vertice=0;
 
     for(var i = 0; i <= this.slices; i++)
     {
@@ -48,12 +48,11 @@ MySphere.prototype.initBuffers = function()
             this.normals.push(x,y,z);
             this.vertices.push(this.radius * x, this.radius* y, this.radius * z);
             this.texCoords.push(k / this.slices, 1 - i / this.stacks);
-            verticeNumber++;
+            vertice++;
 
 
             if (i > 0 && k > 0) {
-                this.indices.push(verticeNumber- this.stacks - 1,verticeNumber - 1, verticeNumber - this.stacks - 2);
-                this.indices.push(verticeNumber - 1, verticeNumber - 2,verticeNumber - this.stacks - 2);
+                this.myIndices(vertice,this.stacks);
             }
         }
     }
@@ -63,26 +62,18 @@ MySphere.prototype.initBuffers = function()
 };
 
 
+MySphere.prototype.myIndices = function(verticeNumber, stacks)
+{
+    this.indices.push(verticeNumber- stacks - 1,verticeNumber - 1, verticeNumber - stacks - 2);
+    this.indices.push(verticeNumber - 1, verticeNumber - 2,verticeNumber - stacks - 2);
+}
+
+
 /**
  * Scale the texture.
  * @param ampS Amplify factor S.
  * @param ampT Amplify factor T.
  */
 MySphere.prototype.scaleTexCoords = function(ampS, ampT) {
-    /*for(var i = 0; i <= this.texCoords.length; i++) {
-        if(i == 0)
-            this.texCoords[i] = this.texCoords[i] / ampS;
-
-        if(i % 2 != 0)
-        {
-            this.texCoords[i+1] = this.texCoords[i+1] / ampT;
-        }
-        else
-            this.texCoords[i] = this.texCoords[i] / ampS;
-    }*/
-
     this.updateTexCoordsGLBuffers();
 };
-
-
-
