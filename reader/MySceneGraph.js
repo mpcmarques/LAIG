@@ -1731,5 +1731,5 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    console.log(currTime);
+    // TODO -> implementar animacoes
 };
