@@ -51,7 +51,7 @@
         <!-- Screen -->
         <TEXTURE id="pc-screen">
             <file path="images/pc-screen.jpg"/>
-            <amplif_factor s="1" t="1"/>
+            <amplif_factor s="10" t="10"/>
         </TEXTURE>
 
         <!-- Keyboard -->
@@ -177,8 +177,15 @@
             <ambient r="0.05" g="0.05" b="0.05" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
-
     </MATERIALS>
+
+    <ANIMATIONS>
+        <!-- andar -->
+        <ANIMATION id="andar" type="linear" speed="1">
+                <CONTROLPOINT x="0" z="0"/>
+                <CONTROLPOINT x="1" z="1"/>
+        </ANIMATION>
+    </ANIMATIONS>
 
 
     <!-- The leaves -->

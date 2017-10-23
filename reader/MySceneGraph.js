@@ -6,8 +6,9 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATION_INDEX = 5;
+var LEAVES_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -21,6 +22,7 @@ function MySceneGraph(filename, scene) {
     scene.graph = this;
 
     this.nodes = [];
+    this.animations = {};
 
     this.idRoot = null;                    // The id of the root element.
 
@@ -138,6 +140,17 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
             return error;
     }
 
+    // <ANIMATIONS>
+    if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+        return "tag <ANIMATIONS> missing";
+    else {
+        if (index != ANIMATION_INDEX)
+            this.onXMLMinorError("tag <ANIMATIONS> out of order" + index + " " + ANIMATION_INDEX);
+
+        if ((error = this.parseAnimations(nodes[index])) != null)
+            return error;
+    }
+
     // <NODES>
     if ((index = nodeNames.indexOf("NODES")) == -1)
         return "tag <NODES> missing";
@@ -149,7 +162,58 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
             return error;
     }
 
-}
+};
+
+MySceneGraph.prototype.parseAnimations = function (animationsNode) {
+
+    var children = animationsNode.children;
+
+    for (var i = 0; i < children.length; i++){
+        var animation = children[i];
+
+        // parse id
+        var id = this.reader.getString(animation, 'id');
+
+        if (id == null){
+            this.onXMLMinorError("unable to parse animation id");
+            return;
+        }
+        // parse type
+        var type = this.reader.getItem(animation, 'type', ['linear'], true);
+
+        if (type == null){
+            this.onXMLMinorError("unable to parse type of animation " + id);
+            return;
+        }
+
+        // parse speed
+        var speed = this.reader.getFloat(animation, "speed", true);
+
+        if (speed == null){
+            this.onXMLMinorError("unable to parse the speed of the animation " + id);
+        }
+
+        // parse control points
+        var controlPoints = [];
+
+        for(var j = 0; j < animation.children.length; j++){
+            var cp  = animation.children[j];
+
+            var x = this.reader.getFloat(cp, 'x');
+            var z = this.reader.getFloat(cp, 'z');
+
+            if(x != null && z != null)
+                controlPoints.push([x, z]);
+            else {
+                this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
+                return;
+            }
+        }
+
+        this.animations[id] = new LinearAnimation(this.scene, controlPoints);
+    }
+    console.log("Parsed animations.");
+};
 
 /**
  * Parses the <INITIALS> block.
@@ -1658,6 +1722,10 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
     const rootNode = this.nodes[this.idRoot];
+
+    // animate
+
+
     // render starting from root.
     this.renderNode(rootNode);
 };
