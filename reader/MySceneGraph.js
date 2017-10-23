@@ -1369,8 +1369,15 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                         args.push(controlPoints);
                     }
 
-                    //parse leaf
-                    this.nodes[nodeID].addChild(new MyGraphLeaf(this, descendants[j], type, args));
+                    // parse leaf and primitive
+                    var leaf = new MyGraphLeaf(this, descendants[j], type, args);
+                    var primitive = this.parsePrimitive(leaf);
+
+                    if (primitive != null) {
+                        this.nodes[nodeID].addChild(primitive);
+                    } else {
+                        this.onXMLMinorError("Couldn't parse the primitive of the leaf " + type + " probably because of wrong arguments or type.");
+                    }
                     sizeChildren++;
                 }
                 else
@@ -1500,8 +1507,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         var leafNode = node.leaves[i];
 
         // Leaf primitive
-        if (leafNode instanceof MyGraphLeaf) {
-            this.renderLeaf(leafNode, currentTransformMatrix, appearance, texture);
+        if (leafNode instanceof MyPrimitive || leafNode instanceof MyPatch) {
+            this.renderPrimitive(leafNode, currentTransformMatrix, texture);
         }
 
         // Intermediate node
@@ -1521,23 +1528,20 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 };
 
 /**
- * Renders a leaf.
- * @param leaf              Leaf to be rendered.
+ * Renders a primitive.
+ * @param primitive         Primitive to be rendered.
  * @param transformMatrix   Transformation matrix.
- * @param appearance        Appearance.
- * @param texture           Texture.
+ * @param texture           Texture to get ampS and ampT;
  */
-MySceneGraph.prototype.renderLeaf = function (leaf, transformMatrix, appearance, texture) {
-    var renderPrimitive = this.parsePrimitive(leaf, texture);
+MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, texture) {
+    // Texture amplification
+    if(texture != null)
+        primitive.scaleTexCoords(texture[1], texture[2]);
 
-    if (renderPrimitive != null) {
-        this.scene.pushMatrix();
-        this.scene.multMatrix(transformMatrix);
-        renderPrimitive.display();
-        this.scene.popMatrix();
-    } else {
-        this.onXMLError("Couldn't parse leaf, probably because of wrong arguments or type.");
-    }
+    this.scene.pushMatrix();
+    this.scene.multMatrix(transformMatrix);
+    primitive.display();
+    this.scene.popMatrix();
 };
 
 /**
@@ -1616,10 +1620,9 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
 /**
  * Parses a primitive based on the leaf type.
  * @param leaf  Leaf.
- * @param texture   Texture.
  * @returns {*} Primitive if the arguments are correct, and the type matches.
  */
-MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
+MySceneGraph.prototype.parsePrimitive = function (leaf) {
     var renderPrimitive;
 
     if (!this.checkArgs(leaf.args, leaf.type))
@@ -1645,9 +1648,6 @@ MySceneGraph.prototype.parsePrimitive = function (leaf, texture) {
             break;
     }
 
-    if (texture != null && renderPrimitive != null) {
-        renderPrimitive.scaleTexCoords(texture[1], texture[2]);
-    }
     return renderPrimitive;
 };
 

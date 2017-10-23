@@ -5,15 +5,14 @@
  * @constructor
  */
 function MyCircle(scene, slices) {
-    CGFobject.call(this,scene);
+    MyPrimitive.call(this, scene);
 
-    this.scene = scene;
     this.slices = slices;
 
     this.initBuffers();
 }
 
-MyCircle.prototype = Object.create(CGFobject.prototype);
+MyCircle.prototype = Object.create(MyPrimitive.prototype);
 MyCircle.prototype.constructor=MyCircle;
 
 MyCircle.prototype.initBuffers = function ()

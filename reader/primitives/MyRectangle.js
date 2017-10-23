@@ -8,7 +8,7 @@
  * @constructor
  */
 function MyRectangle(scene, minX, maxY, maxX, minY) {
-    CGFobject.call(this,scene);
+    MyPrimitive.call(this, scene);
 
     //MINX = MINX
     this.minX = minX || 0;
@@ -23,7 +23,7 @@ function MyRectangle(scene, minX, maxY, maxX, minY) {
     this.initBuffers();
 }
 
-MyRectangle.prototype = Object.create(CGFobject.prototype);
+MyRectangle.prototype = Object.create(MyPrimitive.prototype);
 MyRectangle.prototype.constructor = MyRectangle;
 
 MyRectangle.prototype.initBuffers = function() {

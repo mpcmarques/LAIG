@@ -5,7 +5,7 @@
  * @constructor
  */
 function MySphere(scene,arg) {
-    CGFobject.call(this,scene);
+    MyPrimitive.call(this, scene);
 
     this.radius = arg[0];
     this.slices = arg[1];
@@ -15,7 +15,7 @@ function MySphere(scene,arg) {
     this.initBuffers();
 }
 
-MySphere.prototype = Object.create(CGFobject.prototype);
+MySphere.prototype = Object.create(MyPrimitive.prototype);
 MySphere.prototype.constructor = MySphere;
 
 MySphere.prototype.initBuffers = function()
