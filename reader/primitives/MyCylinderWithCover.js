@@ -11,7 +11,7 @@
  * @constructor
  */
 function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, slices, hasBottomCover, hasTopCover) {
-    CGFobject.call(this, scene);
+    MyPrimitive.call(this, scene);
 
     this.height = height;
 
@@ -25,7 +25,7 @@ function MyCylinderWithCover(scene, height, bottomRadius, topRadius, stacks, sli
     this.cover = new MyCircle(scene, slices);
 }
 
-MyCylinderWithCover.prototype = Object.create(CGFobject.prototype);
+MyCylinderWithCover.prototype = Object.create(MyPrimitive.prototype);
 MyCylinderWithCover.prototype.constructor = MyCylinderWithCover;
 
 MyCylinderWithCover.prototype.display = function () {
@@ -60,6 +60,6 @@ MyCylinderWithCover.prototype.display = function () {
  * @param ampT Amplify factor T.
  */
 MyCylinderWithCover.prototype.scaleTexCoords = function (ampS, ampT) {
-    this.cylinder.scaleTexCoords(ampS, ampT);
+    //this.cylinder.scaleTexCoords(ampS, ampT);
 
 };

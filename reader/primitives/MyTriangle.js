@@ -5,7 +5,7 @@
  * @constructor
  */
 function MyTriangle(scene, vector) {
-    CGFobject.call(this, scene);
+    MyPrimitive.call(this, scene);
 
     this.vector = vector;
 
@@ -15,7 +15,7 @@ function MyTriangle(scene, vector) {
     this.initBuffers();
 }
 
-MyTriangle.prototype = Object.create(CGFobject.prototype);
+MyTriangle.prototype = Object.create(MyPrimitive.prototype);
 MyTriangle.prototype.constructor = MyTriangle;
 
 MyTriangle.prototype.initBuffers = function() {

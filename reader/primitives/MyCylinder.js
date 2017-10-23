@@ -9,7 +9,7 @@
  * @constructor
  */
 function MyCylinder(scene, height, bottomRadius, topRadius, stacks, slices) {
-    CGFobject.call(this, scene);
+    MyPrimitive.call(this, scene);
 
     this.height = height;
     this.slices = slices;
@@ -20,7 +20,7 @@ function MyCylinder(scene, height, bottomRadius, topRadius, stacks, slices) {
     this.initBuffers();
 }
 
-MyCylinder.prototype = Object.create(CGFobject.prototype);
+MyCylinder.prototype = Object.create(MyPrimitive.prototype);
 MyCylinder.prototype.constructor = MyCylinder;
 
 MyCylinder.prototype.initBuffers = function () {

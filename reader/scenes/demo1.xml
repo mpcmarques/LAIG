@@ -51,7 +51,7 @@
         <!-- Screen -->
         <TEXTURE id="pc-screen">
             <file path="images/pc-screen.jpg"/>
-            <amplif_factor s="10" t="10"/>
+            <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
         <!-- Keyboard -->
