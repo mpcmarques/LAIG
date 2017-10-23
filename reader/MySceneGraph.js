@@ -1723,9 +1723,13 @@ MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
     const rootNode = this.nodes[this.idRoot];
 
-    // animate
-
-
     // render starting from root.
     this.renderNode(rootNode);
+};
+
+/**
+ * Updates the scene, independent of rendering.
+ */
+MySceneGraph.prototype.update = function (currTime) {
+    console.log(currTime);
 };
