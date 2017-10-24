@@ -8,5 +8,5 @@ MyPrimitive.prototype = Object.create(CGFobject.prototype);
 MyPrimitive.prototype.constructor=MyPrimitive;
 
 MyPrimitive.prototype.scaleTexCoords = function () {
-    console.error("MyPrimitive subclass - you should implement this function.");
+    console.warn("MyPrimitive subclass - you should implement this function.");
 };

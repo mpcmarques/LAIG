@@ -1342,7 +1342,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                     if (type != null)
                         this.log("   Leaf: " + type);
                     else
-                        this.warn("Error in leaf");
+                        this.onXMLMinorError("Error in leaf");
 
                     //  Parse arguments
                     var unsplit = this.reader.getString(descendants[j], 'args');
@@ -1393,195 +1393,6 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
     console.log("Parsed nodes");
     return null;
-};
-
-/*
- * Callback to be executed on any read error
- */
-MySceneGraph.prototype.onXMLError = function (message) {
-    console.error("XML Loading Error: " + message);
-    this.loadedOk = false;
-};
-
-/**
- * Callback to be executed on any minor error, showing a warning on the console.
- */
-MySceneGraph.prototype.onXMLMinorError = function (message) {
-    console.warn("Warning: " + message);
-};
-
-/**
- * Prints a log to the console.
- * @param message Message to be printed.
- */
-MySceneGraph.prototype.log = function (message) {
-    console.log("   " + message);
-};
-
-/**
- * Prints a warn to the console.
- * @param message   Message to be printed.
- */
-MySceneGraph.prototype.warn = function (message) {
-    console.warn("Warning:  " + message)
-};
-
-/**
- * Generates a default material, with a random name. This material will be passed onto the root node, which
- * may override it.
- */
-MySceneGraph.prototype.generateDefaultMaterial = function () {
-    var materialDefault = new CGFappearance(this.scene);
-    materialDefault.setShininess(1);
-    materialDefault.setSpecular(0, 0, 0, 1);
-    materialDefault.setDiffuse(0.5, 0.5, 0.5, 1);
-    materialDefault.setAmbient(0, 0, 0, 1);
-    materialDefault.setEmission(0, 0, 0, 1);
-
-    // Generates random material ID not currently in use.
-    this.defaultMaterialID = null;
-    do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
-    while (this.materials[this.defaultMaterialID] != null);
-
-    this.materials[this.defaultMaterialID] = materialDefault;
-};
-
-/**
- * Generates a random string of the specified length.
- */
-MySceneGraph.generateRandomString = function (length) {
-    // Generates an array of random integer ASCII codes of the specified length
-    // and returns a string of the specified length.
-    var numbers = [];
-    for (var i = 0; i < length; i++)
-        numbers.push(Math.floor(Math.random() * 256));          // Random ASCII code.
-
-    return String.fromCharCode.apply(null, numbers);
-};
-
-/**
- * This function mixes the appearance and texture
- * @param appearance    Appearance to be mixed.
- * @param texture       Texture to be mixed.
- * @returns CGFappearance   A new appearance mixed with the texture.
- */
-MySceneGraph.prototype.mixNodeAppearance = function (appearance, texture) {
-    // apply node appearance and/or texture
-    if (texture != null && appearance != null) {
-        // modify appearance if there is a texture
-        var newAppearance = new CGFappearance(this.scene);
-        newAppearance.ambient = appearance.ambient;
-        newAppearance.diffuse = appearance.diffuse;
-        newAppearance.emission = appearance.emission;
-        newAppearance.specular = appearance.specular;
-        newAppearance.shineness = appearance.shineness;
-        newAppearance.setTexture(texture[0]);
-        return newAppearance;
-    } else if (appearance != null && texture == null) {
-        return appearance;
-    } else if (texture != null && appearance == null) {
-        var textureAppearance = new CGFappearance(this.scene);
-        textureAppearance.setTexture(texture[0]);
-        return textureAppearance;
-    }
-};
-
-/**
- * Render a node, this function is call recursively.
- * @param node  Node to be rendered.
- * @param transformMatrix   Transformation matrix.
- * @param textureParam      Texture parameter.
- * @param appearanceParam   Appearance parameter.
- */
-MySceneGraph.prototype.renderNode = function (node, transformMatrix, textureParam, appearanceParam) {
-    var texture = this.textures[node.textureID] || textureParam;
-    var appearance = this.materials[node.materialID] || appearanceParam;
-    var currentTransformMatrix = transformMatrix || node.transformMatrix;
-
-    // Apply node appearance
-    var nodeAppearance = this.mixNodeAppearance(appearance, texture);
-    if (nodeAppearance != null)
-        nodeAppearance.apply();
-
-    for (var i = 0; i < node.leaves.length; i++) {
-        var leafNode = node.leaves[i];
-
-        // Leaf primitive
-        if (leafNode instanceof MyPrimitive || leafNode instanceof MyPatch) {
-            this.renderPrimitive(leafNode, currentTransformMatrix, texture);
-        }
-
-        // Intermediate node
-        else {
-            var currentNode = this.nodes[leafNode];
-            if (currentNode != null) {
-                // calculate children transform matrix
-                var newMatrix = mat4.create();
-                mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
-                // render children node
-                this.renderNode(currentNode, newMatrix, texture, appearance);
-            } else {
-                this.warn('Can´t find node ' + leafNode);
-            }
-        }
-    }
-};
-
-/**
- * Renders a primitive.
- * @param primitive         Primitive to be rendered.
- * @param transformMatrix   Transformation matrix.
- * @param texture           Texture to get ampS and ampT;
- */
-MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, texture) {
-    // Texture amplification
-    if(texture != null)
-        primitive.scaleTexCoords(texture[1], texture[2]);
-
-    this.scene.pushMatrix();
-    this.scene.multMatrix(transformMatrix);
-    primitive.display();
-    this.scene.popMatrix();
-};
-
-/**
- * Check leaf arguments.
- * @param args  Arguments.
- * @param type  Leaf type,
- * @returns {boolean}   True if the arguments are correct.
- */
-MySceneGraph.prototype.checkArgs = function (args, type) {
-    var numArgs;
-
-    // Checks valid parameters
-    switch (type) {
-        case 'cylinder':
-            numArgs = 7;
-            break;
-        case 'sphere':
-            numArgs = 3;
-            break;
-        case 'triangle':
-            numArgs = 9;
-            break;
-        case 'rectangle':
-            numArgs = 4;
-            break;
-        case 'patch':
-            numArgs = 3;
-            break;
-        default:
-            numArgs = 0;
-            break;
-    }
-
-    // Checks for a correct number of arguments.
-    if (args.length != numArgs) {
-        console.error("incorrect number of arguments for type " + type + "");
-        return false;
-    }
-
-    return true;
 };
 
 /**
@@ -1652,6 +1463,130 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
 };
 
 /**
+ * Check leaf arguments.
+ * @param args  Arguments.
+ * @param type  Leaf type,
+ * @returns {boolean}   True if the arguments are correct.
+ */
+MySceneGraph.prototype.checkArgs = function (args, type) {
+    var numArgs;
+
+    // Checks valid parameters
+    switch (type) {
+        case 'cylinder':
+            numArgs = 7;
+            break;
+        case 'sphere':
+            numArgs = 3;
+            break;
+        case 'triangle':
+            numArgs = 9;
+            break;
+        case 'rectangle':
+            numArgs = 4;
+            break;
+        case 'patch':
+            numArgs = 3;
+            break;
+        default:
+            numArgs = 0;
+            break;
+    }
+
+    // Checks for a correct number of arguments.
+    if (args.length != numArgs) {
+        console.error("incorrect number of arguments for type " + type + "");
+        return false;
+    }
+
+    return true;
+};
+
+
+/*
+ * Callback to be executed on any read error
+ */
+MySceneGraph.prototype.onXMLError = function (message) {
+    console.error("XML Loading Error: " + message);
+    this.loadedOk = false;
+};
+
+/**
+ * Callback to be executed on any minor error, showing a warning on the console.
+ */
+MySceneGraph.prototype.onXMLMinorError = function (message) {
+    console.warn("Warning: " + message);
+};
+
+/**
+ * Prints a log to the console.
+ * @param message Message to be printed.
+ */
+MySceneGraph.prototype.log = function (message) {
+    console.log("   " + message);
+};
+
+/**
+ * Generates a default material, with a random name. This material will be passed onto the root node, which
+ * may override it.
+ */
+MySceneGraph.prototype.generateDefaultMaterial = function () {
+    var materialDefault = new CGFappearance(this.scene);
+    materialDefault.setShininess(1);
+    materialDefault.setSpecular(0, 0, 0, 1);
+    materialDefault.setDiffuse(0.5, 0.5, 0.5, 1);
+    materialDefault.setAmbient(0, 0, 0, 1);
+    materialDefault.setEmission(0, 0, 0, 1);
+
+    // Generates random material ID not currently in use.
+    this.defaultMaterialID = null;
+    do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
+    while (this.materials[this.defaultMaterialID] != null);
+
+    this.materials[this.defaultMaterialID] = materialDefault;
+};
+
+/**
+ * Generates a random string of the specified length.
+ */
+MySceneGraph.generateRandomString = function (length) {
+    // Generates an array of random integer ASCII codes of the specified length
+    // and returns a string of the specified length.
+    var numbers = [];
+    for (var i = 0; i < length; i++)
+        numbers.push(Math.floor(Math.random() * 256));          // Random ASCII code.
+
+    return String.fromCharCode.apply(null, numbers);
+};
+
+/**
+ * This function mixes the appearance and texture
+ * @param appearance    Appearance to be mixed.
+ * @param texture       Texture to be mixed.
+ * @returns CGFappearance   A new appearance mixed with the texture.
+ */
+MySceneGraph.prototype.mixNodeAppearance = function (appearance, texture) {
+    // apply node appearance and/or texture
+    if (texture != null && appearance != null) {
+        // modify appearance if there is a texture
+        var newAppearance = new CGFappearance(this.scene);
+        newAppearance.ambient = appearance.ambient;
+        newAppearance.diffuse = appearance.diffuse;
+        newAppearance.emission = appearance.emission;
+        newAppearance.specular = appearance.specular;
+        newAppearance.shineness = appearance.shineness;
+        newAppearance.setTexture(texture[0]);
+        return newAppearance;
+    } else if (appearance != null && texture == null) {
+        return appearance;
+    } else if (texture != null && appearance == null) {
+        var textureAppearance = new CGFappearance(this.scene);
+        textureAppearance.setTexture(texture[0]);
+        return textureAppearance;
+    }
+};
+
+/**
  *
  * Displays the scene, processing each node, starting in the root node.
  */
@@ -1660,4 +1595,62 @@ MySceneGraph.prototype.displayScene = function () {
     const rootNode = this.nodes[this.idRoot];
     // render starting from root.
     this.renderNode(rootNode);
+};
+
+/**
+ * Render a node, this function is call recursively.
+ * @param node  Node to be rendered.
+ * @param transformMatrix   Transformation matrix.
+ * @param textureParam      Texture parameter.
+ * @param appearanceParam   Appearance parameter.
+ */
+MySceneGraph.prototype.renderNode = function (node, transformMatrix, textureParam, appearanceParam) {
+    var texture = this.textures[node.textureID] || textureParam;
+    var appearance = this.materials[node.materialID] || appearanceParam;
+    var currentTransformMatrix = transformMatrix || node.transformMatrix;
+
+    // Apply node appearance
+    var nodeAppearance = this.mixNodeAppearance(appearance, texture);
+    if (nodeAppearance != null)
+        nodeAppearance.apply();
+
+    for (var i = 0; i < node.leaves.length; i++) {
+        var leafNode = node.leaves[i];
+
+        // Leaf primitive
+        if (leafNode instanceof MyPrimitive || leafNode instanceof MyPatch) {
+            this.renderPrimitive(leafNode, currentTransformMatrix, texture);
+        }
+
+        // Intermediate node
+        else {
+            var currentNode = this.nodes[leafNode];
+            if (currentNode != null) {
+                // calculate children transform matrix
+                var newMatrix = mat4.create();
+                mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
+                // render children node
+                this.renderNode(currentNode, newMatrix, texture, appearance);
+            } else {
+                console.warn('Can´t find node ' + leafNode);
+            }
+        }
+    }
+};
+
+/**
+ * Renders a primitive.
+ * @param primitive         Primitive to be rendered.
+ * @param transformMatrix   Transformation matrix.
+ * @param texture           Texture to get ampS and ampT;
+ */
+MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, texture) {
+    // Texture amplification
+    if(texture != null)
+        primitive.scaleTexCoords(texture[1], texture[2]);
+
+    this.scene.pushMatrix();
+    this.scene.multMatrix(transformMatrix);
+    primitive.display();
+    this.scene.popMatrix();
 };
