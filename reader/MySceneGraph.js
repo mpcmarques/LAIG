@@ -1416,7 +1416,7 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
             var ww = parseFloat(this.reader.getString(cpoint, "ww", true));
 
             if (xx == null || yy == null || zz == null || ww == null) {
-                this.onXMLError("Failed parsing control points for patch cpline " + j + "\n");
+                this.onXMLError("Failed parsing control points for patch cpline "+ i + " cpoint " + j);
             }
 
             else
@@ -1434,32 +1434,25 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
  * @returns {*} Primitive if the arguments are correct, and the type matches.
  */
 MySceneGraph.prototype.parsePrimitive = function (leaf) {
-    var renderPrimitive;
 
     if (!this.checkArgs(leaf.args, leaf.type))
-        return;
+        return null;
 
     switch (leaf.type) {
         case 'rectangle':
-            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
-            break;
+            return new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
         case 'triangle':
-            renderPrimitive = new MyTriangle(this.scene, leaf.args);
-            break;
+            return new MyTriangle(this.scene, leaf.args);
         case 'cylinder':
-            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
-            break;
+            return new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
         case 'sphere':
-            renderPrimitive = new MySphere(this.scene, leaf.args);
+            return new MySphere(this.scene, leaf.args);
             break;
         case 'patch':
-            renderPrimitive = new MyPatch(this.scene, leaf.args);
-            break;
+            return new MyPatch(this.scene, leaf.args);
         default:
-            break;
+            return null;
     }
-
-    return renderPrimitive;
 };
 
 /**
