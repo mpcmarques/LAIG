@@ -1646,8 +1646,11 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
  */
 MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, texture) {
     // Texture amplification
-    if(texture != null)
+
+    if(texture != null && !primitive.isTexturedScaled) {
         primitive.scaleTexCoords(texture[1], texture[2]);
+        primitive.isTexturedScaled = true;
+    }
 
     this.scene.pushMatrix();
     this.scene.multMatrix(transformMatrix);

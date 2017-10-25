@@ -68,8 +68,8 @@
 
         <!--Flag Texture-->
         <TEXTURE id="flag">
-            <file path="images/flag.png"/>
-            <amplif_factor s="1" t="1"/>
+            <file path="images/moon.jpg"/>
+            <amplif_factor s="0.5" t="1"/>
          </TEXTURE>
 
         <!-- Metal -->
