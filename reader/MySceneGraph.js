@@ -1716,46 +1716,6 @@ MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, t
 };
 
 /**
- * Check leaf arguments.
- * @param args  Arguments.
- * @param type  Leaf type,
- * @returns {boolean}   True if the arguments are correct.
- */
-MySceneGraph.prototype.checkArgs = function (args, type) {
-    var numArgs;
-
-    // Checks valid parameters
-    switch (type) {
-        case 'cylinder':
-            numArgs = 7;
-            break;
-        case 'sphere':
-            numArgs = 3;
-            break;
-        case 'triangle':
-            numArgs = 9;
-            break;
-        case 'rectangle':
-            numArgs = 4;
-            break;
-        case 'patch':
-            numArgs = 3;
-            break;
-        default:
-            numArgs = 0;
-            break;
-    }
-
-    // Checks for a correct number of arguments.
-    if (args.length != numArgs) {
-        console.error("incorrect number of arguments for type " + type + "");
-        return false;
-    }
-
-    return true;
-};
-
-/**
  * Parses the patch control points based on the xml(lsx) element.
  * @param xmlelem   LSX element.
  * @returns {Array} Patch control points.
