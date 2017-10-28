@@ -31,7 +31,10 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
     
     this.axis = new CGFaxis(this);
-}
+
+    // sets update period
+    this.setUpdatePeriod(100);
+};
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -153,3 +156,11 @@ XMLscene.prototype.display = function() {
     // ---- END Background, camera and axis setup
     
 }
+
+/**
+ * Callback used when it is necessary to update some internal state independent of the rendering (display) of the scene. Should be reimplemented by descendants.
+ * @param currTime Current time.
+ */
+XMLscene.prototype.update = function (currTime) {
+    this.graph.update(currTime);
+};

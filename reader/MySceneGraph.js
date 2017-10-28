@@ -6,8 +6,9 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATION_INDEX = 5;
+var LEAVES_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -21,6 +22,7 @@ function MySceneGraph(filename, scene) {
     scene.graph = this;
 
     this.nodes = [];
+    this.animations = {};
 
     this.idRoot = null;                    // The id of the root element.
 
@@ -138,6 +140,17 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
             return error;
     }
 
+    // <ANIMATIONS>
+    if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+        return "tag <ANIMATIONS> missing";
+    else {
+        if (index != ANIMATION_INDEX)
+            this.onXMLMinorError("tag <ANIMATIONS> out of order" + index + " " + ANIMATION_INDEX);
+
+        if ((error = this.parseAnimations(nodes[index])) != null)
+            return error;
+    }
+
     // <NODES>
     if ((index = nodeNames.indexOf("NODES")) == -1)
         return "tag <NODES> missing";
@@ -149,7 +162,58 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
             return error;
     }
 
-}
+};
+
+MySceneGraph.prototype.parseAnimations = function (animationsNode) {
+
+    var children = animationsNode.children;
+
+    for (var i = 0; i < children.length; i++){
+        var animation = children[i];
+
+        // parse id
+        var id = this.reader.getString(animation, 'id');
+
+        if (id == null){
+            this.onXMLMinorError("unable to parse animation id");
+            return;
+        }
+        // parse type
+        var type = this.reader.getItem(animation, 'type', ['linear'], true);
+
+        if (type == null){
+            this.onXMLMinorError("unable to parse type of animation " + id);
+            return;
+        }
+
+        // parse speed
+        var speed = this.reader.getFloat(animation, "speed", true);
+
+        if (speed == null){
+            this.onXMLMinorError("unable to parse the speed of the animation " + id);
+        }
+
+        // parse control points
+        var controlPoints = [];
+
+        for(var j = 0; j < animation.children.length; j++){
+            var cp  = animation.children[j];
+
+            var x = this.reader.getFloat(cp, 'x');
+            var z = this.reader.getFloat(cp, 'z');
+
+            if(x != null && z != null)
+                controlPoints.push([x, z]);
+            else {
+                this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
+                return;
+            }
+        }
+
+        this.animations[id] = new LinearAnimation(this.scene, controlPoints);
+    }
+    console.log("Parsed animations.");
+};
 
 /**
  * Parses the <INITIALS> block.
@@ -1649,4 +1713,130 @@ MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, t
     this.scene.multMatrix(transformMatrix);
     primitive.display();
     this.scene.popMatrix();
+};
+
+/**
+ * Check leaf arguments.
+ * @param args  Arguments.
+ * @param type  Leaf type,
+ * @returns {boolean}   True if the arguments are correct.
+ */
+MySceneGraph.prototype.checkArgs = function (args, type) {
+    var numArgs;
+
+    // Checks valid parameters
+    switch (type) {
+        case 'cylinder':
+            numArgs = 7;
+            break;
+        case 'sphere':
+            numArgs = 3;
+            break;
+        case 'triangle':
+            numArgs = 9;
+            break;
+        case 'rectangle':
+            numArgs = 4;
+            break;
+        case 'patch':
+            numArgs = 3;
+            break;
+        default:
+            numArgs = 0;
+            break;
+    }
+
+    // Checks for a correct number of arguments.
+    if (args.length != numArgs) {
+        console.error("incorrect number of arguments for type " + type + "");
+        return false;
+    }
+
+    return true;
+};
+
+/**
+ * Parses the patch control points based on the xml(lsx) element.
+ * @param xmlelem   LSX element.
+ * @returns {Array} Patch control points.
+ */
+MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
+    var cplines = xmlelem.children;
+    var controlPoints = [];
+
+    for (var i = 0; i < cplines.length; i++) {
+        var cpline = cplines[i];
+        var cplinePoints = [];
+
+        for (var j = 0; j < cpline.children.length; j++) {
+            var cpoint = cpline.children[j];
+            var xx = parseFloat(this.reader.getString(cpoint, "xx", true));
+            var yy = parseFloat(this.reader.getString(cpoint, "yy", true));
+            var zz = parseFloat(this.reader.getString(cpoint, "zz", true));
+            var ww = parseFloat(this.reader.getString(cpoint, "ww", true));
+
+            if (xx == null || yy == null || zz == null || ww == null) {
+                this.onXMLError("Failed parsing control points for patch cpline " + j + "\n");
+            }
+
+            else
+                cplinePoints.push([xx, yy, zz, ww]);
+        }
+        controlPoints.push(cplinePoints);
+    }
+
+    return controlPoints;
+};
+
+/**
+ * Parses a primitive based on the leaf type.
+ * @param leaf  Leaf.
+ * @returns {*} Primitive if the arguments are correct, and the type matches.
+ */
+MySceneGraph.prototype.parsePrimitive = function (leaf) {
+    var renderPrimitive;
+
+    if (!this.checkArgs(leaf.args, leaf.type))
+        return;
+
+    switch (leaf.type) {
+        case 'rectangle':
+            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
+            break;
+        case 'triangle':
+            renderPrimitive = new MyTriangle(this.scene, leaf.args);
+            break;
+        case 'cylinder':
+            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
+            break;
+        case 'sphere':
+            renderPrimitive = new MySphere(this.scene, leaf.args);
+            break;
+        case 'patch':
+            renderPrimitive = new MyPatch(this.scene, leaf.args);
+            break;
+        default:
+            break;
+    }
+
+    return renderPrimitive;
+};
+
+/**
+ *
+ * Displays the scene, processing each node, starting in the root node.
+ */
+MySceneGraph.prototype.displayScene = function () {
+    // entry point for graph rendering.
+    const rootNode = this.nodes[this.idRoot];
+
+    // render starting from root.
+    this.renderNode(rootNode);
+};
+
+/**
+ * Updates the scene, independent of rendering.
+ */
+MySceneGraph.prototype.update = function (currTime) {
+    // TODO -> implementar animacoes
 };
