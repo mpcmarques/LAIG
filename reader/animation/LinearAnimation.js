@@ -3,39 +3,46 @@ function LinearAnimation (scene, controlPoints, speed) {
 
     this.controlPoints = controlPoints;
     this.speed = speed;
-    this.speedPerControlPoint = controlPoints.length / speed;
 
     this.point = controlPoints[0];
     this.currentControlPoint = 0;
+    this.ended = false;
 }
 
 LinearAnimation.prototype = Object.create(Animation);
 LinearAnimation.prototype.constructor = LinearAnimation;
 
-LinearAnimation.prototype.animate = function(){
+LinearAnimation.prototype.animate = function(currTime){
 
-    if(this.point[this.currentControlPoint] < this.controlPoints[this.currentControlPoint+1][this.currentControlPoint]){
-        this.point[0] += this.speedPerControlPoint;
-    }
+    if(this.ended)
+        return;
 
-    if(this.point[this.currentControlPoint+2] < this.controlPoints[this.currentControlPoint+1][this.currentControlPoint+2]){
-        this.point[1] += this.speedPerControlPoint;
-    }
+    if(this.currentTime == null)
+        this.currentTime = currTime;
 
-    if(this.point[0] == this.controlPoints[1][0]
-        && this.point[1] == this.controlPoints[1][2]){
+    var deltaT = ((currTime - this.currentTime)/1000);
+    var distanceX = this.controlPoints[this.currentControlPoint+1][0] - this.point[0];
+    var distanceZ = this.controlPoints[this.currentControlPoint+1][1] - this.point[1];
+    
+    this.point[0] += distanceX * deltaT;
+    this.point[1] += distanceZ * deltaT;
 
+    if(this.point >= this.controlPoints[this.currentControlPoint+1]) {
+        this.point = this.controlPoints[this.currentControlPoint+1];
         this.currentControlPoint += 1;
     }
+
+    if(this.currentControlPoint == this.controlPoints.length-1)
+        this.ended = true;
+
+    console.log(this.point);
 };
 
-LinearAnimation.prototype.update = function(deltaTime) {
-
+LinearAnimation.prototype.update = function(currTime) {
+   this.animate(currTime);
 };
 
 LinearAnimation.prototype.display = function() {
-    this.scene.pushMatrix();
     this.scene.translate(this.point[0], 0, this.point[1]);
-    this.scene.popMatrix();
 };
 

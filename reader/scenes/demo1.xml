@@ -183,7 +183,8 @@
         <!-- andar -->
         <ANIMATION id="andar" type="linear" speed="1">
                 <CONTROLPOINT x="0" z="0"/>
-                <CONTROLPOINT x="1" z="1"/>
+                <CONTROLPOINT x="3" z="3"/>
+                <CONTROLPOINT x="10" z="5"/>
         </ANIMATION>
     </ANIMATIONS>
 

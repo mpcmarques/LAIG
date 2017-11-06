@@ -1685,6 +1685,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 
     // apply animation
     var nodeAnimation =  node.animationID;
+    this.scene.pushMatrix();
     if(nodeAnimation != null)
         this.animations[nodeAnimation].display();
 
@@ -1710,6 +1711,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
             }
         }
     }
+    this.scene.popMatrix();
 };
 
 /**
