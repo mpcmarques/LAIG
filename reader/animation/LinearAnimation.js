@@ -19,13 +19,24 @@ LinearAnimation.prototype.animate = function(){
     }
 
     if(this.point[this.currentControlPoint+2] < this.controlPoints[this.currentControlPoint+1][this.currentControlPoint+2]){
-        this.point[2] += this.speedPerControlPoint;
+        this.point[1] += this.speedPerControlPoint;
     }
 
     if(this.point[0] == this.controlPoints[1][0]
-        && this.point[2] == this.controlPoints[1][2]){
+        && this.point[1] == this.controlPoints[1][2]){
 
         this.currentControlPoint += 1;
     }
+};
+
+LinearAnimation.prototype.update = function(deltaTime) {
+
+
+};
+
+LinearAnimation.prototype.display = function() {
+    this.scene.pushMatrix();
+    this.scene.translate(this.point[0], 0, this.point[1]);
+    this.scene.popMatrix();
 };
 

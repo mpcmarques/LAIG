@@ -1683,6 +1683,11 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if (nodeAppearance != null)
         nodeAppearance.apply();
 
+    // apply animation
+    var nodeAnimation =  node.animationID;
+    if(nodeAnimation != null)
+        this.animations[nodeAnimation].display();
+
     for (var i = 0; i < node.leaves.length; i++) {
         var leafNode = node.leaves[i];
 
@@ -1810,18 +1815,11 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    for (var nodeID in this.nodes) {
-       //console.log(this.nodes[nodeID]);
-        var node = this.nodes[nodeID];
+    for(var animationId in this.animations){
+        if(this.animations.hasOwnProperty(animationId)){
+            var animation = this.animations[animationId];
 
-        if(node.animationID != null)
-            this.animate(node);
+            animation.update(currTime);
+        }
     }
-};
-
-MySceneGraph.prototype.animate = function (node) {
-    var animation = this.animations[node.animationID];
-
-    console.log(animation);
-
 };
