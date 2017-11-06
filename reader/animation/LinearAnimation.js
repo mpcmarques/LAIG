@@ -31,7 +31,6 @@ LinearAnimation.prototype.animate = function(){
 
 LinearAnimation.prototype.update = function(deltaTime) {
 
-
 };
 
 LinearAnimation.prototype.display = function() {
