@@ -32,6 +32,8 @@ LinearAnimation.prototype.animate = function(currTime){
         this.currentControlPoint += 1;
     }
 
+    console.log(this.currentControlPoint);
+
     if(this.currentControlPoint == this.controlPoints.length-1)
         this.ended = true;
 
