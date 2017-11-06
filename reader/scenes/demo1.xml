@@ -217,6 +217,8 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
+            <ANIMATION id="andar"/>
+
             <TRANSLATION x="0" y="2" z="0"/>
 
             <DESCENDANTS>
