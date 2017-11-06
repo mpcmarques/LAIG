@@ -210,7 +210,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
             }
         }
 
-        this.animations[id] = new LinearAnimation(this.scene, controlPoints);
+        this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
     }
     console.log("Parsed animations.");
 };
@@ -1260,7 +1260,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATION"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1297,18 +1297,14 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Retrieves animation ID.
             var animationIndex = specsNames.indexOf("ANIMATION");
             if(animationIndex != -1){
-                var animationID = this.reader.getString(nodeSpecs[animationID], 'id);
+                var animationID = this.reader.getString(nodeSpecs[animationIndex], 'id');
                 if(animationID == null)
                     return "unable to parse Animation ID (node ID = " + nodeID + ")";
                 if (animationID != "null"  && this.animations[animationID] == null)
                     return "ID does not correspond to a valid animation (node ID = " + nodeID + ")";
 
                 this.nodes[nodeID].animationID = animationID;
-                console.log(animationID);
             }
-
-
-
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
@@ -1814,5 +1810,18 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
+    for (var nodeID in this.nodes) {
+       //console.log(this.nodes[nodeID]);
+        var node = this.nodes[nodeID];
+
+        if(node.animationID != null)
+            this.animate(node);
+    }
+};
+
+MySceneGraph.prototype.animate = function (node) {
+    var animation = this.animations[node.animationID];
+
+    console.log(animation);
 
 };
