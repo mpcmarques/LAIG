@@ -1294,6 +1294,22 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
             this.nodes[nodeID].textureID = textureID;
 
+            // Retrieves animation ID.
+            var animationIndex = specsNames.indexOf("ANIMATION");
+            if(animationIndex != -1){
+                var animationID = this.reader.getString(nodeSpecs[animationID], 'id);
+                if(animationID == null)
+                    return "unable to parse Animation ID (node ID = " + nodeID + ")";
+                if (animationID != "null"  && this.animations[animationID] == null)
+                    return "ID does not correspond to a valid animation (node ID = " + nodeID + ")";
+
+                this.nodes[nodeID].animationID = animationID;
+                console.log(animationID);
+            }
+
+
+
+
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
                 switch (nodeSpecs[j].nodeName) {
@@ -1798,5 +1814,5 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    // TODO -> implementar animacoes
+
 };

@@ -871,6 +871,7 @@
             <MATERIAL id="blackPlasticMaterial"/>
             <TEXTURE id="null"/>
 
+
             <TRANSLATION x="-4.8" y="-3.7" z="2.3"/>
             <ROTATION axis="y" angle="-22.5"/>
 
