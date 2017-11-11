@@ -178,13 +178,6 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
             this.onXMLMinorError("unable to parse animation id");
             return;
         }
-        // parse type
-        var type = this.reader.getItem(animation, 'type', ['linear'], true);
-
-        if (type == null){
-            this.onXMLMinorError("unable to parse type of animation " + id);
-            return;
-        }
 
         // parse speed
         var speed = this.reader.getFloat(animation, "speed", true);
@@ -192,26 +185,57 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
         if (speed == null){
             this.onXMLMinorError("unable to parse the speed of the animation " + id);
         }
+        // parse type
+        var type = this.reader.getItem(animation, 'type', ['linear','circular','bezier'], true);
 
+
+
+        if (type == null){
+            this.onXMLMinorError("unable to parse type of animation " + id);
+            return;
+        }
+
+        if(type == "circular")
+        {
+
+          var center = [];
+
+          console.log("entrou");
+          var centerx = this.reader.getFloat(animation, "centerx", true);
+          var centery = this.reader.getFloat(animation, "centery", true);
+          var centerz = this.reader.getFloat(animation, "centerz", true);
+          var radius = this.reader.getFloat(animation,"radius", true);
+          var startang = this.reader.getFloat(animation,"startang", true);
+          var rotang = this.reader.getFloat(animation, "rotang", true);
+
+          center.push([centerx,centery,centerz]);
+
+          this.animations[id] = new CircularAnimation(this.scene, speed, center, radius, startang, rotang);
+        }
+
+        if(type == "linear" || type=="bezier"){
         // parse control points
         var controlPoints = [];
 
         for(var j = 0; j < animation.children.length; j++){
             var cp  = animation.children[j];
 
-            var x = this.reader.getFloat(cp, 'x');
-            var z = this.reader.getFloat(cp, 'z');
+            var x = this.reader.getFloat(cp, 'xx');
+            var y = this.reader.getFloat(cp, 'yy');
+            var z = this.reader.getFloat(cp, 'zz');
 
-            if(x != null && z != null)
-                controlPoints.push([x, z]);
+            if((x != null && z != null) && y !=null)
+                controlPoints.push([x, y, z]);
             else {
                 this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
                 return;
             }
         }
-
         this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
     }
+  }
+
+
     console.log("Parsed animations.");
 };
 

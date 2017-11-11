@@ -22,10 +22,12 @@ LinearAnimation.prototype.animate = function(currTime){
 
     var deltaT = ((currTime - this.currentTime)/1000);
     var distanceX = this.controlPoints[this.currentControlPoint+1][0] - this.point[0];
-    var distanceZ = this.controlPoints[this.currentControlPoint+1][1] - this.point[1];
-    
+    var distancey = this.controlPoints[this.currentControlPoint+1][1] - this.point[1];
+    var distanceZ = this.controlPoints[this.currentControlPoint+1][2] - this.point[2];
+
     this.point[0] += distanceX * deltaT;
-    this.point[1] += distanceZ * deltaT;
+    this.point[1] += distancey * deltaT;
+    this.point[2] += distanceZ * deltaT;
 
     if(this.point >= this.controlPoints[this.currentControlPoint+1]) {
         this.point = this.controlPoints[this.currentControlPoint+1];
@@ -47,4 +49,3 @@ LinearAnimation.prototype.update = function(currTime) {
 LinearAnimation.prototype.display = function() {
     this.scene.translate(this.point[0], 0, this.point[1]);
 };
-
