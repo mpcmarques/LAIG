@@ -47,5 +47,5 @@ LinearAnimation.prototype.update = function(currTime) {
 };
 
 LinearAnimation.prototype.display = function() {
-    this.scene.translate(this.point[0], 0, this.point[1]);
+    this.scene.translate(this.point[0], 0, this.point[2]);
 };
