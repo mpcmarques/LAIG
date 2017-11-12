@@ -2,7 +2,6 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     Animation.call(this, scene);
 
     var DEGREE_TO_RAD = Math.PI / 180;
-    this.controlPoints = controlPoints;
     this.speed = speed;
     this.center = center;
     this.radius = radius;
