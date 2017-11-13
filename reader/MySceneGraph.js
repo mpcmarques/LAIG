@@ -208,7 +208,9 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
           var startang = this.reader.getFloat(animation,"startang", true);
           var rotang = this.reader.getFloat(animation, "rotang", true);
 
-          center.push([centerx,centery,centerz]);
+          center.push(centerx)
+          center.push(centery)
+          center.push(centerz);
 
           this.animations[id] = new CircularAnimation(this.scene, speed, center, radius, startang, rotang);
         }
