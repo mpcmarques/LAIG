@@ -38,10 +38,6 @@ LinearAnimation.prototype.animate = function (currTime) {
     else
         Zsign = -1;
 
-    // X = Xo + v * t.
-    this.point[0] = this.controlPoints[this.currentControlPoint][0] + Xsign * deltaT * this.speed;
-    this.point[2] = this.controlPoints[this.currentControlPoint][2] + Zsign * deltaT * this.speed;
-
     // check if arrived at a control point final coordinate
     var xArrived = false, zArrived = false;
     if(Xsign == 1){
@@ -60,6 +56,13 @@ LinearAnimation.prototype.animate = function (currTime) {
             zArrived = true;
     }
 
+    // X = Xo + v * t if not arrived yet.
+    if(!xArrived)
+        this.point[0] = this.controlPoints[this.currentControlPoint][0] + Xsign * deltaT * this.speed;
+
+    if(!zArrived)
+        this.point[2] = this.controlPoints[this.currentControlPoint][2] + Zsign * deltaT * this.speed;
+
     // arrived at next control points, change the current.
     if(xArrived && zArrived){
         this.currentControlPoint += 1;
@@ -68,6 +71,8 @@ LinearAnimation.prototype.animate = function (currTime) {
 
     if (this.currentControlPoint == this.controlPoints.length - 1)
         this.ended = true;
+
+    console.log(this.point, xArrived, zArrived);
 };
 
 LinearAnimation.prototype.update = function (currTime) {

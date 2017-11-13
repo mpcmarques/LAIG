@@ -183,8 +183,8 @@
         <!-- andar -->
         <ANIMATION id="andar" speed="1" type="linear">
                 <CONTROLPOINT xx="0" yy="0" zz="0"/>
-                <CONTROLPOINT xx="10" yy="0" zz="10"/>
-                <CONTROLPOINTS xx="4" yy="0" zz="4"/>
+                <CONTROLPOINT xx="10" yy="0" zz="0"/>
+                <CONTROLPOINT xx="4" yy="0" zz="4"/>
         </ANIMATION>
 
         <ANIMATION id="volta" speed="1" type="circular"
