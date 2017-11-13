@@ -17,29 +17,32 @@ LinearAnimation.prototype.animate = function(currTime){
     if(this.ended)
         return;
 
-    if(this.currentTime == null)
-        this.currentTime = currTime;
+    // delta T
+    if(this.currentTime != null) {
+        var deltaT = ((currTime - this.currentTime) / 1000);
 
-    var deltaT = ((currTime - this.currentTime)/1000);
-    var distanceX = this.controlPoints[this.currentControlPoint+1][0] - this.point[0];
-    var distancey = this.controlPoints[this.currentControlPoint+1][1] - this.point[1];
-    var distanceZ = this.controlPoints[this.currentControlPoint+1][2] - this.point[2];
+        // X = Xo + v * t.
+        this.point[0] = this.controlPoints[this.currentControlPoint][0] + deltaT * this.speed;
+        this.point[2] = this.controlPoints[this.currentControlPoint][2] + deltaT * this.speed;
 
-    this.point[0] += distanceX * deltaT;
-    this.point[1] += distancey * deltaT;
-    this.point[2] += distanceZ * deltaT;
+        if (this.point[0] >= this.controlPoints[this.currentControlPoint + 1][0]) {
+            this.point[0] = this.controlPoints[this.currentControlPoint + 1][0];
+        }
 
-    if(this.point >= this.controlPoints[this.currentControlPoint+1]) {
-        this.point = this.controlPoints[this.currentControlPoint+1];
-        this.currentControlPoint += 1;
+        if (this.point[2] >= this.controlPoints[this.currentControlPoint + 1][2]) {
+            this.point[2] = this.controlPoints[this.currentControlPoint + 1][2];
+        }
+
+        if (this.point[2] >= this.controlPoints[this.currentControlPoint + 1][2] &&
+            this.point[0] >= this.controlPoints[this.currentControlPoint + 1][2]) {
+            this.currentControlPoint += 1;
+        }
     }
 
-    console.log(this.currentControlPoint);
-
-    if(this.currentControlPoint == this.controlPoints.length-1)
+    if (this.currentControlPoint == this.controlPoints.length - 1)
         this.ended = true;
 
-    console.log(this.point);
+    this.currentTime = currTime;
 };
 
 LinearAnimation.prototype.update = function(currTime) {
