@@ -21,9 +21,12 @@ BezierAnimation.prototype.animate = function (currTime) {
 //x = (1−t)2 * 0 + 2(1−t)t * 0.5 + t2 * 1 = (1-t)t + t2 = t
 //y = (1−t)2 * 0 + 2(1−t)t * 1 + t2 * 0 = 2(1-t)t = –t2 + 2t
 
+            if(this.point[2] <0 || this.point[0] <0)
+            {
+              this.ended=true;
+            }
 
-
-
+  if(!this.ended)
     if(this.currentTime != null) {
 
         var startTime = ((currTime - this.currentTime) / 1000.0);
@@ -54,6 +57,7 @@ BezierAnimation.prototype.update = function (currTime) {
 };
 
 BezierAnimation.prototype.display = function () {
-    console.log(this.point);
+    //console.log(this.point);
     this.scene.translate(this.point[0], this.point[1], this.point[2]);
+    //this.scene.rotate(Math.PI / 2 + Math.cos(this.point[2]), 0, 1, 0);
 };

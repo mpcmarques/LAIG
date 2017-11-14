@@ -195,9 +195,9 @@
 
         <ANIMATION id="curva" speed="1" type="bezier">
             <CONTROLPOINT xx="0" yy="0" zz="0"/>
-            <CONTROLPOINT xx="1" yy="0" zz="0"/>
-            <CONTROLPOINT xx="1" yy="0" zz="4"/>
-            <CONTROLPOINT xx="3" yy="0" zz="3"/>
+            <CONTROLPOINT xx="20" yy="0" zz="0"/>
+            <CONTROLPOINT xx="20" yy="0" zz="20"/>
+            <CONTROLPOINT xx="0" yy="0" zz="20"/>
         </ANIMATION>
 
 
@@ -233,7 +233,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATION id="andar"/>
+            <ANIMATION id="curva"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

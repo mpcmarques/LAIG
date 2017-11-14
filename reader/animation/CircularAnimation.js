@@ -9,7 +9,7 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
       this.rotang = DEGREE_TO_RAD * rotang;
       this.point = [];
       this.end = false;
-    
+
     }
 
   CircularAnimation.prototype = Object.create(Animation);
@@ -47,4 +47,5 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
 
   CircularAnimation.prototype.display = function() {
       this.scene.translate(this.point[0],this.center[1],this.point[1]);
+      this.scene.rotate(Math.PI / 2 + this.startang, 0, 1, 0);
   };
