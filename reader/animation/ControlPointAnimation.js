@@ -1,3 +1,6 @@
+/**
+* Abstract class, represent an animation that needs control points.
+*/
 var ControlPointAnimation = function(scene, speed, controlPoints) {
   Animation.call(this, scene, speed);
 
