@@ -233,7 +233,11 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 return;
             }
         }
-        this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
+        if(type== "linear") {
+            this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
+        }
+        else if(type == "bezier")
+            this.animations[id] = new BezierAnimation(this.scene, controlPoints, speed);
     }
   }
 

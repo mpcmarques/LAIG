@@ -191,7 +191,12 @@
           centerx="0" centery="0" centerz="3"
           radius="10" startang="0" rotang="180"/>
 
-
+        <ANIMATION id="curva" speed="1" type="bezier">
+            <CONTROLPOINT xx="0" yy="0" zz="0"/>
+            <CONTROLPOINT xx="1" yy="0" zz="0"/>
+            <CONTROLPOINT xx="1" yy="0" zz="4"/>
+            <CONTROLPOINT xx="3" yy="0" zz="3"/>
+        </ANIMATION>
 
 
     </ANIMATIONS>
@@ -226,7 +231,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATION id="volta"/>
+            <ANIMATION id="curva"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

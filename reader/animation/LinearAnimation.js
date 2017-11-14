@@ -72,7 +72,7 @@ LinearAnimation.prototype.animate = function (currTime) {
     if (this.currentControlPoint == this.controlPoints.length - 1)
         this.ended = true;
 
-    console.log(this.point, xArrived, zArrived);
+
 };
 
 LinearAnimation.prototype.update = function (currTime) {

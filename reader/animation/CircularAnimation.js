@@ -35,11 +35,9 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
   }
         this.currentTime = currTime;
 
-        if(this.startang >= this.rotang){
+        if(this.startang >= this.rotang)
           this.end = true;
-          console.log(this.point);
-          console.log(this.end);
-        }
+
         }
   };
 
