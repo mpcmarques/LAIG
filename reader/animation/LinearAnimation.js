@@ -80,5 +80,11 @@ LinearAnimation.prototype.update = function (currTime) {
 };
 
 LinearAnimation.prototype.display = function () {
+    // Dx and Dz
+    var dx = this.point[0] - this.controlPoints[this.currentControlPoint][0];
+    var dz = this.point[2] - this.controlPoints[this.currentControlPoint][2];
+    var angle = Math.atan2(dx, dz);
+
     this.scene.translate(this.point[0], 0, this.point[2]);
+    this.scene.rotate(angle, 0, 1, 0);
 };
