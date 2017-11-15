@@ -58,7 +58,10 @@ BezierAnimation.prototype.update = function (currTime) {
 };
 
 BezierAnimation.prototype.display = function () {
-    //console.log(this.point);
+
     this.scene.translate(this.point[0], this.point[1], this.point[2]);
-    //this.scene.rotate(Math.PI / 2 + Math.cos(this.point[2]), 0, 1, 0);
+    var radius = Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));
+    var angle = Math.acos(this.point[0]/radius);
+    this.scene.rotate(angle, 0, 1, 0);
+
 };
