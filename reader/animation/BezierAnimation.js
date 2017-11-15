@@ -63,5 +63,4 @@ BezierAnimation.prototype.display = function () {
     var radius = Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));
     var angle = Math.acos(this.point[0]/radius);
     this.scene.rotate(angle, 0, 1, 0);
-
 };
