@@ -50,7 +50,6 @@ BezierAnimation.prototype.update = function (currTime) {
 };
 
 BezierAnimation.prototype.display = function () {
-
     this.scene.translate(this.point[0], this.point[1], this.point[2]);
     var radius = Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));
     var angle = Math.acos(this.point[0]/radius);

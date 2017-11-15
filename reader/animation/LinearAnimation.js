@@ -74,7 +74,6 @@ LinearAnimation.prototype.move = function(currTime){
 
 LinearAnimation.prototype.display = function () {
     // Dx and Dz
-
     //var dx = this.point[0] - this.controlPoints[this.currentControlPoint][0];
    // var dz = this.point[2] - this.controlPoints[this.currentControlPoint][2];
    // var angle = Math.atan2(dx, dz);
