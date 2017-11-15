@@ -21,9 +21,10 @@ BezierAnimation.prototype.animate = function (currTime) {
 //x = (1−t)2 * 0 + 2(1−t)t * 0.5 + t2 * 1 = (1-t)t + t2 = t
 //y = (1−t)2 * 0 + 2(1−t)t * 1 + t2 * 0 = 2(1-t)t = –t2 + 2t
 
-            if(this.point[2] <0 || this.point[0] <0)
+            if((this.point[2] <0 || this.point[0] <0) || this.point[1]<0)
             {
               this.ended=true;
+              return;
             }
 
   if(!this.ended)
