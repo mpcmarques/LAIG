@@ -1,18 +1,8 @@
 function LinearAnimation(scene, controlPoints, speed) {
-    Animation.call(this, scene);
-
-    this.controlPoints = controlPoints;
-    this.speed = speed;
-
-    this.point = [];
-    this.point[0] = controlPoints[0][0];
-    this.point[1] = controlPoints[0][1];
-    this.point[2] = controlPoints[0][2];
-    this.currentControlPoint = 0;
-    this.ended = false;
+    ControlPointAnimation.call(this, scene, speed, controlPoints);
 }
 
-LinearAnimation.prototype = Object.create(Animation);
+LinearAnimation.prototype = Object.create(ControlPointAnimation.prototype);
 LinearAnimation.prototype.constructor = LinearAnimation;
 
 LinearAnimation.prototype.update = function (currTime) {

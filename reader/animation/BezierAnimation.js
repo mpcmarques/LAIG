@@ -1,20 +1,12 @@
 function BezierAnimation(scene, controlPoints, speed) {
-    Animation.call(this, scene);
+    ControlPointAnimation.call(this, scene, speed, controlPoints);
 
-    this.controlPoints = controlPoints;
-    this.speed = speed;
-    this.point = [];
-    this.point[0] = controlPoints[0][0];
-    this.point[1] = controlPoints[0][1];
-    this.point[2] = controlPoints[0][2];
     this.actualx = this.point[0];
     this.actualy = this.point[2];
-    this.currentControlPoint = 0;
-    this.ended = false;
     this.aux = 0.0;
 }
 
-BezierAnimation.prototype = Object.create(Animation);
+BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
 BezierAnimation.prototype.constructor = BezierAnimation;
 
 BezierAnimation.prototype.animate = function (currTime) {
