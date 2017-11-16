@@ -168,13 +168,13 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
     var children = animationsNode.children;
 
-    for (var i = 0; i < children.length; i++){
+    for (var i = 0; i < children.length; i++) {
         var animation = children[i];
 
         // parse id
         var id = this.reader.getString(animation, 'id');
 
-        if (id == null){
+        if (id == null) {
             this.onXMLMinorError("unable to parse animation id");
             return;
         }
@@ -182,64 +182,82 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
         // parse speed
         var speed = this.reader.getFloat(animation, "speed", true);
 
-        if (speed == null){
+        if (speed == null) {
             this.onXMLMinorError("unable to parse the speed of the animation " + id);
         }
         // parse type
-        var type = this.reader.getItem(animation, 'type', ['linear','circular','bezier'], true);
+        var type = this.reader.getItem(animation, 'type', ['linear', 'circular', 'bezier', 'combo'], true);
 
-
-
-        if (type == null){
+        if (type == null) {
             this.onXMLMinorError("unable to parse type of animation " + id);
             return;
         }
 
-        if(type == "circular")
-        {
+        if (type == 'combo'){
+            var comboAnimations = [];
+            for (var k = 0; k < animation.children.length; k++){
+                var currentAnimation = animation.children[k];
 
-          var center = [];
+                var animationName = this.reader.getString(currentAnimation, "id", true);
 
-          console.log("entrou");
-          var centerx = this.reader.getFloat(animation, "centerx", true);
-          var centery = this.reader.getFloat(animation, "centery", true);
-          var centerz = this.reader.getFloat(animation, "centerz", true);
-          var radius = this.reader.getFloat(animation,"radius", true);
-          var startang = this.reader.getFloat(animation,"startang", true);
-          var rotang = this.reader.getFloat(animation, "rotang", true);
+                if(animationName == null){
+                    this.onXMLMinorError("unable to parse combo animation " + id);
+                    return;
+                }
 
-          center.push(centerx)
-          center.push(centery)
-          center.push(centerz);
-
-          this.animations[id] = new CircularAnimation(this.scene, speed, center, radius, startang, rotang);
-        }
-
-        if(type == "linear" || type=="bezier"){
-        // parse control points
-        var controlPoints = [];
-
-        for(var j = 0; j < animation.children.length; j++){
-            var cp  = animation.children[j];
-
-            var x = this.reader.getFloat(cp, 'xx');
-            var y = this.reader.getFloat(cp, 'yy');
-            var z = this.reader.getFloat(cp, 'zz');
-
-            if((x != null && z != null) && y !=null)
-                controlPoints.push([x, y, z]);
-            else {
-                this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
-                return;
+                if(this.animations[animationName] != null)
+                    comboAnimations.push(this.animations[animationName]);
+                else {
+                    this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
+                    return;
+                }
             }
+            this.animations[id] = new ComboAnimation(this.scene, speed, comboAnimations);
         }
-        if(type== "linear") {
-            this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
+
+        if (type == "circular") {
+
+            var center = [];
+
+            var centerx = this.reader.getFloat(animation, "centerx", true);
+            var centery = this.reader.getFloat(animation, "centery", true);
+            var centerz = this.reader.getFloat(animation, "centerz", true);
+            var radius = this.reader.getFloat(animation, "radius", true);
+            var startang = this.reader.getFloat(animation, "startang", true);
+            var rotang = this.reader.getFloat(animation, "rotang", true);
+
+            center.push(centerx);
+            center.push(centery);
+            center.push(centerz);
+
+            this.animations[id] = new CircularAnimation(this.scene, speed, center, radius, startang, rotang);
         }
-        else if(type == "bezier")
-            this.animations[id] = new BezierAnimation(this.scene, controlPoints, speed);
+
+        if (type == "linear" || type == "bezier") {
+            // parse control points
+            var controlPoints = [];
+
+            for (var j = 0; j < animation.children.length; j++) {
+                var cp = animation.children[j];
+
+                var x = this.reader.getFloat(cp, 'xx');
+                var y = this.reader.getFloat(cp, 'yy');
+                var z = this.reader.getFloat(cp, 'zz');
+
+                if ((x != null && z != null) && y != null)
+                    controlPoints.push([x, y, z]);
+                else {
+                    this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
+                    return;
+                }
+            }
+            if (type == "linear") {
+                this.animations[id] = new LinearAnimation(this.scene, controlPoints, speed);
+            }
+            else if (type == "bezier")
+                this.animations[id] = new BezierAnimation(this.scene, controlPoints, speed);
+        }
     }
-  }
 
 
     console.log("Parsed animations.");
@@ -1326,11 +1344,11 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
             // Retrieves animation ID.
             var animationIndex = specsNames.indexOf("ANIMATION");
-            if(animationIndex != -1){
+            if (animationIndex != -1) {
                 var animationID = this.reader.getString(nodeSpecs[animationIndex], 'id');
-                if(animationID == null)
+                if (animationID == null)
                     return "unable to parse Animation ID (node ID = " + nodeID + ")";
-                if (animationID != "null"  && this.animations[animationID] == null)
+                if (animationID != "null" && this.animations[animationID] == null)
                     return "ID does not correspond to a valid animation (node ID = " + nodeID + ")";
 
                 this.nodes[nodeID].animationID = animationID;
@@ -1522,7 +1540,7 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
             var ww = parseFloat(this.reader.getString(cpoint, "ww", true));
 
             if (xx == null || yy == null || zz == null || ww == null) {
-                this.onXMLError("Failed parsing control points for patch cpline "+ i + " cpoint " + j);
+                this.onXMLError("Failed parsing control points for patch cpline " + i + " cpoint " + j);
             }
 
             else
@@ -1714,9 +1732,9 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         nodeAppearance.apply();
 
     // apply animation
-    var nodeAnimation =  node.animationID;
+    var nodeAnimation = node.animationID;
     this.scene.pushMatrix();
-    if(nodeAnimation != null)
+    if (nodeAnimation != null)
         this.animations[nodeAnimation].display();
 
     for (var i = 0; i < node.leaves.length; i++) {
@@ -1753,7 +1771,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 MySceneGraph.prototype.renderPrimitive = function (primitive, transformMatrix, texture) {
     // Texture amplification
 
-    if(texture != null && !primitive.isTexturedScaled) {
+    if (texture != null && !primitive.isTexturedScaled) {
         primitive.scaleTexCoords(texture[1], texture[2]);
         primitive.isTexturedScaled = true;
     }
@@ -1847,10 +1865,9 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    for(var animationId in this.animations){
-        if(this.animations.hasOwnProperty(animationId)){
+    for (var animationId in this.animations) {
+        if (this.animations.hasOwnProperty(animationId)) {
             var animation = this.animations[animationId];
-
             animation.update(currTime);
         }
     }
