@@ -14,17 +14,20 @@ ComboAnimation.prototype.update = function(deltaT){
         return;
 
     var animation = this.animations[this.currentAnimation];
+
     animation.update(deltaT);
 
     if (animation.ended){
         this.currentAnimation += 1;
     }
 
-    if(this.currentAnimation == this.animationsNumber)
+    if(this.currentAnimation == this.animationsNumber) {
         this.ended = true;
+    }
 };
 
 ComboAnimation.prototype.display = function(){
+
     if(!this.ended) {
         var animation = this.animations[this.currentAnimation];
         animation.display();

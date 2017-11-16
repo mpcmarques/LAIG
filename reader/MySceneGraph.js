@@ -26,6 +26,8 @@ function MySceneGraph(filename, scene) {
 
     this.idRoot = null;                    // The id of the root element.
 
+    this.parsedAnimations = false;          // check if already parsed the animations.
+
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
@@ -205,14 +207,30 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                     return;
                 }
 
-                if(this.animations[animationName] != null)
-                    comboAnimations.push(this.animations[animationName]);
+                var selectedAnimation = this.animations[animationName];
+                if (selectedAnimation instanceof LinearAnimation){
+                    comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
+                }
+                else if (selectedAnimation instanceof CircularAnimation){
+                    comboAnimations.push(
+                        new CircularAnimation(this.scene, selectedAnimation.speed,
+                            selectedAnimation.center,
+                            selectedAnimation.radius,
+                            selectedAnimation.startang,
+                            selectedAnimation.rotang
+                        )
+                    );
+                }
+                else if(selectedAnimation instanceof BezierAnimation) {
+                    comboAnimations.push(new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
+                }
                 else {
                     this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
                     return;
                 }
             }
             this.animations[id] = new ComboAnimation(this.scene, speed, comboAnimations);
+            console.log(comboAnimations);
         }
 
         if (type == "circular") {
@@ -261,6 +279,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
 
     console.log("Parsed animations.");
+    this.parsedAnimations = true;
 };
 
 /**
@@ -1865,10 +1884,12 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    for (var animationId in this.animations) {
-        if (this.animations.hasOwnProperty(animationId)) {
-            var animation = this.animations[animationId];
-            animation.update(currTime);
+    if(this.parsedAnimations) { // check if animations are already parsed.
+        for (var animationId in this.animations) {
+            if (this.animations.hasOwnProperty(animationId)) {
+                var animation = this.animations[animationId];
+                animation.update(currTime);
+            }
         }
     }
 };
