@@ -7,6 +7,7 @@ function BezierAnimation(scene, controlPoints, speed) {
     this.incialY = this.controlPoints[0][1];
     this.inicialZ = this.controlPoints[0][2];
     this.aux = 0.0;
+    console.log(this.lenght(this.controlPoints));
 }
 
 BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -16,39 +17,103 @@ BezierAnimation.prototype.animate = function (currTime) {
 //x = (1−t)2 * 0 + 2(1−t)t * 0.5 + t2 * 1 = (1-t)t + t2 = t
 //y = (1−t)2 * 0 + 2(1−t)t * 1 + t2 * 0 = 2(1-t)t = –t2 + 2t
 
-            if((this.point[2] <0 || this.point[0] <0) || this.point[1]<0)
+
+            if(this.aux > this.lenght(this.controlPoints))
             {
               this.ended=true;
-
+              console.log(this.ended);
             }
 
-  if(!this.ended)
+  if(!this.ended) {
+
+      if (this.inicialTime == null) {
+          this.inicialTime = currTime;
+      }
+      var deltaTime = ((currTime - this.inicialTime) / 1000.0);
+      var radius = Math.sqrt(Math.pow(this.point[0], 2) + Math.pow(this.point[2], 2));
 
 
-        if(this.inicialTime == null)
-        {
-            this.inicialTime = currTime;
-        }
-        var deltaTime = ((currTime - this.inicialTime) / 1000.0);
-        var radius = Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));
-
-
-    this.bezier(this.controlPoints,deltaTime * this.speed);
-       /* if(isNaN(radius))
-            this.bezier(this.controlPoints,deltaTime * this.speed) ;
-        else
-            this.bezier(this.controlPoints,deltaTime * this.speed /radius) ;
+      this.aux = this.bezier(this.controlPoints, deltaTime * this.speed);
+      /* if(isNaN(radius))
+           this.bezier(this.controlPoints,deltaTime * this.speed) ;
+       else
+           this.bezier(this.controlPoints,deltaTime * this.speed /radius) ;
 */
 
-
-
-
+  }
     this.currentTime = currTime;
 };
 
 BezierAnimation.prototype.update = function (currTime) {
     this.animate(currTime);
 };
+
+BezierAnimation.prototype.lenght = function (controlPoints) {
+
+
+    var L2 = [];
+      L2 = this.addArray2(controlPoints[0] , controlPoints[1]);
+
+    var H = this.addArray2(controlPoints[1],controlPoints[2]);
+    var L3 = this.addArray2(L2,H);
+    var R3 = this.addArray2(controlPoints[2],controlPoints[3]);
+    var R2 = this.addArray2(H , R3);
+    var R1 = this.addArray2(L3 , R2);
+
+
+   var sum =  this.distance(controlPoints[0],L2);
+    sum += this.distance(L2,L3);
+    sum += this.distance(L3,R1);
+    sum += this.distance(R1,R2);
+    sum += this.distance(R2, R3);
+    sum += this.distance(R3, controlPoints[3]);
+
+
+    return sum;
+}
+
+BezierAnimation.prototype.distance = function (firstArray, secondArray) {
+
+    return Math.sqrt(Math.pow(secondArray[0] - firstArray[0],2)+ Math.pow(secondArray[1] - firstArray[1],2) + Math.pow(secondArray[2] - firstArray[2],2));
+
+}
+
+
+
+
+BezierAnimation.prototype.subArray = function (firstArray, secondArray) {
+
+    var newArray = [];
+    for(var i=0; i<firstArray.length;i++)
+    {
+       newArray[i] = firstArray[i] - secondArray[i];
+    }
+
+    return newArray;
+}
+
+BezierAnimation.prototype.addArray = function (firstArray, secondArray) {
+
+    var newArray = [];
+    for(var i=0; i<firstArray.length;i++)
+    {
+        newArray[i] = firstArray[i] + secondArray[i];
+    }
+
+    return newArray;
+}
+
+BezierAnimation.prototype.addArray2 = function (firstArray, secondArray) {
+
+    var newArray = [];
+    for(var i=0; i<firstArray.length;i++)
+    {
+        newArray[i] = (firstArray[i] + secondArray[i])/2;
+    }
+
+    return newArray;
+}
+
 
 BezierAnimation.prototype.bezier = function(controlPoints, t) {
     //var  P1 = pInicio;
@@ -73,7 +138,10 @@ BezierAnimation.prototype.bezier = function(controlPoints, t) {
 
     this.point[0] = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + controlPoints[0][0];
     this.point[1] = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + controlPoints[0][1];
-    this.point[2] = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0][2];
+    this.point[2] = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0][2]
+
+
+    return Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));
 };
 
 BezierAnimation.prototype.display = function () {

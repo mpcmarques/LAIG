@@ -8,8 +8,9 @@ function XMLscene(interface) {
     CGFscene.call(this);
 
     this.interface = interface;
-
+    this.scaleFactor = 1.0;
     this.lightValues = {};
+    this.selectedExampleShader=0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -29,6 +30,9 @@ XMLscene.prototype.init = function(application) {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
+
+
+    this.testShaders=[];
 
     this.axis = new CGFaxis(this);
 
@@ -68,6 +72,10 @@ XMLscene.prototype.initLights = function() {
         }
     }
 
+}
+
+XMLscene.prototype.updateScaleFactor = function (v) {
+    this.scaleFactor;
 }
 
 /**

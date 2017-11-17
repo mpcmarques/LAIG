@@ -199,9 +199,9 @@
 
         <ANIMATION id="curva" speed="1" type="bezier">
             <CONTROLPOINT xx="0" yy="0" zz="0"/>
-            <CONTROLPOINT xx="10" yy="1" zz="3"/>
-            <CONTROLPOINT xx="2" yy="30" zz="20"/>
-            <CONTROLPOINT xx="1" yy="0" zz="2"/>
+            <CONTROLPOINT xx="30" yy="0" zz="0"/>
+            <CONTROLPOINT xx="30" yy="0" zz="30"/>
+            <CONTROLPOINT xx="0" yy="0" zz="30"/>
         </ANIMATION>
 
         <ANIMATION id="combo" speed="1" type="combo">
@@ -242,7 +242,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATION id="combo"/>
+            <ANIMATION id="curva"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

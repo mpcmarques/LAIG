@@ -22,9 +22,20 @@ MyInterface.prototype.init = function(application) {
     //  http://workshop.chromeexperiments.com/examples/gui
     
     this.gui = new dat.GUI();
-
     // add a group of controls (and open/expand by defult)
-    
+
+    this.gui.add(this.scene, 'selectedExampleShader', {
+
+    }).name('Shader examples');
+
+
+    obj = this;
+    this.gui.add(this.scene, 'scaleFactor',-50,50).onChange(function(v)
+    {
+        obj.scene.updateScaleFactor(v);
+    });
+
+
     return true;
 };
 
