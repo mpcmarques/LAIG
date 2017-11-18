@@ -72,18 +72,18 @@ XMLscene.prototype.initLights = function() {
         }
     }
 
-}
+};
 
 XMLscene.prototype.updateScaleFactor = function (v) {
-    this.scaleFactor;
-}
+    this.scaleFactor = v;
+};
 
 /**
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
-}
+};
 
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -103,7 +103,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-}
+};
 
 /**
  * Displays the scene.
@@ -163,7 +163,7 @@ XMLscene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
-}
+};
 
 /**
  * Callback used when it is necessary to update some internal state independent of the rendering (display) of the scene. Should be reimplemented by descendants.

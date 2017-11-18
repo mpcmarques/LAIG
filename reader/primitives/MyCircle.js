@@ -47,7 +47,7 @@ MyCircle.prototype.initBuffers = function ()
         {
             this.indices.push(0, n_ver, (n_ver + 1));
 
-            n_ver = n_ver + 1;;
+            n_ver = n_ver + 1;
         }
         else
             this.indices.push(0, n_ver, 1);

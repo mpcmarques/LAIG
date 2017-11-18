@@ -30,13 +30,13 @@ function MyGraphNode(graph, nodeID) {
  */
 MyGraphNode.prototype.addChild = function(nodeID) {
     this.children.push(nodeID);
-}
+};
 
 /**
  * Adds a leaf to this node's leaves array.
  */
 MyGraphNode.prototype.addChild = function(leaf) {
     this.leaves.push(leaf);
-}
+};
 
 

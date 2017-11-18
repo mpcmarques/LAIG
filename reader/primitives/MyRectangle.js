@@ -60,7 +60,7 @@ MyRectangle.prototype.setTextureCoords = function(){
         this.maxX, this.minY,
         this.minX,  this.maxY,
         this.maxX, this.maxY
-    ]
+    ];
 };
 
 /**

@@ -66,7 +66,7 @@ MySphere.prototype.myIndices = function(verticeNumber, stacks)
 {
     this.indices.push(verticeNumber- stacks - 1,verticeNumber - 1, verticeNumber - stacks - 2);
     this.indices.push(verticeNumber - 1, verticeNumber - 2,verticeNumber - stacks - 2);
-}
+};
 
 
 /**

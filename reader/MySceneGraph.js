@@ -29,9 +29,9 @@ function MySceneGraph(filename, scene) {
     this.parsedAnimations = false;          // check if already parsed the animations.
 
     this.axisCoords = [];
-    this.axisCoords['x'] = [1, 0, 0];
-    this.axisCoords['y'] = [0, 1, 0];
-    this.axisCoords['z'] = [0, 0, 1];
+    this.axisCoords.x = [1, 0, 0];
+    this.axisCoords.y = [0, 1, 0];
+    this.axisCoords.z = [0, 0, 1];
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -398,23 +398,24 @@ MySceneGraph.prototype.parseInitials = function (initialsNode) {
 
     // Rotations.
     var initialRotations = [];
-    initialRotations['x'] = 0;
-    initialRotations['y'] = 0;
-    initialRotations['z'] = 0;
+    initialRotations.x = 0;
+    initialRotations.y = 0;
+    initialRotations.z = 0;
 
     var rotationDefined = [];
-    rotationDefined['x'] = false;
-    rotationDefined['y'] = false;
-    rotationDefined['z'] = false;
+    rotationDefined.x = false;
+    rotationDefined.y = false;
+    rotationDefined.z = false;
 
     var axis;
     var rotationOrder = [];
 
     // Third rotation (first rotation defined).
+    var angle;
     if (thirdRotationIndex != -1) {
         axis = this.reader.getItem(children[thirdRotationIndex], 'axis', ['x', 'y', 'z']);
         if (axis != null) {
-            var angle = this.reader.getFloat(children[thirdRotationIndex], 'angle');
+            angle = this.reader.getFloat(children[thirdRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
                 if (!rotationDefined[axis])
@@ -429,7 +430,7 @@ MySceneGraph.prototype.parseInitials = function (initialsNode) {
     if (secondRotationIndex != -1) {
         axis = this.reader.getItem(children[secondRotationIndex], 'axis', ['x', 'y', 'z']);
         if (axis != null) {
-            var angle = this.reader.getFloat(children[secondRotationIndex], 'angle');
+            angle = this.reader.getFloat(children[secondRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
                 if (!rotationDefined[axis])
@@ -444,7 +445,7 @@ MySceneGraph.prototype.parseInitials = function (initialsNode) {
     if (firstRotationIndex != -1) {
         axis = this.reader.getItem(children[firstRotationIndex], 'axis', ['x', 'y', 'z']);
         if (axis != null) {
-            var angle = this.reader.getFloat(children[firstRotationIndex], 'angle');
+            angle = this.reader.getFloat(children[firstRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
                 if (!rotationDefined[axis])
@@ -456,11 +457,11 @@ MySceneGraph.prototype.parseInitials = function (initialsNode) {
     }
 
     // Checks for undefined rotations.
-    if (!rotationDefined['x'])
+    if (!rotationDefined.x)
         this.onXMLMinorError("rotation along the Ox axis undefined; assuming Rx = 0");
-    else if (!rotationDefined['y'])
+    else if (!rotationDefined.y)
         this.onXMLMinorError("rotation along the Oy axis undefined; assuming Ry = 0");
-    else if (!rotationDefined['z'])
+    else if (!rotationDefined.z)
         this.onXMLMinorError("rotation along the Oz axis undefined; assuming Rz = 0");
 
     // Updates transform matrix.
@@ -535,7 +536,7 @@ MySceneGraph.prototype.parseInitials = function (initialsNode) {
     console.log("Parsed initials");
 
     return null;
-}
+};
 
 /**
  * Parses the <ILLUMINATION> block.
@@ -558,7 +559,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(r))
                 return "ambient 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
-                return "ambient 'r' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'r' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[0] = r;
         }
@@ -571,7 +572,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(g))
                 return "ambient 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
-                return "ambient 'g' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'g' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[1] = g;
         }
@@ -584,7 +585,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(b))
                 return "ambient 'b' is a non numeric value on the ILLUMINATION block";
             else if (b < 0 || b > 1)
-                return "ambient 'b' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'b' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[2] = b;
         }
@@ -597,7 +598,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(a))
                 return "ambient 'a' is a non numeric value on the ILLUMINATION block";
             else if (a < 0 || a > 1)
-                return "ambient 'a' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'a' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[3] = a;
         }
@@ -617,7 +618,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(r))
                 return "background 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
-                return "background 'r' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'r' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[0] = r;
         }
@@ -630,7 +631,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(g))
                 return "background 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
-                return "background 'g' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'g' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[1] = g;
         }
@@ -643,7 +644,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(b))
                 return "background 'b' is a non numeric value on the ILLUMINATION block";
             else if (b < 0 || b > 1)
-                return "background 'b' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'b' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[2] = b;
         }
@@ -656,7 +657,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(a))
                 return "background 'a' is a non numeric value on the ILLUMINATION block";
             else if (a < 0 || a > 1)
-                return "background 'a' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'a' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[3] = a;
         }
@@ -669,7 +670,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
     console.log("Parsed illumination");
 
     return null;
-}
+};
 
 /**
  * Parses the <LIGHTS> node.
@@ -730,7 +731,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
             else if (isNaN(aux))
                 return "'enable value' is a non numeric value on the LIGHTS block";
             else if (aux != 0 && aux != 1)
-                return "'enable value' must be 0 or 1 on the LIGHTS block"
+                return "'enable value' must be 0 or 1 on the LIGHTS block";
             else
                 enableLight = aux == 0 ? false : true;
         }
@@ -777,7 +778,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(w))
                     return "'w' is a non numeric value on the LIGHTS block";
                 else if (w < 0 || w > 1)
-                    return "'w' must be a value between 0 and 1 on the LIGHTS block"
+                    return "'w' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     positionLight.push(w);
             }
@@ -796,7 +797,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "ambient 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "ambient 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'r' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     ambientIllumination.push(r);
             }
@@ -809,7 +810,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "ambient 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "ambient 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     ambientIllumination.push(g);
             }
@@ -822,7 +823,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "ambient 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "ambient 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     ambientIllumination.push(b);
             }
@@ -835,7 +836,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "ambient 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "ambient 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'a' must be a value between 0 and 1 on the LIGHTS block";
                 ambientIllumination.push(a);
             }
             else
@@ -853,7 +854,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "diffuse 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(r);
             }
@@ -866,7 +867,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "diffuse 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(g);
             }
@@ -879,7 +880,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "diffuse 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(b);
             }
@@ -892,7 +893,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "diffuse 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(a);
             }
@@ -911,7 +912,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "specular 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "specular 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'r' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(r);
             }
@@ -924,7 +925,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "specular 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "specular 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(g);
             }
@@ -937,7 +938,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "specular 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "specular 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(b);
             }
@@ -950,7 +951,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "specular 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "specular 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'a' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(a);
             }
@@ -973,7 +974,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
     console.log("Parsed lights");
 
     return null;
-}
+};
 
 /**
  * Parses the <TEXTURES> block.
@@ -1053,7 +1054,7 @@ MySceneGraph.prototype.parseTextures = function (texturesNode) {
         return "at least one texture must be defined in the TEXTURES block";
 
     console.log("Parsed textures");
-}
+};
 
 /**
  * Parses the <MATERIALS> node.
@@ -1112,7 +1113,7 @@ MySceneGraph.prototype.parseMaterials = function (materialsNode) {
         else if (isNaN(r))
             return "specular 'r' is a non numeric value on the MATERIALS block";
         else if (r < 0 || r > 1)
-            return "specular 'r' must be a value between 0 and 1 on the MATERIALS block"
+            return "specular 'r' must be a value between 0 and 1 on the MATERIALS block";
         specularComponent.push(r);
         // G.
         var g = this.reader.getFloat(materialSpecs[specularIndex], 'g');
@@ -1286,7 +1287,7 @@ MySceneGraph.prototype.parseMaterials = function (materialsNode) {
     this.generateDefaultMaterial();
 
     console.log("Parsed materials");
-}
+};
 
 
 /**
@@ -1590,7 +1591,6 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
             return new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
         case 'sphere':
             return new MySphere(this.scene, leaf.args);
-            break;
         case 'patch':
             return new MyPatch(this.scene, leaf.args);
         default:
@@ -1728,7 +1728,7 @@ MySceneGraph.prototype.mixNodeAppearance = function (appearance, texture) {
  */
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
-    const rootNode = this.nodes[this.idRoot];
+    var rootNode = this.nodes[this.idRoot];
     // render starting from root.
     this.renderNode(rootNode);
 };
@@ -1874,7 +1874,7 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
  */
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
-    const rootNode = this.nodes[this.idRoot];
+    var rootNode = this.nodes[this.idRoot];
 
     // render starting from root.
     this.renderNode(rootNode);

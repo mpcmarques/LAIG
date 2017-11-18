@@ -20,8 +20,7 @@ BezierAnimation.prototype.animate = function (currTime) {
 
             if(this.aux > this.lenght(this.controlPoints))
             {
-              this.ended=true;
-              console.log(this.ended);
+              this.ended = true;
             }
 
   if(!this.ended) {
@@ -70,13 +69,13 @@ BezierAnimation.prototype.lenght = function (controlPoints) {
 
 
     return sum;
-}
+};
 
 BezierAnimation.prototype.distance = function (firstArray, secondArray) {
 
     return Math.sqrt(Math.pow(secondArray[0] - firstArray[0],2)+ Math.pow(secondArray[1] - firstArray[1],2) + Math.pow(secondArray[2] - firstArray[2],2));
 
-}
+};
 
 
 
@@ -90,7 +89,7 @@ BezierAnimation.prototype.subArray = function (firstArray, secondArray) {
     }
 
     return newArray;
-}
+};
 
 BezierAnimation.prototype.addArray = function (firstArray, secondArray) {
 
@@ -101,7 +100,7 @@ BezierAnimation.prototype.addArray = function (firstArray, secondArray) {
     }
 
     return newArray;
-}
+};
 
 BezierAnimation.prototype.addArray2 = function (firstArray, secondArray) {
 
@@ -112,7 +111,7 @@ BezierAnimation.prototype.addArray2 = function (firstArray, secondArray) {
     }
 
     return newArray;
-}
+};
 
 
 BezierAnimation.prototype.bezier = function(controlPoints, t) {
@@ -138,7 +137,7 @@ BezierAnimation.prototype.bezier = function(controlPoints, t) {
 
     this.point[0] = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + controlPoints[0][0];
     this.point[1] = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + controlPoints[0][1];
-    this.point[2] = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0][2]
+    this.point[2] = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0][2];
 
 
     return Math.sqrt(Math.pow(this.point[0],2) + Math.pow(this.point[2],2));

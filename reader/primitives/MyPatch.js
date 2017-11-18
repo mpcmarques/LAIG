@@ -28,18 +28,19 @@ MyPatch.prototype.constructor = MyPatch;
 
 MyPatch.prototype.getKnotsVector = function(degree) { // TODO (CGF 0.19.3): add to CGFnurbsSurface
 
-    var v = new Array();
-    for (var i = 0; i <= degree; i++) {
+    var v = [];
+    var i;
+    for (i = 0; i <= degree; i++) {
         v.push(0);
     }
-    for (var i = 0; i <= degree; i++) {
+    for (i = 0; i <= degree; i++) {
         v.push(1);
     }
     return v;
 };
 
 MyPatch.prototype.getSurfacePoint = function (u,v){
-    return this.surface.getPoint(u,v)
+    return this.surface.getPoint(u,v);
 };
 
 /**
