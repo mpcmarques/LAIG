@@ -205,8 +205,8 @@
         </ANIMATION>
 
         <ANIMATION id="combo" type="combo">
-            <SPANREF id="andar"/>
-            <SPANREF id="andar2"/>
+            <SPANREF id="volta"/>
+            <SPANREF id="volta"/>
         </ANIMATION>
 
 
@@ -242,7 +242,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATIONREF id="andar"/>
+            <ANIMATIONREF id="combo"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

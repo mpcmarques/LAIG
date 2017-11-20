@@ -13,8 +13,9 @@ ComboAnimation.prototype.update = function(deltaT){
         return;
 
     var animation = this.animations[this.currentAnimation];
-
+    console.info(animation);
     animation.update(deltaT);
+    console.info(animation);
 
     if (animation.ended){
         this.currentAnimation += 1;

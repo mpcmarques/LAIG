@@ -100,8 +100,6 @@ LinearAnimation.prototype.rotate = function(deltaT){
     var finalRotation = Math.atan2(this.point[0],this.point[2]);
 
     this.angle = finalRotation;
-
-    console.log(finalRotation, this.angle);
 };
 
 LinearAnimation.prototype.display = function () {

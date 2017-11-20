@@ -25,7 +25,7 @@ MyInterface.prototype.init = function(application) {
     // add a group of controls (and open/expand by defult)
 
     this.gui.add(this.scene, 'selectedExampleShader', {
-
+        'FlatShader' : 0
     }).name('Shader examples');
 
 

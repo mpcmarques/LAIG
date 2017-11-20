@@ -32,7 +32,7 @@ BezierAnimation.prototype.animate = function (currTime) {
       var radius = Math.sqrt(Math.pow(this.point[0], 2) + Math.pow(this.point[2], 2));
 
 
-      this.aux = this.bezier(this.controlPoints, deltaTime * this.speed);
+      this.aux = this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
       /* if(isNaN(radius))
            this.bezier(this.controlPoints,deltaTime * this.speed) ;
        else
@@ -47,7 +47,7 @@ BezierAnimation.prototype.update = function (currTime) {
     this.animate(currTime);
 };
 
-BezierAnimation.prototype.lenght = function (controlPoints) {
+BezierAnimation.prototype.length = function (controlPoints) {
 
 
     var L2 = [];

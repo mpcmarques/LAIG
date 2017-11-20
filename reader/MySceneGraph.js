@@ -1318,6 +1318,10 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             var nodeID = this.reader.getString(children[i], 'id');
             if (nodeID == null)
                 return "failed to retrieve node ID";
+
+            var selectable = false;
+            selectable = this.reader.getBoolean(children[i], 'selectable', false);
+            
             // Checks if ID is valid.
             if (this.nodes[nodeID] != null)
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
