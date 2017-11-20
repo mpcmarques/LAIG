@@ -1333,7 +1333,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             this.log("Processing node " + nodeID);
 
             // Creates node.
-            this.nodes[nodeID] = new MyGraphNode(this, nodeID);
+            this.nodes[nodeID] = new MyGraphNode(this, nodeID, selectable);
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1760,6 +1760,13 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if (nodeAppearance != null)
         nodeAppearance.apply();
 
+    // apply shader
+    var modifiedShader = false;
+    if(node.selectable) {
+        this.scene.setActiveShader(this.scene.testShaders[this.scene.selectedExampleShader]);
+        modifiedShader = true;
+    }
+
     // apply animation
     var nodeAnimation = node.animationID;
     this.scene.pushMatrix();
@@ -1789,6 +1796,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         }
     }
     this.scene.popMatrix();
+    if(modifiedShader)
+        this.scene.setActiveShader(this.scene.defaultShader);
 };
 
 /**

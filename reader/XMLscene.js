@@ -11,7 +11,6 @@ function XMLscene(interface) {
     this.scaleFactor = 1.0;
     this.lightValues = {};
     this.selectedExampleShader=0;
-    this.setUniformValues = 1.0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -34,7 +33,8 @@ XMLscene.prototype.init = function(application) {
 
 
     this.testShaders=[
-        new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag")
+        new CGFshader(this.gl, "shaders/vertex.vert", "shaders/vertex.frag"),
+        new CGFshader(this.gl, "shaders/fragment.vert", "shaders/fragment.frag")
     ];
 
     this.axis = new CGFaxis(this);
@@ -79,7 +79,8 @@ XMLscene.prototype.initLights = function() {
 };
 
 XMLscene.prototype.updateScaleFactor = function (v) {
-    this.testShaders[0].setUniformsValues({normScale: this.setUniformValues})
+    this.testShaders[0].setUniformsValues({normScale: this.scaleFactor});
+    this.testShaders[1].setUniformsValues({normScale: this.scaleFactor});
 };
 
 /**

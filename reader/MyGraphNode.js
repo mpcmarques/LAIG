@@ -2,13 +2,14 @@
  * MyGraphNode class, representing an intermediate node in the scene graph.
  * @param graph     Scene graph.
  * @param nodeID    Node identifier.
+ * @param selectable    Select to apply shaders.
  * @constructor
  */
-function MyGraphNode(graph, nodeID) {
+function MyGraphNode(graph, nodeID, selectable) {
     this.graph = graph;
-
     this.nodeID = nodeID;
-    
+    this.selectable = selectable;
+
     // IDs of child nodes.
     this.children = [];
 
