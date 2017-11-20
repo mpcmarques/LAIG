@@ -7,15 +7,13 @@ function ComboAnimation(scene, animations){
 ComboAnimation.prototype.constructor = ComboAnimation;
 
 
-ComboAnimation.prototype.update = function(deltaT){
+ComboAnimation.prototype.update = function(currTime){
 
     if(this.ended)
         return;
 
     var animation = this.animations[this.currentAnimation];
-    console.info(animation);
-    animation.update(deltaT);
-    console.info(animation);
+    animation.update(currTime);
 
     if (animation.ended){
         this.currentAnimation += 1;

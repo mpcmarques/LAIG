@@ -6,6 +6,7 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     this.radius = radius;
     this.startang = DEGREE_TO_RAD * startang;
     this.rotang = DEGREE_TO_RAD * rotang;
+    this.initialAngle = this.startang;
     this.point = [];
 }
 
@@ -13,27 +14,25 @@ CircularAnimation.prototype = Object.create(Animation.prototype);
 CircularAnimation.prototype.constructor = CircularAnimation;
 
 CircularAnimation.prototype.animate = function (currTime) {
-    if (!this.ended) {
+    if (this.ended)
+        return;
 
-        if (this.currentTime != null) {
-
-            var startTime = ((currTime - this.currentTime) / 1000.0);
-
-            var currang = this.startang;
+    if (this.initialTime == null)
+        this.initialTime = currTime;
 
 
-            this.point[0] = this.center[0] + this.radius * Math.sin(currang);
-            this.point[1] = this.center[2] + this.radius * Math.cos(currang);
-            this.startang += startTime * this.speed;
+    var startTime = ((currTime - this.initialTime) / 1000.0);
+
+    var currang = this.startang;
+
+    this.point[0] = this.center[0] + this.radius * Math.sin(currang);
+    this.point[1] = this.center[2] + this.radius * Math.cos(currang);
+    this.startang = this.initialAngle + startTime * this.speed;
 
 
-        }
-        this.currentTime = currTime;
+    if (this.startang >= this.rotang)
+        this.ended = true;
 
-        if (this.startang >= this.rotang)
-            this.ended = true;
-
-    }
 };
 
 CircularAnimation.prototype.update = function (currTime) {
