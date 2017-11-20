@@ -183,7 +183,7 @@
         <!-- andar -->
         <ANIMATION id="andar" speed="5" type="linear">
                 <CONTROLPOINT xx="0" yy="0" zz="0"/>
-                <CONTROLPOINT xx="10" yy="0" zz="0"/>
+                <CONTROLPOINT xx="10" yy="5" zz="0"/>
                 <CONTROLPOINT xx="0" yy="0" zz="10"/>
         </ANIMATION>
 
@@ -242,7 +242,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATIONREF id="curva"/>
+            <ANIMATIONREF id="andar"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

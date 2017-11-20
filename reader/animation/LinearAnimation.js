@@ -1,5 +1,6 @@
 function LinearAnimation(scene, controlPoints, speed) {
     ControlPointAnimation.call(this, scene, speed, controlPoints);
+    this.angle = 0;
 }
 
 LinearAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -26,7 +27,7 @@ LinearAnimation.prototype.move = function (currTime) {
     var lastPoint = this.controlPoints[this.currentControlPoint];
 
     // chooses front or back movement
-    var Xsign, Zsign;
+    var Xsign, Zsign, Ysign;
     if (lastPoint[0] - nextPoint[0] < 0)
         Xsign = 1;
     else
@@ -37,8 +38,13 @@ LinearAnimation.prototype.move = function (currTime) {
     else
         Zsign = -1;
 
+    if(lastPoint[1] - nextPoint[1] < 0)
+        Ysign = 1;
+    else
+        Ysign = -1;
+
     // check if arrived at a control point final coordinate
-    var xArrived = false, zArrived = false;
+    var xArrived = false, zArrived = false, yArrived = false;
     if (Xsign == 1) {
         if (this.point[0] >= nextPoint[0])
             xArrived = true;
@@ -55,6 +61,14 @@ LinearAnimation.prototype.move = function (currTime) {
             zArrived = true;
     }
 
+    if(Ysign  == 1){
+        if(this.point[1] >= nextPoint[1])
+            yArrived = true;
+    } else {
+        if (this.point[1] <= nextPoint[1])
+            yArrived = true;
+    }
+
     // X = Xo + v * t if not arrived yet.
     if (!xArrived)
         this.point[0] = lastPoint[0] + Xsign * deltaT * this.speed;
@@ -62,23 +76,35 @@ LinearAnimation.prototype.move = function (currTime) {
     if (!zArrived)
         this.point[2] = lastPoint[2] + Zsign * deltaT * this.speed;
 
+    if(!yArrived)
+        this.point[1] = lastPoint[1] + Ysign * deltaT * this.speed;
+
     // arrived at next control points, change the current.
-    if (xArrived && zArrived) {
+    if (xArrived && zArrived && yArrived) {
         this.currentControlPoint += 1;
         this.initialTime = currTime;
         this.point[0] = nextPoint[0];
+        this.point[1] = nextPoint[1];
         this.point[2] = nextPoint[2];
     }
+
+    this.rotate(deltaT);
 
     if (this.currentControlPoint == this.controlPoints.length - 1)
         this.ended = true;
 };
 
-LinearAnimation.prototype.display = function () {
-    // Dx and Dz
+LinearAnimation.prototype.rotate = function(deltaT){
     var dx = this.point[0] - this.controlPoints[this.currentControlPoint][0];
     var dz = this.point[2] - this.controlPoints[this.currentControlPoint][2];
-    var angle = Math.atan2(dx, dz);
-    this.scene.translate(this.point[0], 0, this.point[2]);
-    this.scene.rotate(angle, 0, 1, 0);
+    var finalRotation = Math.atan2(this.point[0],this.point[2]);
+
+    this.angle = finalRotation;
+
+    console.log(finalRotation, this.angle);
+};
+
+LinearAnimation.prototype.display = function () {
+    this.scene.translate(this.point[0], this.point[1], this.point[2]);
+    this.scene.rotate(this.angle, 0, 1, 0);
 };
