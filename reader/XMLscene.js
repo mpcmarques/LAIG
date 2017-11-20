@@ -11,6 +11,7 @@ function XMLscene(interface) {
     this.scaleFactor = 1.0;
     this.lightValues = {};
     this.selectedExampleShader=0;
+    this.setUniformValues = 1.0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -32,9 +33,12 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 
-    this.testShaders=[];
+    this.testShaders=[
+        new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag")
+    ];
 
     this.axis = new CGFaxis(this);
+
 
     // sets update period
     this.setUpdatePeriod(30);
@@ -75,7 +79,7 @@ XMLscene.prototype.initLights = function() {
 };
 
 XMLscene.prototype.updateScaleFactor = function (v) {
-    this.scaleFactor = v;
+    this.testShaders[0].setUniformsValues({normScale: this.setUniformValues})
 };
 
 /**

@@ -7,7 +7,7 @@ function BezierAnimation(scene, controlPoints, speed) {
     this.incialY = this.controlPoints[0][1];
     this.inicialZ = this.controlPoints[0][2];
     this.aux = 0.0;
-    console.log(this.lenght(this.controlPoints));
+    console.log(this.length(this.controlPoints));
 }
 
 BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -18,7 +18,7 @@ BezierAnimation.prototype.animate = function (currTime) {
 //y = (1−t)2 * 0 + 2(1−t)t * 1 + t2 * 0 = 2(1-t)t = –t2 + 2t
 
 
-            if(this.aux > this.lenght(this.controlPoints))
+            if(this.aux > this.length(this.controlPoints))
             {
               this.ended = true;
             }
