@@ -13,6 +13,7 @@ ComboAnimation.prototype.update = function(currTime){
         return;
 
     var animation = this.animations[this.currentAnimation];
+
     animation.update(currTime);
 
     if (animation.ended){

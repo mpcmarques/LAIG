@@ -211,12 +211,14 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 }
 
                 var selectedAnimation = this.animations[animationName];
+
                 if (selectedAnimation instanceof LinearAnimation){
                     comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
                 }
                 else if (selectedAnimation instanceof CircularAnimation){
                     comboAnimations.push(
-                        new CircularAnimation(this.scene, selectedAnimation.speed,
+                        new CircularAnimation(this.scene,
+                            selectedAnimation.speed,
                             selectedAnimation.center,
                             selectedAnimation.radius,
                             selectedAnimation.startang,
@@ -225,7 +227,9 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                     );
                 }
                 else if(selectedAnimation instanceof BezierAnimation) {
-                    comboAnimations.push(new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
+                    comboAnimations.push(
+                        new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
+                    );
                 }
                 else {
                     this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
@@ -1321,7 +1325,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
             var selectable = false;
             selectable = this.reader.getBoolean(children[i], 'selectable', false);
-            
+
             // Checks if ID is valid.
             if (this.nodes[nodeID] != null)
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
