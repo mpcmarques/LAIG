@@ -204,7 +204,7 @@
             <CONTROLPOINT xx="0" yy="0" zz="30"/>
         </ANIMATION>
 
-        <ANIMATION id="combo" speed="1" type="combo">
+        <ANIMATION id="combo" type="combo">
             <SPANREF id="andar"/>
             <SPANREF id="andar2"/>
         </ANIMATION>
@@ -242,7 +242,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATION id="curva"/>
+            <ANIMATIONREF id="curva"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

@@ -181,18 +181,21 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
             return;
         }
 
-        // parse speed
-        var speed = this.reader.getFloat(animation, "speed", true);
-
-        if (speed == null) {
-            this.onXMLMinorError("unable to parse the speed of the animation " + id);
-        }
         // parse type
         var type = this.reader.getItem(animation, 'type', ['linear', 'circular', 'bezier', 'combo'], true);
 
         if (type == null) {
             this.onXMLMinorError("unable to parse type of animation " + id);
             return;
+        }
+
+        if(type != 'combo') {
+            // parse speed
+            var speed = this.reader.getFloat(animation, "speed", true);
+
+            if (speed == null) {
+                this.onXMLMinorError("unable to parse the speed of the animation " + id);
+            }
         }
 
         if (type == 'combo'){
@@ -229,8 +232,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                     return;
                 }
             }
-            this.animations[id] = new ComboAnimation(this.scene, speed, comboAnimations);
-            console.log(comboAnimations);
+            this.animations[id] = new ComboAnimation(this.scene, comboAnimations);
         }
 
         if (type == "circular") {
@@ -1328,7 +1330,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATION"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREF"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1363,7 +1365,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             this.nodes[nodeID].textureID = textureID;
 
             // Retrieves animation ID.
-            var animationIndex = specsNames.indexOf("ANIMATION");
+            var animationIndex = specsNames.indexOf("ANIMATIONREF");
             if (animationIndex != -1) {
                 var animationID = this.reader.getString(nodeSpecs[animationIndex], 'id');
                 if (animationID == null)
