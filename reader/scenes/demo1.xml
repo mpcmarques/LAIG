@@ -241,7 +241,7 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="apollo11" selectable="true">
+        <NODE id="apollo11" selectable="false">
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
             <TRANSLATION x="0" y="2" z="0"/>
@@ -249,6 +249,7 @@
 
             <ANIMATIONREFS>
             <ANIMATIONREF id="curva"/>
+            <ANIMATIONREF id="andar"/>
             </ANIMATIONREFS>
 
 

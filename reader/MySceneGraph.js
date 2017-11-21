@@ -169,7 +169,7 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
 MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
     var children = animationsNode.children;
-
+    console.log(children);
     for (var i = 0; i < children.length; i++) {
         var animation = children[i];
 
@@ -1470,6 +1470,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
 
                                this.nodes[nodeID].addAnimation(curId);
+                               this.nodes[nodeID].animationID = curId;
                                anisizeChildren++;
                            }
                        }
