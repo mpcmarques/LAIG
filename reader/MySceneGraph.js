@@ -23,7 +23,7 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
     this.animations = {};
-
+    this.myAnimations = [];
     this.idRoot = null;                    // The id of the root element.
 
     this.parsedAnimations = false;          // check if already parsed the animations.
@@ -1470,10 +1470,13 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
 
                                this.nodes[nodeID].addAnimation(curId);
+                               this.myAnimations.push(curId);
                                this.nodes[nodeID].animationID = curId;
                                anisizeChildren++;
+                               this.nodes[nodeID].hasAnimation = true;
                            }
                        }
+                   this.nodes[nodeID].animationID = this.myAnimations;
                }
 
 
@@ -1783,10 +1786,23 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     }
 
     // apply animation
-    var nodeAnimation = node.animationID;
-    this.scene.pushMatrix();
-    if (nodeAnimation != null)
-        this.animations[nodeAnimation].display();
+    var nodeAnimation = node.animations[0];
+    var test = node.animations;
+    if(node.hasAnimation) {
+        console.log(node.animations);
+        console.log(node.animations.length);
+        for (var i = 0; i < node.animations.length; i++) {
+        this.scene.pushMatrix();
+        if (test[i] != null)
+            console.log(test[i]);
+            this.animations[test[i]].display();
+    }
+    }
+
+        this.scene.pushMatrix();
+        if (nodeAnimation != null)
+            this.animations[nodeAnimation].display();
+
 
     for (var i = 0; i < node.leaves.length; i++) {
         var leafNode = node.leaves[i];
