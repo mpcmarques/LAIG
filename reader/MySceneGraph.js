@@ -284,7 +284,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
     }
 
 
-    console.log("Parsed animations.");
+    console.log("Parsed.");
     this.parsedAnimations = true;
 };
 
@@ -1338,7 +1338,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREF"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS","DESCENDANTS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1371,18 +1371,6 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].textureID = textureID;
-
-            // Retrieves animation ID.
-            var animationIndex = specsNames.indexOf("ANIMATIONREF");
-            if (animationIndex != -1) {
-                var animationID = this.reader.getString(nodeSpecs[animationIndex], 'id');
-                if (animationID == null)
-                    return "unable to parse Animation ID (node ID = " + nodeID + ")";
-                if (animationID != "null" && this.animations[animationID] == null)
-                    return "ID does not correspond to a valid animation (node ID = " + nodeID + ")";
-
-                this.nodes[nodeID].animationID = animationID;
-            }
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
@@ -1464,6 +1452,32 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                         break;
                 }
             }
+
+
+
+                var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+               if(animationsIndex != -1)
+               {
+                   var aniDescendants = nodeSpecs[animationsIndex].childNodes;
+                   console.log(aniDescendants);
+                   var anisizeChildren = 0;
+                   for (var j = 0; j < aniDescendants.length; j++) {
+                       if (aniDescendants[j].nodeName == "ANIMATIONREF") {
+
+                           var curId = this.reader.getString(aniDescendants[j], 'id');
+
+                           this.log("   Descendant: " + curId);
+
+
+                               this.nodes[nodeID].addAnimation(curId);
+                               anisizeChildren++;
+                           }
+                       }
+               }
+
+
+
+
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");

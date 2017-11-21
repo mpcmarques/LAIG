@@ -197,7 +197,7 @@
           centerx="0" centery="0" centerz="3"
           radius="10" startang="0" rotang="180"/>
 
-        <ANIMATION id="curva" speed="1" type="bezier">
+        <ANIMATION id="curva" speed="10" type="bezier">
             <CONTROLPOINT xx="0" yy="0" zz="0"/>
             <CONTROLPOINT xx="30" yy="0" zz="0"/>
             <CONTROLPOINT xx="30" yy="0" zz="30"/>
@@ -228,6 +228,9 @@
             <MATERIAL id="defaultMaterial"/>
             <TEXTURE id="null"/>
 
+
+
+
             <DESCENDANTS>
                 <NODEREF id="chao"/>
                 <NODEREF id="bandeiraCompleta"/>
@@ -241,10 +244,14 @@
         <NODE id="apollo11" selectable="true">
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
-
-            <ANIMATIONREF id="andar"/>
-
             <TRANSLATION x="0" y="2" z="0"/>
+
+
+            <ANIMATIONREFS>
+            <ANIMATIONREF id="curva"/>
+            </ANIMATIONREFS>
+
+
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>

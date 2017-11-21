@@ -22,6 +22,9 @@ function MyGraphNode(graph, nodeID, selectable) {
     // The texture ID.
     this.textureID = null ;
 
+    // IDs of animations
+    this.animations = [];
+
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
 }
@@ -32,6 +35,12 @@ function MyGraphNode(graph, nodeID, selectable) {
 MyGraphNode.prototype.addChild = function(nodeID) {
     this.children.push(nodeID);
 };
+
+MyGraphNode.prototype.addAnimation = function (animationID) {
+    this.animations.push(animationID);
+};
+
+
 
 /**
  * Adds a leaf to this node's leaves array.
