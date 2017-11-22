@@ -242,7 +242,9 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
 
-            <ANIMATIONREF id="andar"/>
+            <ANIMATIONREFS>
+                <ANIMATIONREF id="andar"/>
+            </ANIMATIONREFS>
 
             <TRANSLATION x="0" y="2" z="0"/>
 

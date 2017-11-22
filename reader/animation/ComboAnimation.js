@@ -3,6 +3,7 @@ function ComboAnimation(scene, animations){
     this.animations = animations;
     this.currentAnimation = 0;
     this.animationsNumber = this.animations.length;
+    this.ended = false;
 }
 ComboAnimation.prototype.constructor = ComboAnimation;
 

@@ -199,8 +199,9 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
         }
 
         if (type == 'combo'){
-            var comboAnimations = [];
-            for (var k = 0; k < animation.children.length; k++){
+            var animationsIds = [];
+
+            for(var k = 0; k < animation.children.length; k++){
                 var currentAnimation = animation.children[k];
 
                 var animationName = this.reader.getString(currentAnimation, "id", true);
@@ -210,33 +211,10 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                     return;
                 }
 
-                var selectedAnimation = this.animations[animationName];
-
-                if (selectedAnimation instanceof LinearAnimation){
-                    comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
-                }
-                else if (selectedAnimation instanceof CircularAnimation){
-                    comboAnimations.push(
-                        new CircularAnimation(this.scene,
-                            selectedAnimation.speed,
-                            selectedAnimation.center,
-                            selectedAnimation.radius,
-                            selectedAnimation.startang,
-                            selectedAnimation.rotang
-                        )
-                    );
-                }
-                else if(selectedAnimation instanceof BezierAnimation) {
-                    comboAnimations.push(
-                        new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
-                    );
-                }
-                else {
-                    this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
-                    return;
-                }
+                animationsIds.push(animationName);
             }
-            this.animations[id] = new ComboAnimation(this.scene, comboAnimations);
+
+            this.parseComboAnimation(id, animationsIds);
         }
 
         if (type == "circular") {
@@ -286,6 +264,40 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
     console.log("Parsed animations.");
     this.parsedAnimations = true;
+};
+
+MySceneGraph.prototype.parseComboAnimation = function(id, animationsIDs){
+    var comboAnimations = [];
+    for (var k = 0; k < animationsIDs.length; k++){
+        var animationName = animationsIDs[k];
+
+        var selectedAnimation = this.animations[animationName];
+
+        if (selectedAnimation instanceof LinearAnimation){
+            comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
+        }
+        else if (selectedAnimation instanceof CircularAnimation){
+            comboAnimations.push(
+                new CircularAnimation(this.scene,
+                    selectedAnimation.speed,
+                    selectedAnimation.center,
+                    selectedAnimation.radius,
+                    selectedAnimation.startang,
+                    selectedAnimation.rotang
+                )
+            );
+        }
+        else if(selectedAnimation instanceof BezierAnimation) {
+            comboAnimations.push(
+                new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
+            );
+        }
+        else {
+            this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
+            return;
+        }
+    }
+    this.animations[id] = new ComboAnimation(this.scene, comboAnimations);
 };
 
 /**
@@ -1338,7 +1350,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREF"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1371,18 +1383,6 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].textureID = textureID;
-
-            // Retrieves animation ID.
-            var animationIndex = specsNames.indexOf("ANIMATIONREF");
-            if (animationIndex != -1) {
-                var animationID = this.reader.getString(nodeSpecs[animationIndex], 'id');
-                if (animationID == null)
-                    return "unable to parse Animation ID (node ID = " + nodeID + ")";
-                if (animationID != "null" && this.animations[animationID] == null)
-                    return "ID does not correspond to a valid animation (node ID = " + nodeID + ")";
-
-                this.nodes[nodeID].animationID = animationID;
-            }
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
@@ -1463,6 +1463,26 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                     default:
                         break;
                 }
+            }
+
+            // Retrieves animation ID.
+            var animationIndex = specsNames.indexOf("ANIMATIONREFS");
+            if (animationIndex != -1) {
+                var animationsNodes = nodeSpecs[animationIndex].children;
+                var animations = [];
+
+                for(var n = 0; n < animationsNodes.length; n++) {
+                    var animationID = this.reader.getString(animationsNodes[n], 'id');
+
+                    if (animationID == null)
+                        return "unable to parse Animation ID (node ID = " + nodeID + ")";
+                    if (animationID != "null" && this.animations[animationID] == null)
+                        return "ID does not correspond to a valid animation (node ID = " + nodeID + ") (animation ID= "+ animationID + ")";
+
+                    animations.push(animationID);
+                }
+                // creates a new combo animation based on node animations
+                this.parseComboAnimation(nodeID, animations);
             }
 
             // Retrieves information about children.
@@ -1768,10 +1788,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     }
 
     // apply animation
-    var nodeAnimation = node.animationID;
+    var animation = this.animations[node.nodeID];
     this.scene.pushMatrix();
-    if (nodeAnimation != null)
-        this.animations[nodeAnimation].display();
+    if (animation != null)
+        animation.display();
 
     for (var i = 0; i < node.leaves.length; i++) {
         var leafNode = node.leaves[i];
