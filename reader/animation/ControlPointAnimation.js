@@ -2,8 +2,9 @@
 * Abstract class, represent an animation that needs control points.
 */
 var ControlPointAnimation = function(scene, speed, controlPoints) {
-  Animation.call(this, scene, speed);
+  Animation.call(this, scene);
 
+  this.speed = speed;
   this.controlPoints = controlPoints;
   this.currentControlPoint = 0;
   this.point = controlPoints[0].splice();

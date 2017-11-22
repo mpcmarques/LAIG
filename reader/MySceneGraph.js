@@ -23,7 +23,7 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
     this.animations = {};
-    this.myAnimations = [];
+
     this.idRoot = null;                    // The id of the root element.
 
     this.parsedAnimations = false;          // check if already parsed the animations.
@@ -169,7 +169,7 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
 MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
     var children = animationsNode.children;
-    console.log(children);
+
     for (var i = 0; i < children.length; i++) {
         var animation = children[i];
 
@@ -199,8 +199,9 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
         }
 
         if (type == 'combo'){
-            var comboAnimations = [];
-            for (var k = 0; k < animation.children.length; k++){
+            var animationsIds = [];
+
+            for(var k = 0; k < animation.children.length; k++){
                 var currentAnimation = animation.children[k];
 
                 var animationName = this.reader.getString(currentAnimation, "id", true);
@@ -210,33 +211,10 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                     return;
                 }
 
-                var selectedAnimation = this.animations[animationName];
-
-                if (selectedAnimation instanceof LinearAnimation){
-                    comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
-                }
-                else if (selectedAnimation instanceof CircularAnimation){
-                    comboAnimations.push(
-                        new CircularAnimation(this.scene,
-                            selectedAnimation.speed,
-                            selectedAnimation.center,
-                            selectedAnimation.radius,
-                            selectedAnimation.startang,
-                            selectedAnimation.rotang
-                        )
-                    );
-                }
-                else if(selectedAnimation instanceof BezierAnimation) {
-                    comboAnimations.push(
-                        new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
-                    );
-                }
-                else {
-                    this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
-                    return;
-                }
+                animationsIds.push(animationName);
             }
-            this.animations[id] = new ComboAnimation(this.scene, comboAnimations);
+
+            this.parseComboAnimation(id, animationsIds);
         }
 
         if (type == "circular") {
@@ -284,8 +262,42 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
     }
 
 
-    console.log("Parsed.");
+    console.log("Parsed animations.");
     this.parsedAnimations = true;
+};
+
+MySceneGraph.prototype.parseComboAnimation = function(id, animationsIDs){
+    var comboAnimations = [];
+    for (var k = 0; k < animationsIDs.length; k++){
+        var animationName = animationsIDs[k];
+
+        var selectedAnimation = this.animations[animationName];
+
+        if (selectedAnimation instanceof LinearAnimation){
+            comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
+        }
+        else if (selectedAnimation instanceof CircularAnimation){
+            comboAnimations.push(
+                new CircularAnimation(this.scene,
+                    selectedAnimation.speed,
+                    selectedAnimation.center,
+                    selectedAnimation.radius,
+                    selectedAnimation.startang,
+                    selectedAnimation.rotang
+                )
+            );
+        }
+        else if(selectedAnimation instanceof BezierAnimation) {
+            comboAnimations.push(
+                new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
+            );
+        }
+        else {
+            this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);
+            return;
+        }
+    }
+    this.animations[id] = new ComboAnimation(this.scene, comboAnimations);
 };
 
 /**
@@ -1338,7 +1350,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS","DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1453,35 +1465,25 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                 }
             }
 
+            // Retrieves animation ID.
+            var animationIndex = specsNames.indexOf("ANIMATIONREFS");
+            if (animationIndex != -1) {
+                var animationsNodes = nodeSpecs[animationIndex].children;
+                var animations = [];
 
+                for(var n = 0; n < animationsNodes.length; n++) {
+                    var animationID = this.reader.getString(animationsNodes[n], 'id');
 
-                var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
-               if(animationsIndex != -1)
-               {
-                   var aniDescendants = nodeSpecs[animationsIndex].childNodes;
-                   console.log(aniDescendants);
-                   var anisizeChildren = 0;
-                   for (var j = 0; j < aniDescendants.length; j++) {
-                       if (aniDescendants[j].nodeName == "ANIMATIONREF") {
+                    if (animationID == null)
+                        return "unable to parse Animation ID (node ID = " + nodeID + ")";
+                    if (animationID != "null" && this.animations[animationID] == null)
+                        return "ID does not correspond to a valid animation (node ID = " + nodeID + ") (animation ID= "+ animationID + ")";
 
-                           var curId = this.reader.getString(aniDescendants[j], 'id');
-
-                           this.log("   Descendant: " + curId);
-
-
-                               this.nodes[nodeID].addAnimation(curId);
-                               this.myAnimations.push(curId);
-                               this.nodes[nodeID].animationID = curId;
-                               anisizeChildren++;
-                               this.nodes[nodeID].hasAnimation = true;
-                           }
-                       }
-                   this.nodes[nodeID].animationID = this.myAnimations;
-               }
-
-
-
-
+                    animations.push(animationID);
+                }
+                // creates a new combo animation based on node animations
+                this.parseComboAnimation(nodeID, animations);
+            }
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
@@ -1786,23 +1788,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     }
 
     // apply animation
-    var nodeAnimation = node.animations[0];
-    var test = node.animations;
-    if(node.hasAnimation) {
-        console.log(node.animations);
-        console.log(node.animations.length);
-        for (var i = 0; i < node.animations.length; i++) {
-        this.scene.pushMatrix();
-        if (test[i] != null)
-            console.log(test[i]);
-            this.animations[test[i]].display();
-    }
-    }
-
-        this.scene.pushMatrix();
-        if (nodeAnimation != null)
-            this.animations[nodeAnimation].display();
-
+    var animation = this.animations[node.nodeID];
+    this.scene.pushMatrix();
+    if (animation != null)
+        animation.display();
 
     for (var i = 0; i < node.leaves.length; i++) {
         var leafNode = node.leaves[i];

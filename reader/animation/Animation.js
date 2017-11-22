@@ -1,9 +1,8 @@
 /**
 * Animation's abstract superclass.
 */
-var Animation = function(scene, speed) {
+var Animation = function(scene) {
     this.scene = scene;
-    this.speed = speed;
     this.ended = false;
 };
 
