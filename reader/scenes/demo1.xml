@@ -197,7 +197,7 @@
           centerx="0" centery="0" centerz="3"
           radius="10" startang="0" rotang="180"/>
 
-        <ANIMATION id="curva" speed="1" type="bezier">
+        <ANIMATION id="curva" speed="5" type="bezier">
             <CONTROLPOINT xx="0" yy="0" zz="0"/>
             <CONTROLPOINT xx="30" yy="0" zz="0"/>
             <CONTROLPOINT xx="30" yy="0" zz="30"/>
@@ -243,6 +243,7 @@
             <TEXTURE id="null" />
 
             <ANIMATIONREFS>
+                <ANIMATIONREF id="curva"/>
                 <ANIMATIONREF id="andar"/>
             </ANIMATIONREFS>
 

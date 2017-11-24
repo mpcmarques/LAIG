@@ -78,10 +78,11 @@ XMLscene.prototype.initLights = function() {
 
 };
 
-XMLscene.prototype.updateScaleFactor = function (v) {
-    this.testShaders[0].setUniformsValues({normScale: this.scaleFactor});
-    this.testShaders[1].setUniformsValues({normScale: this.scaleFactor});
-};
+XMLscene.prototype.myTime = function () {
+    var myDate = new Date;
+    return myDate.getMilliseconds()/1000;
+}
+
 
 /**
  * Initializes the scene cameras.
@@ -176,4 +177,5 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
+    this.testShaders[0].setUniformsValues({deltaT: this.myTime()});
 };

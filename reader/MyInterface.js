@@ -30,11 +30,6 @@ MyInterface.prototype.init = function(application) {
     }).name('Shaders');
 
 
-    obj = this;
-    this.gui.add(this.scene, 'scaleFactor',-50,50).onChange(function(v)
-    {
-        obj.scene.updateScaleFactor(v);
-    });
 
 
     return true;
