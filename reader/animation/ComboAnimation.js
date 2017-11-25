@@ -9,27 +9,21 @@ ComboAnimation.prototype = Object.create(Animation.prototype);
 ComboAnimation.prototype.constructor = ComboAnimation;
 
 ComboAnimation.prototype.update = function(currTime){
-
-    if(this.ended)
-        return;
-
-    var animation = this.animations[this.currentAnimation];
-
-    animation.update(currTime);
-
-    if (animation.ended){
-        this.currentAnimation += 1;
-    }
-
-    if(this.currentAnimation == this.animationsNumber) {
+    if( this.currentAnimation < this.animationsNumber){
+        
+        var animation = this.animations[this.currentAnimation];
+        
+        animation.update(currTime);
+        
+        if (animation.ended && this.currentAnimation+1 < this.animationsNumber){
+            this.currentAnimation += 1;
+        }
+    } else {
         this.ended = true;
     }
 };
-
-ComboAnimation.prototype.display = function(){
-
-    if(!this.ended) {
+    
+    ComboAnimation.prototype.display = function(){
         var animation = this.animations[this.currentAnimation];
         animation.display();
-    }
-};
+    };
