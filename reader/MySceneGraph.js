@@ -26,7 +26,7 @@ function MySceneGraph(filename, scene) {
 
     this.idRoot = null;                    // The id of the root element.
 
-    this.parsedAnimations = false;          // check if already parsed the animations.
+    this.isAllParsed = false;          // check if already parsed the animations.
 
     this.axisCoords = [];
     this.axisCoords.x = [1, 0, 0];
@@ -163,7 +163,7 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
         if ((error = this.parseNodes(nodes[index])) != null)
             return error;
     }
-
+    this.isAllParsed = true;
 };
 
 MySceneGraph.prototype.parseAnimations = function (animationsNode) {
@@ -259,10 +259,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 this.animations[id] = new BezierAnimation(this.scene, controlPoints, speed);
         }
     }
-
-
     console.log("Parsed animations.");
-    this.parsedAnimations = true;
 };
 
 MySceneGraph.prototype.parseComboAnimation = function(id, animationsIDs){
@@ -1926,7 +1923,7 @@ MySceneGraph.prototype.displayScene = function () {
  * Updates the scene, independent of rendering.
  */
 MySceneGraph.prototype.update = function (currTime) {
-    if(this.parsedAnimations) { // check if animations are already parsed.
+    if(this.isAllParsed) { // check if animations are already parsed.
         for (var animationId in this.animations) {
             if (this.animations.hasOwnProperty(animationId)) {
                 var animation = this.animations[animationId];

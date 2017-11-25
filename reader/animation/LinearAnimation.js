@@ -1,8 +1,6 @@
 function LinearAnimation(scene, controlPoints, speed) {
     ControlPointAnimation.call(this, scene, speed, controlPoints);
-    this.angle = 0;
-    this.initialAngle = 0;
-    this.nextAngle = 0;
+    this.rotate();
 }
 
 LinearAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -30,7 +28,7 @@ LinearAnimation.prototype.move = function (currTime) {
     var lastPoint = this.controlPoints[this.currentControlPoint];
 
     // rotate
-    this.rotate(deltaT);
+    this.rotate();
     
     // chooses front or back movement
     var Xsign, Zsign, Ysign;
@@ -98,7 +96,7 @@ LinearAnimation.prototype.move = function (currTime) {
     this.ended = true;
 };
 
-LinearAnimation.prototype.rotate = function(deltaT){
+LinearAnimation.prototype.rotate = function(){
     /*
     var nextPoint = this.controlPoints[this.currentControlPoint+1];
     var nextOtherPoint = this.controlPoints[this.currentControlPoint+2];
