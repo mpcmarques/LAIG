@@ -98,8 +98,8 @@ LinearAnimation.prototype.move = function (currTime) {
 
 LinearAnimation.prototype.rotate = function(deltaT){
     
-    var nextPoint = this.controlPoints[this.currentControlPoint+1]
-    var nextOtherPoint = this.controlPoints[this.currentControlPoint+2]
+    var nextPoint = this.controlPoints[this.currentControlPoint+1];
+    var nextOtherPoint = this.controlPoints[this.currentControlPoint+2];
     
     if (nextPoint != null && nextOtherPoint != null){
         var dx = nextOtherPoint[0] - nextPoint[1];
