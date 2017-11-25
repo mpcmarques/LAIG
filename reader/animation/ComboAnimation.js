@@ -22,8 +22,8 @@ ComboAnimation.prototype.update = function(currTime){
         this.ended = true;
     }
 };
-    
-    ComboAnimation.prototype.display = function(){
-        var animation = this.animations[this.currentAnimation];
-        animation.display();
-    };
+
+ComboAnimation.prototype.display = function(){
+    var animation = this.animations[this.currentAnimation];
+    animation.display();
+};

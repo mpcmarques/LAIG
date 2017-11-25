@@ -181,7 +181,7 @@
 
     <ANIMATIONS>
         <!-- andar -->
-        <ANIMATION id="andar" speed="1" type="linear">
+        <ANIMATION id="andar" speed="5" type="linear">
                 <CONTROLPOINT xx="0" yy="0" zz="0"/>
                 <CONTROLPOINT xx="10" yy="5" zz="0"/>
                 <CONTROLPOINT xx="0" yy="0" zz="10"/>
@@ -244,6 +244,7 @@
 
             <ANIMATIONREFS>
                 <ANIMATIONREF id="andar"/>
+                <ANIMATIONREF id="andar2"/>
             </ANIMATIONREFS>
 
             <TRANSLATION x="0" y="2" z="0"/>
