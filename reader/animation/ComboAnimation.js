@@ -24,8 +24,6 @@ ComboAnimation.prototype.update = function(currTime){
 };
 
 ComboAnimation.prototype.display = function(){
-    
     var animation = this.animations[this.currentAnimation];
     animation.display();
-    
 };

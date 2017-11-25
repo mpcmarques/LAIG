@@ -78,10 +78,10 @@ XMLscene.prototype.initLights = function() {
 };
 
 XMLscene.prototype.myTime = function () {
-    var myDate = new Date;
+    var myDate = new Date();
     return myDate.getMilliseconds()/1000;
 
-}
+};
 
 
 /**

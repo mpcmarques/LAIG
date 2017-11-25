@@ -189,9 +189,10 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
             return;
         }
 
+        var speed;
         if(type != 'combo') {
             // parse speed
-            var speed = this.reader.getFloat(animation, "speed", true);
+            speed = this.reader.getFloat(animation, "speed", true);
 
             if (speed == null) {
                 this.onXMLMinorError("unable to parse the speed of the animation " + id);
