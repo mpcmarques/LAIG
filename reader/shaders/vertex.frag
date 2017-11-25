@@ -2,8 +2,8 @@
 precision highp float;
 #endif
 
-uniform float deltaT;
+uniform float timeFactor;
 
 void main() {
-		gl_FragColor =  vec4(0.0,0.0,1, deltaT);
+		gl_FragColor =  vec4(0.5,0.7,1, timeFactor);
 }

@@ -213,7 +213,6 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
                 animationsIds.push(animationName);
             }
-
             this.parseComboAnimation(id, animationsIds);
         }
 
@@ -273,6 +272,7 @@ MySceneGraph.prototype.parseComboAnimation = function(id, animationsIDs){
 
         var selectedAnimation = this.animations[animationName];
 
+
         if (selectedAnimation instanceof LinearAnimation){
             comboAnimations.push(new LinearAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed));
         }
@@ -291,6 +291,9 @@ MySceneGraph.prototype.parseComboAnimation = function(id, animationsIDs){
             comboAnimations.push(
                 new BezierAnimation(this.scene, selectedAnimation.controlPoints, selectedAnimation.speed)
             );
+        }
+        else if(selectedAnimation instanceof ComboAnimation) {
+            comboAnimations.push( new ComboAnimation(this.scene, selectedAnimation.animations));
         }
         else {
             this.onXMLMinorError("couldn't retrive animation " + animationName + " for combo animation " + id);

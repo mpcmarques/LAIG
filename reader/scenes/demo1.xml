@@ -204,9 +204,9 @@
             <CONTROLPOINT xx="0" yy="0" zz="30"/>
         </ANIMATION>
 
-        <ANIMATION id="combo" type="combo">
-            <SPANREF id="volta"/>
-            <SPANREF id="volta"/>
+        <ANIMATION id="myco" type="combo">
+            <SPANREF id="curva"/>
+            <SPANREF id="andar"/>
         </ANIMATION>
 
 
@@ -238,16 +238,14 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="apollo11" selectable="true">
+        <NODE id="apollo11">
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
+            <TRANSLATION x="0" y="2" z="0"/>
 
             <ANIMATIONREFS>
-                <ANIMATIONREF id="andar"/>
-                <ANIMATIONREF id="andar2"/>
+                <ANIMATIONREF id="myco"/>
             </ANIMATIONREFS>
-
-            <TRANSLATION x="0" y="2" z="0"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>

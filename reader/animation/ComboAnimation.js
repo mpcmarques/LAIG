@@ -12,7 +12,7 @@ ComboAnimation.prototype.update = function(currTime){
     if( this.currentAnimation < this.animationsNumber){
         
         var animation = this.animations[this.currentAnimation];
-        
+
         animation.update(currTime);
         
         if (animation.ended && this.currentAnimation+1 < this.animationsNumber){
