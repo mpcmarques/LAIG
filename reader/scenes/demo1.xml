@@ -244,7 +244,7 @@
             <TRANSLATION x="0" y="2" z="0"/>
 
             <ANIMATIONREFS>
-                <ANIMATIONREF id="myco"/>
+                <ANIMATIONREF id="volta"/>
             </ANIMATIONREFS>
 
             <DESCENDANTS>

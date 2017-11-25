@@ -1,13 +1,16 @@
 function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     Animation.call(this, scene);
 
-    this.speed = (Math.PI / 180) * speed;
+    this.speed =  speed / radius;
     var DEGREE_TO_RAD = Math.PI / 180;
     this.center = center;
     this.radius = radius;
     this.startang = DEGREE_TO_RAD * startang;
     this.rotang = DEGREE_TO_RAD * rotang;
     this.initialAngle = this.startang;
+    this.perim = (2 * Math.PI * this.radius * this.rotang) /  (360 * DEGREE_TO_RAD);
+    this.timeExpected = this.perim / this.speed;
+    console.log(this.timeExpected);
     this.point = [];
 }
 
@@ -15,7 +18,8 @@ CircularAnimation.prototype = Object.create(Animation.prototype);
 CircularAnimation.prototype.constructor = CircularAnimation;
 
 CircularAnimation.prototype.animate = function (currTime) {
-    if (this.ended)
+
+    if(this.ended)
         return;
 
     if (this.initialTime == null)
@@ -23,16 +27,18 @@ CircularAnimation.prototype.animate = function (currTime) {
 
 
     var startTime = ((currTime - this.initialTime) / 1000.0);
+    var currAng = this.rotang / this.timeExpected;
 
-    var currang = this.startang;
-
-    this.point[0] = this.center[0] + this.radius * Math.sin(currang);
-    this.point[1] = this.center[2] + this.radius * Math.cos(currang);
-    this.startang = this.initialAngle + startTime * this.speed;
+    this.point[0] = this.center[0] + this.radius * Math.sin(currAng);
+    this.point[1] = this.center[2] + this.radius * Math.cos(currAng);
+    
 
 
-    if (this.startang >= this.rotang)
-        this.ended = true;
+   console.warn(currAng, this.rotang);
+
+   if(currAng >= this.rotang)
+     this.ended = true;
+
 
 };
 
@@ -42,5 +48,8 @@ CircularAnimation.prototype.update = function (currTime) {
 
 CircularAnimation.prototype.display = function () {
     this.scene.translate(this.point[0], this.center[1], this.point[1]);
-    this.scene.rotate(Math.PI / 2 + this.startang, 0, 1, 0);
+    this.scene.rotate(Math.atan2(this.point[0],this.point[1]), 0, 1, 0);
 };
+
+
+
