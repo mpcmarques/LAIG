@@ -56,10 +56,10 @@ MyRectangle.prototype.initBuffers = function() {
  */
 MyRectangle.prototype.setTextureCoords = function(){
     this.texCoords = [
-        this.minX,  this.minY,
-        this.maxX, this.minY,
-        this.minX,  this.maxY,
-        this.maxX, this.maxY
+        0,  0,
+        1, 0,
+        0, 1,
+        1, 1
     ];
 };
 

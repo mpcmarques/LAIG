@@ -29,8 +29,9 @@ CircularAnimation.prototype.animate = function (currTime) {
     var startTime = ((currTime - this.initialTime) / 1000.0);
    
 
-    this.position.x = this.center.x + this.radius * Math.sin(this.initialAngle);
-    this.position.z = this.center.z + this.radius * Math.cos(this.initialAngle);
+    this.position.x = this.center.z + this.radius * Math.cos(this.initialAngle);
+    this.position.z = this.center.x + this.radius * Math.sin(this.initialAngle);
+
     this.initialAngle += this.currAng;
     
 
@@ -45,6 +46,7 @@ CircularAnimation.prototype.update = function (currTime) {
 };
 
 CircularAnimation.prototype.display = function () {
+    console.log(this.position.x,this.position.y,this.position.z);
     this.scene.translate(this.position.x, this.position.y, this.position.z);
     this.scene.rotate(Math.atan2(this.position.x, this.position.z), 0, 1, 0);
 };
