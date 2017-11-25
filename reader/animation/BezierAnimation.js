@@ -7,7 +7,7 @@ function BezierAnimation(scene, controlPoints, speed) {
     this.incialY = this.controlPoints[0][1];
     this.inicialZ = this.controlPoints[0][2];
     this.timeExpected = this.length(this.controlPoints) / this.speed;
-    console.log(this.timeExpected);
+
 }
 
 BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -26,7 +26,7 @@ BezierAnimation.prototype.animate = function (currTime) {
       }
       var deltaTime = ((currTime - this.inicialTime) / 1000.0);
       var radius = Math.sqrt(Math.pow(this.point[0], 2) + Math.pow(this.point[2], 2));
-      console.log(deltaTime);
+
 
 
       this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
