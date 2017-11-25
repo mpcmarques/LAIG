@@ -23,10 +23,14 @@ LinearAnimation.prototype.move = function (currTime) {
     if (this.initialTime == null)
     this.initialTime = currTime;
     
+    
     // delta T
     var deltaT = ((currTime - this.initialTime) / 1000);
     var nextPoint = this.controlPoints[this.currentControlPoint + 1];
     var lastPoint = this.controlPoints[this.currentControlPoint];
+
+    // rotate
+    this.rotate(deltaT);
     
     // chooses front or back movement
     var Xsign, Zsign, Ysign;
@@ -90,36 +94,53 @@ LinearAnimation.prototype.move = function (currTime) {
         this.point[2] = nextPoint[2];
     }
     
-    this.rotate(deltaT);
-    
     if (this.currentControlPoint == this.controlPoints.length - 1)
     this.ended = true;
 };
 
 LinearAnimation.prototype.rotate = function(deltaT){
-    
+    /*
     var nextPoint = this.controlPoints[this.currentControlPoint+1];
     var nextOtherPoint = this.controlPoints[this.currentControlPoint+2];
-    
+
     if (nextPoint != null && nextOtherPoint != null){
-        var dx = nextOtherPoint[0] - nextPoint[1];
+        var dx = nextOtherPoint[0] - nextPoint[0];
         var dz = nextOtherPoint[2] - nextPoint[2];
         
-        this.nextAngle = Math.atan2(dx,dz);
-    }
-    
-    var angleSign;
-    if (this.nextAngle > this.angle)
-        angleSign = 1;
-    else if (this.nextAngle == this.angle)
-        angleSign = 0;
-    else if (this.nextAngle < this.angle)
-        angleSign = -1;
-    
-    this.angle = this.initialAngle + angleSign * this.speed * deltaT;
+        var nextAngle = Math.atan2(dx,dz);
 
-    // TODO: CONTINUE FROM THIS.
-    
+        var sign;
+        if(this.angle == nextAngle)
+            sign = 0;
+        else if(this.angle < nextAngle)
+            sign = 1;
+        else if(this.angle > nextAngle)
+            sign = -1;
+        
+        var dt = Math.sqrt(Math.pow(dx, 2) + Math.pow(dz, 2));
+        this.angle = this.initialAngle + sign * this.speed/5 * deltaT;
+
+        var arrived = false;
+        if(sign == -1){
+            if(this.angle <= nextAngle)
+            arrived = true;
+        }
+        else if (sign == 1){
+            if(this.angle >= nextAngle)
+            arrived = true;
+        } else {
+            arrived = true;
+        }
+
+        if (arrived){
+            this.angle = nextAngle;
+            this.initialAngle = this.angle;
+        }
+
+        console.log(this.angle, nextAngle, arrived);
+    }*/
+
+    this.angle = Math.atan2(this.point[0], this.point[2]);
 };
 
 LinearAnimation.prototype.display = function () {
