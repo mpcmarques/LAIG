@@ -15,6 +15,7 @@ LinearAnimation.prototype.animate = function (currTime) {
 };
 
 LinearAnimation.prototype.move = function (currTime) {
+
     if (this.ended)
     return;
     
@@ -32,17 +33,17 @@ LinearAnimation.prototype.move = function (currTime) {
     
     // chooses front or back movement
     var Xsign, Zsign, Ysign;
-    if (lastPoint[0] - nextPoint[0] < 0)
+    if (lastPoint.x - nextPoint.x < 0)
     Xsign = 1;
     else
     Xsign = -1;
     
-    if (lastPoint[2] - nextPoint[2] < 0)
+    if (lastPoint.z - nextPoint.z < 0)
     Zsign = 1;
     else
     Zsign = -1;
     
-    if(lastPoint[1] - nextPoint[1] < 0)
+    if(lastPoint.y - nextPoint.y < 0)
     Ysign = 1;
     else
     Ysign = -1;
@@ -50,46 +51,46 @@ LinearAnimation.prototype.move = function (currTime) {
     // check if arrived at a control point final coordinate
     var xArrived = false, zArrived = false, yArrived = false;
     if (Xsign == 1) {
-        if (this.point[0] >= nextPoint[0])
+        if (this.position.x >= nextPoint.x)
         xArrived = true;
     } else {
-        if (this.point[0] <= nextPoint[0])
+        if (this.position.x <= nextPoint.x)
         xArrived = true;
     }
     
     if (Zsign == 1) {
-        if (this.point[2] >= nextPoint[2])
+        if (this.position.z >= nextPoint.z)
         zArrived = true;
     } else {
-        if (this.point[2] <= nextPoint[2])
+        if (this.position.z <= nextPoint.z)
         zArrived = true;
     }
     
     if(Ysign  == 1){
-        if(this.point[1] >= nextPoint[1])
+        if(this.position.y >= nextPoint.y)
         yArrived = true;
     } else {
-        if (this.point[1] <= nextPoint[1])
+        if (this.position.y <= nextPoint.y)
         yArrived = true;
     }
     
     // X = Xo + v * t if not arrived yet.
     if (!xArrived)
-    this.point[0] = lastPoint[0] + Xsign * deltaT * this.speed;
+    this.position.x = lastPoint.x + Xsign * deltaT * this.speed;
     
     if (!zArrived)
-    this.point[2] = lastPoint[2] + Zsign * deltaT * this.speed;
+    this.position.z = lastPoint.z + Zsign * deltaT * this.speed;
     
     if(!yArrived)
-    this.point[1] = lastPoint[1] + Ysign * deltaT * this.speed;
+    this.position.y = lastPoint.y + Ysign * deltaT * this.speed;
     
     // arrived at next control points, change the current.
     if (xArrived && zArrived && yArrived) {
         this.currentControlPoint += 1;
         this.initialTime = currTime;
-        this.point[0] = nextPoint[0];
-        this.point[1] = nextPoint[1];
-        this.point[2] = nextPoint[2];
+        this.position.x = nextPoint.x;
+        this.position.y = nextPoint.y;
+        this.position.z = nextPoint.z;
     }
     
     if (this.currentControlPoint == this.controlPoints.length - 1)
@@ -138,10 +139,10 @@ LinearAnimation.prototype.rotate = function(){
         console.log(this.angle, nextAngle, arrived);
     }*/
 
-    this.angle = Math.atan2(this.point[0], this.point[2]);
+    this.angle = Math.atan2(this.position.x, this.position.z);
 };
 
 LinearAnimation.prototype.display = function () {
-    this.scene.translate(this.point[0], this.point[1], this.point[2]);
+    this.scene.translate(this.position.x, this.position.y, this.position.z);
     this.scene.rotate(this.angle, 0, 1, 0);
 };

@@ -219,18 +219,15 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
         if (type == "circular") {
 
-            var center = [];
-
-            var centerx = this.reader.getFloat(animation, "centerx", true);
-            var centery = this.reader.getFloat(animation, "centery", true);
-            var centerz = this.reader.getFloat(animation, "centerz", true);
+            var centerX = this.reader.getFloat(animation, "centerx", true);
+            var centerY = this.reader.getFloat(animation, "centery", true);
+            var centerZ = this.reader.getFloat(animation, "centerz", true);
             var radius = this.reader.getFloat(animation, "radius", true);
             var startang = this.reader.getFloat(animation, "startang", true);
             var rotang = this.reader.getFloat(animation, "rotang", true);
 
-            center.push(centerx);
-            center.push(centery);
-            center.push(centerz);
+
+            var center = new Position(centerX, centerY, centerZ);
 
             this.animations[id] = new CircularAnimation(this.scene, speed, center, radius, startang, rotang);
         }
@@ -247,7 +244,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 var z = this.reader.getFloat(cp, 'zz');
 
                 if ((x != null && z != null) && y != null)
-                    controlPoints.push([x, y, z]);
+                    controlPoints.push(new Position(x, y, z));
                 else {
                     this.onXMLMinorError("unable to parse control point " + j + "of the animation " + id);
                     return;
@@ -1933,3 +1930,15 @@ MySceneGraph.prototype.update = function (currTime) {
         }
     }
 };
+
+// TODO: Add doc
+MySceneGraph.prototype.parsePositions = function(controlPoints){
+    var positions = [];
+  
+    for(var i = 0; i < controlPoints.length ; i++){
+      var position = new Position(controlPoints[i]);
+      positions.push(position);
+    }
+  
+    return positions;
+  };
