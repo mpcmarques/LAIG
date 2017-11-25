@@ -6,8 +6,8 @@ function BezierAnimation(scene, controlPoints, speed) {
     this.inicialX = this.controlPoints[0][0];
     this.incialY = this.controlPoints[0][1];
     this.inicialZ = this.controlPoints[0][2];
-    this.aux = 0.0;
-    console.log(this.length(this.controlPoints));
+    this.timeExpected = this.length(this.controlPoints) / this.speed;
+    console.log(this.timeExpected);
 }
 
 BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
@@ -18,10 +18,6 @@ BezierAnimation.prototype.animate = function (currTime) {
 //y = (1−t)2 * 0 + 2(1−t)t * 1 + t2 * 0 = 2(1-t)t = –t2 + 2t
 
 
-            if(this.aux > this.length(this.controlPoints))
-            {
-              this.ended = true;
-            }
 
   if(!this.ended) {
 
@@ -30,14 +26,15 @@ BezierAnimation.prototype.animate = function (currTime) {
       }
       var deltaTime = ((currTime - this.inicialTime) / 1000.0);
       var radius = Math.sqrt(Math.pow(this.point[0], 2) + Math.pow(this.point[2], 2));
+      console.log(deltaTime);
 
 
-      this.aux = this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
-      /* if(isNaN(radius))
-           this.bezier(this.controlPoints,deltaTime * this.speed) ;
-       else
-           this.bezier(this.controlPoints,deltaTime * this.speed /radius) ;
-*/
+      this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
+
+      if(this.timeExpected < deltaTime)
+      {
+          this.ended = true;
+      }
 
   }
     this.currentTime = currTime;

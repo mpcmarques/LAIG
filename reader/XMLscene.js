@@ -33,8 +33,7 @@ XMLscene.prototype.init = function(application) {
 
 
     this.testShaders=[
-        new CGFshader(this.gl, "shaders/vertex.vert", "shaders/vertex.frag"),
-        new CGFshader(this.gl, "shaders/fragment.vert", "shaders/fragment.frag")
+        new CGFshader(this.gl, "shaders/vertex.vert", "shaders/vertex.frag")
     ];
 
     this.axis = new CGFaxis(this);
@@ -81,6 +80,7 @@ XMLscene.prototype.initLights = function() {
 XMLscene.prototype.myTime = function () {
     var myDate = new Date;
     return myDate.getMilliseconds()/1000;
+
 }
 
 
@@ -177,5 +177,7 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-    this.testShaders[0].setUniformsValues({deltaT: this.myTime()});
+
+    this.testShaders[0].setUniformsValues({timeFactor: this.myTime()});
+
 };

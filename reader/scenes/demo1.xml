@@ -238,16 +238,14 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="apollo11" selectable="true">
+        <NODE id="apollo11">
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
+            <TRANSLATION x="0" y="2" z="0"/>
 
             <ANIMATIONREFS>
-                <ANIMATIONREF id="andar"/>
-                <ANIMATIONREF id="andar2"/>
+                <ANIMATIONREF id="curva"/>
             </ANIMATIONREFS>
-
-            <TRANSLATION x="0" y="2" z="0"/>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>
