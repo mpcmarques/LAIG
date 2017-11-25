@@ -10,7 +10,7 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     this.initialAngle = this.startang;
     this.perim = (2 * Math.PI * this.radius * this.rotang) /  (360 * DEGREE_TO_RAD);
     this.timeExpected = this.perim / this.speed;
-    console.log(this.timeExpected);
+    this.currAng = this.rotang / this.timeExpected;
     this.point = [];
 }
 
@@ -19,7 +19,7 @@ CircularAnimation.prototype.constructor = CircularAnimation;
 
 CircularAnimation.prototype.animate = function (currTime) {
 
-    if(this.ended)
+   if(this.ended)
         return;
 
     if (this.initialTime == null)
@@ -27,17 +27,20 @@ CircularAnimation.prototype.animate = function (currTime) {
 
 
     var startTime = ((currTime - this.initialTime) / 1000.0);
-    var currAng = this.rotang / this.timeExpected;
+   
 
-    this.point[0] = this.center[0] + this.radius * Math.sin(currAng);
-    this.point[1] = this.center[2] + this.radius * Math.cos(currAng);
+    this.point[0] = this.center[0] + this.radius * Math.sin(this.initialAngle);
+    this.point[1] = this.center[2] + this.radius * Math.cos(this.initialAngle);
+    this.initialAngle += this.currAng;
     
 
 
-   console.warn(currAng, this.rotang);
+    if(DEGREE_TO_RAD * this.initialAngle >= this.rotang){
+        this.initialAngle = this.rotang;
+        this.ended = true;
+    }
 
-   if(currAng >= this.rotang)
-     this.ended = true;
+
 
 
 };
