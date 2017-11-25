@@ -238,7 +238,7 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="apollo11" selectable="false">
+        <NODE id="apollo11" selectable="true">
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
             <TRANSLATION x="0" y="2" z="0"/>
