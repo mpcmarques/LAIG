@@ -61,6 +61,14 @@ MyRectangle.prototype.setTextureCoords = function(){
         0, 1,
         1, 1
     ];
+    /* 
+    this.texCoords = [
+        this.minX,  this.minY,
+        this.maxX, this.minY,
+        this.minX,  this.maxY,
+        this.maxX, this.maxY
+    ];
+    */
 };
 
 /**
