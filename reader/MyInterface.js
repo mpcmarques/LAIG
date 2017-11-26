@@ -24,7 +24,7 @@ MyInterface.prototype.init = function(application) {
     this.gui = new dat.GUI();
     // add a group of controls (and open/expand by defult)
 
-    this.gui.add(this.scene, 'selectedExampleShader', {
+    this.gui.add(this.scene, 'selectedShader', {
         'Vertex Shader' : 0
     }).name('Shaders');
 
@@ -54,14 +54,10 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 
 MyInterface.prototype.AddSelected = function () {
     var selectDic = {};
-    this.scene.selectable;
-    console.log(this.scene.selectable);
     for(var i=0; i< this.scene.selectable.length; i++)
     {
         selectDic[this.scene.selectable[i].nodeID] = i;
     }
 
-    this.gui.add(this.scene, 'selectedExampleNode', selectDic).name('Nodes').onChange(function (x){
-        this.scene.selectedExampleNode =   x;
-    } );
-}
+    this.gui.add(this.scene, 'selectedNode', selectDic).name('Nodes');
+};

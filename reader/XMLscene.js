@@ -10,8 +10,8 @@ function XMLscene(interface) {
     this.interface = interface;
     this.scaleFactor = 1.0;
     this.lightValues = {};
-    this.selectedExampleShader=0;
-    this.selectedExampleNode = 0;
+    this.selectedShader = 0;
+    this.selectedNode = 0;
 
     this.selectable = [];
 
