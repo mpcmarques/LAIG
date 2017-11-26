@@ -1,3 +1,15 @@
+/**
+ * CircularAnimation
+ * @param scene Scene.
+ * @param speed  Speed.
+ * @param center Center.
+ * @param radius Radius.
+ * @param startang Angle where it starts.
+ * @param rotang Angle to go through.
+ * @constructor
+ */
+
+
 function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     Animation.call(this, scene);
 

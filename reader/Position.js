@@ -1,3 +1,11 @@
+/**
+ * Position
+ * @param x X Point.
+ * @param y Y Point.
+ * @param z Z Point.
+ * @constructor
+ */
+
 function Position (x,y,z) {
     this.x = x;
     this.y = y;

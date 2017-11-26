@@ -1,3 +1,11 @@
+/**
+ * ComboAnimation
+ * @param scene Scene.
+ * @param animations  Animations.
+ * @constructor
+ */
+
+
 function ComboAnimation(scene, animations){
     Animation.call(this, scene);
     this.scene = scene;

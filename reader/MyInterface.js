@@ -25,11 +25,11 @@ MyInterface.prototype.init = function(application) {
     // add a group of controls (and open/expand by defult)
 
     this.gui.add(this.scene, 'selectedExampleShader', {
-        'Vertex Shader' : 0,
-        'Fragment Shader': 1
+        'Vertex Shader' : 0
     }).name('Shaders');
 
 
+    this.gui.add(this.scene, 'selectedExampleNode', this.nodes).name('Nodes');
 
 
     return true;

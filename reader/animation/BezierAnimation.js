@@ -1,3 +1,12 @@
+/**
+ * BezierAnimation
+ * @param scene Scene.
+ * @param controlPoints  Control Points.
+ * @param speed  Speed.
+ * @constructor
+ */
+
+
 function BezierAnimation(scene, controlPoints, speed) {
     ControlPointAnimation.call(this, scene, speed, controlPoints);
     
@@ -83,12 +92,11 @@ BezierAnimation.prototype.bezier = function(controlPoints, t) {
     this.position.z = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0].z;
     
     
-    return Math.sqrt(Math.pow(this.position.x,2) + Math.pow(this.position.z,2));
+
 };
 
 BezierAnimation.prototype.display = function () {
     this.scene.translate(this.position.x, this.position.y, this.position.z);
-    
     var angle = Math.atan2(this.position.x,this.position.z);
     this.scene.rotate(angle, 0, 1, 0);
 };

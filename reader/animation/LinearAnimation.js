@@ -1,3 +1,12 @@
+/**
+ * LinearAnimation
+ * @param scene Scene.
+ * @param controlPoints Control Points.
+ * @param speed Speed.
+ * @constructor
+ */
+
+
 function LinearAnimation(scene, controlPoints, speed) {
     ControlPointAnimation.call(this, scene, speed, controlPoints);
     this.rotate();

@@ -11,6 +11,7 @@ function XMLscene(interface) {
     this.scaleFactor = 1.0;
     this.lightValues = {};
     this.selectedExampleShader=0;
+    this.selectedExampleNode = 0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
