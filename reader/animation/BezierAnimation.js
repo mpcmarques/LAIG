@@ -5,8 +5,6 @@
  * @param speed  Speed.
  * @constructor
  */
-
-
 function BezierAnimation(scene, controlPoints, speed) {
     ControlPointAnimation.call(this, scene, speed, controlPoints);
     
@@ -16,6 +14,10 @@ function BezierAnimation(scene, controlPoints, speed) {
 BezierAnimation.prototype = Object.create(ControlPointAnimation.prototype);
 BezierAnimation.prototype.constructor = BezierAnimation;
 
+/**
+ * Perform the animation.
+ * @param currTime  Current time.
+ */
 BezierAnimation.prototype.animate = function (currTime) {
     
     if(!this.ended) {
@@ -40,6 +42,10 @@ BezierAnimation.prototype.update = function (currTime) {
     this.animate(currTime);
 };
 
+/**
+ * Calculate bezier curve length.
+ * @param controlPoints Control Points.
+ */
 BezierAnimation.prototype.length = function (controlPoints) {
     
     var L2 = this.addPositions(controlPoints[0], controlPoints[1]);
@@ -59,6 +65,12 @@ BezierAnimation.prototype.length = function (controlPoints) {
     return sum;
 };
 
+/**
+ * Add positions
+ * @param position1     Position 1
+ * @param position2 Position 2
+ * @returns {Position}  Position1+Position2
+ */
 BezierAnimation.prototype.addPositions = function(position1, position2){
     var newPos = new Position(position1.x, position1.y, position1.z);
     newPos.addPosition(position2);
@@ -67,9 +79,9 @@ BezierAnimation.prototype.addPositions = function(position1, position2){
 
 BezierAnimation.prototype.addPositions2 = function(position1, position2){
     return new Position(
-        position1.x - position2.x,
-        position1.y - position2.y,
-        position1.z - position2.z
+        (position1.x + position2.x)/2,
+        (position1.y + position2.y)/2,
+        (position1.z + position2.z)/2
     );
 };
 
@@ -90,9 +102,6 @@ BezierAnimation.prototype.bezier = function(controlPoints, t) {
     this.position.x = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + controlPoints[0].x;
     this.position.y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + controlPoints[0].y;
     this.position.z = (aZ * Math.pow(t, 3)) + (bZ * Math.pow(t, 2)) + (cZ * t) + controlPoints[0].z;
-    
-    
-
 };
 
 BezierAnimation.prototype.display = function () {
