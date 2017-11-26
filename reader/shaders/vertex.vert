@@ -6,7 +6,7 @@ uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
-uniform float normScale;
+
 uniform float timeFactor;
 
 void main() {
