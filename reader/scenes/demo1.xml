@@ -630,7 +630,7 @@
                </DESCENDANTS>
         </NODE>
 
-       <NODE id="bandeiraCompleta">
+       <NODE id="bandeiraCompleta" selectable="true">
         <MATERIAL id="defaultMaterial"/>
         <TEXTURE id="null"/>
 

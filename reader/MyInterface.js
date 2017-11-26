@@ -28,9 +28,7 @@ MyInterface.prototype.init = function(application) {
         'Vertex Shader' : 0
     }).name('Shaders');
 
-
-    this.gui.add(this.scene, 'selectedExampleNode', this.nodes).name('Nodes');
-
+    this.obj = this;
 
     return true;
 };
@@ -54,3 +52,16 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 };
 
+MyInterface.prototype.AddSelected = function () {
+    var selectDic = {};
+    this.scene.selectable;
+    console.log(this.scene.selectable);
+    for(var i=0; i< this.scene.selectable.length; i++)
+    {
+        selectDic[this.scene.selectable[i].nodeID] = i;
+    }
+
+    this.gui.add(this.scene, 'selectedExampleNode', selectDic).name('Nodes').onChange(function (x){
+        this.scene.selectedExampleNode =   x;
+    } );
+}

@@ -12,6 +12,9 @@ function XMLscene(interface) {
     this.lightValues = {};
     this.selectedExampleShader=0;
     this.selectedExampleNode = 0;
+
+    this.selectable = [];
+
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -110,6 +113,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+    this.interface.AddSelected();
 };
 
 /**
@@ -178,7 +182,7 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-
     this.testShaders[0].setUniformsValues({timeFactor: this.myTime()});
-
+    //this.selectShaders(this.graph.nodes);
 };
+

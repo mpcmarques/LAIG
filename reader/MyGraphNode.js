@@ -8,6 +8,7 @@
 function MyGraphNode(graph, nodeID, selectable) {
     this.graph = graph;
     this.nodeID = nodeID;
+
     this.selectable = selectable;
 
     // IDs of child nodes.
@@ -41,8 +42,6 @@ MyGraphNode.prototype.addChild = function(nodeID) {
 MyGraphNode.prototype.addAnimation = function (animationID) {
     this.animations.push(animationID);
 };
-
-
 
 /**
  * Adds a leaf to this node's leaves array.

@@ -1336,6 +1336,8 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             var selectable = false;
             selectable = this.reader.getBoolean(children[i], 'selectable', false);
 
+
+
             // Checks if ID is valid.
             if (this.nodes[nodeID] != null)
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
@@ -1344,6 +1346,11 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this, nodeID, selectable);
+            if(this.nodes[nodeID].selectable)
+            {
+                this.scene.selectable.push(this.nodes[nodeID]);
+                console.log(this.scene.selectable);
+            }
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1779,8 +1786,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         nodeAppearance.apply();
 
     // apply shader
+    var shaderArray = [];
     var modifiedShader = false;
     if(node.selectable) {
+
         this.scene.setActiveShader(this.scene.testShaders[this.scene.selectedExampleShader]);
         modifiedShader = true;
     }
@@ -1915,6 +1924,7 @@ MySceneGraph.prototype.displayScene = function () {
 
     // render starting from root.
     this.renderNode(rootNode);
+
 };
 
 /**
@@ -1942,3 +1952,10 @@ MySceneGraph.prototype.parsePositions = function(controlPoints){
   
     return positions;
   };
+
+
+MySceneGraph.prototype.myShaders = function (node) {
+    var shaderArray = [];
+    shaderArray.push(node);
+    return
+}
