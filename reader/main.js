@@ -29,7 +29,7 @@ serialInclude = function(a) {
             var e = c[0][0];
             c.splice(0, 1);
             e.call();
-        };
+        }
     } else b.log("Finished.");
 };
 serialInclude.l = new Array();

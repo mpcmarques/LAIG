@@ -26,8 +26,7 @@ BezierAnimation.prototype.animate = function (currTime) {
             this.inicialTime = currTime;
         }
         var deltaTime = ((currTime - this.inicialTime) / 1000.0);
-        var radius = Math.sqrt(Math.pow(this.position.x, 2) + Math.pow(this.position.z, 2));
-        
+
         this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
         
         if(this.timeExpected < deltaTime)

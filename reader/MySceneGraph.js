@@ -7,7 +7,6 @@ var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
 var ANIMATION_INDEX = 5;
-var LEAVES_INDEX = 6;
 var NODES_INDEX = 7;
 
 /**
@@ -749,7 +748,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
             else if (aux != 0 && aux != 1)
                 return "'enable value' must be 0 or 1 on the LIGHTS block";
             else
-                enableLight = aux == 0 ? false : true;
+                enableLight = aux != 0;
         }
 
         // Retrieves the light position.
@@ -1785,7 +1784,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
         nodeAppearance.apply();
 
     // apply shader
-    var shaderArray = [];
     var modifiedShader = false;
     if(node.selectable) {
         if(node == this.scene.selectable[this.scene.selectedNode]){

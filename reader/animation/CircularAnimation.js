@@ -37,10 +37,6 @@ CircularAnimation.prototype.animate = function (currTime) {
     if (this.initialTime == null)
         this.initialTime = currTime;
 
-
-    var startTime = ((currTime - this.initialTime) / 1000.0);
-   
-
     this.position.x = this.center.z + this.radius * Math.cos(this.initialAngle);
     this.position.z = this.center.x + this.radius * Math.sin(this.initialAngle);
 
