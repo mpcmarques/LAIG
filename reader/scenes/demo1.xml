@@ -645,7 +645,7 @@
             <MATERIAL id="rubber"/>
             <TEXTURE id="flag"/>
 
-            <TRANSLATION x="7" y="6" z="0.5"/>
+            <TRANSLATION x="0" y="6" z="0"/>
             <ROTATION axis="z" angle="-180"/>
             <ROTATION axis="x" angle="90"/>
 
@@ -963,7 +963,7 @@
             <MATERIAL id="metal"/>
             <TEXTURE id="haste"/>
 
-            <TRANSLATION x="7" y="10" z="0.5"/>
+            <TRANSLATION x="0" y="10" z="0"/>
             <ROTATION axis="x" angle="90"/>
             <SCALE sx="0.1" sy="0.1" sz="5"/>
 
