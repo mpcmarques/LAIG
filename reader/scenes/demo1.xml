@@ -195,7 +195,7 @@
 
         <ANIMATION id="volta" speed="20" type="circular"
           centerx="0" centery="0" centerz="0"
-          radius="10" startang="0" rotang="180"/>
+          radius="10" startang="0" rotang="360"/>
 
         <ANIMATION id="curva" speed="20" type="bezier">
             <controlpoint xx="0" yy="0" zz="0"/>
@@ -242,11 +242,6 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null" />
             <TRANSLATION x="0" y="2" z="0"/>
-
-            <ANIMATIONREFS>
-                <ANIMATIONREF id="volta"/>
-                <ANIMATIONREF id="andar2"/>
-            </ANIMATIONREFS>
 
             <DESCENDANTS>
                 <NODEREF id="apollo11-top"/>
@@ -635,6 +630,10 @@
         <TEXTURE id="null"/>
 
         <TRANSLATION x="10" y="0" z="3"/>
+
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="volta"/>
+        </ANIMATIONREFS>
 
         <DESCENDANTS>
             <NODEREF id="bandeira"/>

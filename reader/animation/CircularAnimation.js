@@ -24,6 +24,7 @@ function CircularAnimation(scene, speed, center, radius, startang, rotang) {
     this.timeExpected = this.perim / this.speed;
     this.currAng = this.rotang / this.timeExpected;
     this.position = new Position(0,0,0);
+    this.lastPosition = null;
 }
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
@@ -54,6 +55,11 @@ CircularAnimation.prototype.update = function (currTime) {
 };
 
 CircularAnimation.prototype.display = function () {
-    this.scene.translate(this.position.x, this.position.y, this.position.z);
-    this.scene.rotate(Math.atan2(this.position.x, this.position.z), 0, 1, 0);
+  this.scene.translate(this.position.x, this.position.y, this.position.z);
+
+  if(this.lastPosition != null){
+    var dx = this.position.x - this.lastPosition.x;
+    var dz = this.position.z - this.lastPosition.z;
+    //this.scene.rotate(Math.atan2(dx, dz), 0, 1, 0);
+  }
 };
