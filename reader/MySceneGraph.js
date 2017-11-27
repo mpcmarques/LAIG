@@ -1794,9 +1794,9 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
 
     // apply animation
     var animation = this.animations[node.nodeID];
-    this.scene.pushMatrix();
-    if (animation != null)
-        animation.display();
+    if (animation != null){
+       mat4.multiply(currentTransformMatrix, currentTransformMatrix, animation.display());
+    }
 
     for (var i = 0; i < node.leaves.length; i++) {
         var leafNode = node.leaves[i];
@@ -1820,7 +1820,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
             }
         }
     }
-    this.scene.popMatrix();
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
 };
@@ -1937,16 +1936,4 @@ MySceneGraph.prototype.update = function (currTime) {
             }
         }
     }
-};
-
-// TODO: Add doc
-MySceneGraph.prototype.parsePositions = function(controlPoints){
-    var positions = [];
-  
-    for(var i = 0; i < controlPoints.length ; i++){
-      var position = new Position(controlPoints[i]);
-      positions.push(position);
-    }
-  
-    return positions;
 };

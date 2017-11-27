@@ -21,7 +21,7 @@ BezierAnimation.prototype.constructor = BezierAnimation;
  */
 BezierAnimation.prototype.animate = function (currTime) {
 
-    if(!this.ended) {
+    if (!this.ended) {
 
         if (this.inicialTime == null) {
             this.inicialTime = currTime;
@@ -30,16 +30,15 @@ BezierAnimation.prototype.animate = function (currTime) {
 
         // save last position
         this.lastPosition = new Position(
-          this.position.x,
-          this.position.y,
-          this.position.z
+            this.position.x,
+            this.position.y,
+            this.position.z
         );
 
         //apply bezier
         this.bezier(this.controlPoints, deltaTime * this.speed / this.length(this.controlPoints));
 
-        if(this.timeExpected < deltaTime)
-        {
+        if (this.timeExpected < deltaTime) {
             this.ended = true;
         }
     }
@@ -56,13 +55,13 @@ BezierAnimation.prototype.update = function (currTime) {
 BezierAnimation.prototype.length = function (controlPoints) {
 
     var L2 = this.addPositions(controlPoints[0], controlPoints[1]);
-    var H = this.addPositions(controlPoints[1],controlPoints[2]);
-    var L3 = this.addPositions2(L2,H);
-    var R3 = this.addPositions(controlPoints[2],controlPoints[3]);
-    var R2 = this.addPositions2(H , R3);
-    var R1 = this.addPositions2(L3 , R2);
+    var H = this.addPositions(controlPoints[1], controlPoints[2]);
+    var L3 = this.addPositions2(L2, H);
+    var R3 = this.addPositions(controlPoints[2], controlPoints[3]);
+    var R2 = this.addPositions2(H, R3);
+    var R1 = this.addPositions2(L3, R2);
 
-    var sum =  controlPoints[0].distanceTo(L2);
+    var sum = controlPoints[0].distanceTo(L2);
     sum += L2.distanceTo(L3);
     sum += L3.distanceTo(R1);
     sum += R1.distanceTo(R2);
@@ -78,33 +77,33 @@ BezierAnimation.prototype.length = function (controlPoints) {
  * @param position2 Position 2
  * @returns {Position}  Position1+Position2
  */
-BezierAnimation.prototype.addPositions = function(position1, position2){
+BezierAnimation.prototype.addPositions = function (position1, position2) {
     var newPos = new Position(position1.x, position1.y, position1.z);
     newPos.addPosition(position2);
     return newPos;
 };
 
-BezierAnimation.prototype.addPositions2 = function(position1, position2){
+BezierAnimation.prototype.addPositions2 = function (position1, position2) {
     return new Position(
-        (position1.x + position2.x)/2,
-        (position1.y + position2.y)/2,
-        (position1.z + position2.z)/2
+        (position1.x + position2.x) / 2,
+        (position1.y + position2.y) / 2,
+        (position1.z + position2.z) / 2
     );
 };
 
-BezierAnimation.prototype.bezier = function(controlPoints, t) {
+BezierAnimation.prototype.bezier = function (controlPoints, t) {
 
     var cX = 3 * (controlPoints[1].x - controlPoints[0].x),
-    bX = 3 * (controlPoints[2].x - controlPoints[1].x) - cX,
-    aX = controlPoints[3].x - controlPoints[0].x - cX - bX;
+        bX = 3 * (controlPoints[2].x - controlPoints[1].x) - cX,
+        aX = controlPoints[3].x - controlPoints[0].x - cX - bX;
 
     var cY = 3 * (controlPoints[1].y - controlPoints[0].y),
-    bY = 3 * (controlPoints[2].y  - controlPoints[1].y ) - cY,
-    aY = controlPoints[3].y - controlPoints[0].y  - cY - bY;
+        bY = 3 * (controlPoints[2].y - controlPoints[1].y ) - cY,
+        aY = controlPoints[3].y - controlPoints[0].y - cY - bY;
 
     var cZ = 3 * (controlPoints[1].z - controlPoints[0].z),
-    bZ = 3 * (controlPoints[2].z- controlPoints[1].z) - cZ,
-    aZ = controlPoints[3].z - controlPoints[0].z - cZ - bZ;
+        bZ = 3 * (controlPoints[2].z - controlPoints[1].z) - cZ,
+        aZ = controlPoints[3].z - controlPoints[0].z - cZ - bZ;
 
     this.position.x = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + controlPoints[0].x;
     this.position.y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + controlPoints[0].y;
@@ -112,11 +111,14 @@ BezierAnimation.prototype.bezier = function(controlPoints, t) {
 };
 
 BezierAnimation.prototype.display = function () {
-  this.scene.translate(this.position.x, this.position.y, this.position.z);
-  if(this.lastPosition != null){
-    var dx = this.position.x - this.lastPosition.x;
-    var dz = this.position.z - this.lastPosition.z;
-    var angle = Math.atan2(dx, dz);
-    this.scene.rotate(angle, 0, 1, 0);
-  }
+    var newMatrix = mat4.create();
+    mat4.translate(newMatrix, newMatrix, [this.position.x, this.position.y, this.position.z]);
+
+    if (this.lastPosition != null) {
+        var dx = this.position.x - this.lastPosition.x;
+        var dz = this.position.z - this.lastPosition.z;
+        mat4.rotate(newMatrix, newMatrix, Math.atan2(dx,dz), [0, 1, 0]);
+    }
+
+    return newMatrix;
 };

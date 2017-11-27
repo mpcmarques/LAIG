@@ -38,6 +38,12 @@ CircularAnimation.prototype.animate = function (currTime) {
     if (this.initialTime == null)
         this.initialTime = currTime;
 
+    this.lastPosition = new Position(
+        this.position.x,
+        this.position.y,
+        this.position.z
+    );
+
     this.position.x = this.center.z + this.radius * Math.cos(this.initialAngle);
     this.position.z = this.center.x + this.radius * Math.sin(this.initialAngle);
 
@@ -55,11 +61,13 @@ CircularAnimation.prototype.update = function (currTime) {
 };
 
 CircularAnimation.prototype.display = function () {
-  this.scene.translate(this.position.x, this.position.y, this.position.z);
+    var newMatrix = mat4.create();
+    mat4.translate(newMatrix, newMatrix, [this.position.x, this.position.y, this.position.z]);
 
-  if(this.lastPosition != null){
-    var dx = this.position.x - this.lastPosition.x;
-    var dz = this.position.z - this.lastPosition.z;
-    //this.scene.rotate(Math.atan2(dx, dz), 0, 1, 0);
-  }
+    if(this.lastPosition != null){
+        var dx = this.position.x - this.lastPosition.x;
+        var dz = this.position.z - this.lastPosition.z;
+        mat4.rotate(newMatrix, newMatrix, Math.atan2(dx,dz), [0, 1, 0]);
+    }
+    return newMatrix;
 };

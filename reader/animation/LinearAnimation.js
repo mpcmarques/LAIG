@@ -154,6 +154,9 @@ LinearAnimation.prototype.rotate = function(){
 };
 
 LinearAnimation.prototype.display = function () {
-    this.scene.translate(this.position.x, this.position.y, this.position.z);
-    this.scene.rotate(this.angle, 0, 1, 0);
+    var newMatrix = mat4.create();
+    mat4.translate(newMatrix, newMatrix, [this.position.x, this.position.y, this.position.z]);
+    mat4.rotate(newMatrix, newMatrix, this.angle, [0, 1, 0]);
+
+    return newMatrix;
 };
