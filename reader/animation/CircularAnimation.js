@@ -41,7 +41,7 @@ CircularAnimation.prototype.animate = function (currTime) {
     this.position.z = this.center.x + this.radius * Math.sin(this.initialAngle);
 
     this.initialAngle += this.currAng;
-    
+
 
     if(DEGREE_TO_RAD * this.initialAngle >= this.rotang){
         this.initialAngle = this.rotang;
@@ -54,10 +54,6 @@ CircularAnimation.prototype.update = function (currTime) {
 };
 
 CircularAnimation.prototype.display = function () {
-    console.log(this.position.x,this.position.y,this.position.z);
     this.scene.translate(this.position.x, this.position.y, this.position.z);
     this.scene.rotate(Math.atan2(this.position.x, this.position.z), 0, 1, 0);
 };
-
-
-
