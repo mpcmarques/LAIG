@@ -90,7 +90,10 @@ XMLscene.prototype.myTime = function (currTime) {
     var time = currTime - this.initialTime;
 
 
-   return Math.sin(time/500);
+    var arg = Math.pow(Math.sin(time/500), 2);
+
+
+   return arg;
 
 
 

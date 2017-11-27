@@ -631,9 +631,7 @@
 
             <TRANSLATION x="10" y="0" z="3"/>
 
-            <ANIMATIONREFS>
-                <ANIMATIONREF id="andar"/>
-            </ANIMATIONREFS>
+
 
             <DESCENDANTS>
                 <NODEREF id="bandeira"/>
