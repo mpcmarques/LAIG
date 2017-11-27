@@ -80,9 +80,19 @@ XMLscene.prototype.initLights = function() {
 
 };
 
-XMLscene.prototype.myTime = function () {
-    var myDate = new Date();
-    return myDate.getMilliseconds()/1000;
+XMLscene.prototype.myTime = function (currTime) {
+
+    if(this.initialTime == null)
+    {
+        this.initialTime = currTime;
+    }
+
+    var time = currTime - this.initialTime;
+
+
+   return Math.sin(time/500);
+
+
 
 };
 
@@ -183,6 +193,6 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-    this.testShaders[0].setUniformsValues({timeFactor: this.myTime()});
+    this.testShaders[0].setUniformsValues({timeFactor: this.myTime(currTime)});
 };
 
