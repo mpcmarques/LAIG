@@ -207,6 +207,5 @@ XMLscene.prototype.update = function (currTime) {
     this.testShaders[0].setUniformsValues({uSampler2: this.myTime(currTime)});
 
     //console.log(this.testShaders[0].getUniformsValues());
-
 };
 
