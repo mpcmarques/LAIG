@@ -40,7 +40,7 @@ XMLscene.prototype.init = function(application) {
     ];
 
 
-    this.myText = new CGFtexture(this, "scene/images/flag.pgn");
+    this.myText = new CGFtexture(this, "scenes/images/flag.png");
 
 
     this.axis = new CGFaxis(this);
