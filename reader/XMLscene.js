@@ -39,6 +39,10 @@ XMLscene.prototype.init = function(application) {
         new CGFshader(this.gl, "shaders/vertex.vert", "shaders/vertex.frag")
     ];
 
+
+    this.myText = new CGFtexture(this, "scene/images/flag.pgn");
+
+
     this.axis = new CGFaxis(this);
 
 
@@ -90,8 +94,10 @@ XMLscene.prototype.myTime = function (currTime) {
     var time = currTime - this.initialTime;
 
 
-    var arg = Math.pow(Math.sin(time/500), 2);
+    var arg = Math.sin(time/500);
 
+    if(arg < 0)
+        arg = - arg;
 
    return arg;
 
@@ -183,6 +189,7 @@ XMLscene.prototype.display = function() {
 		this.axis.display();
 	}
 
+	this.myText.bind(1);
 
     this.popMatrix();
 
@@ -197,5 +204,9 @@ XMLscene.prototype.display = function() {
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
     this.testShaders[0].setUniformsValues({timeFactor: this.myTime(currTime)});
+    this.testShaders[0].setUniformsValues({uSampler2: this.myTime(currTime)});
+
+    //console.log(this.testShaders[0].getUniformsValues());
+
 };
 

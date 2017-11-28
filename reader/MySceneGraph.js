@@ -1822,6 +1822,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     }
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
+
 };
 
 /**
