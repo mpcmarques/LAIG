@@ -14,6 +14,10 @@ function XMLscene(myInterface) {
 
     this.selectable = [];
 
+    this.objects = [];
+
+    this.setPickEnabled(true);
+
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -40,7 +44,7 @@ XMLscene.prototype.init = function(application) {
     ];
 
 
-    this.myText = new CGFtexture(this, "scenes/images/flag.png");
+//    this.myText = new CGFtexture(this, "scenes/images/flag.png");
 
 
     this.axis = new CGFaxis(this);
@@ -83,6 +87,22 @@ XMLscene.prototype.initLights = function() {
     }
 
 };
+XMLscene.prototype.logPicking = function ()
+{
+    if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+                var obj = this.pickResults[i][0];
+                if (obj)
+                {
+                    var customId = this.pickResults[i][1];
+                    console.log("Picked object: " + obj + ", with pick id " + customId);
+                }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+        }
+    }
+}
 
 XMLscene.prototype.myTime = function (currTime) {
 
@@ -157,6 +177,7 @@ XMLscene.prototype.display = function() {
 
     if (this.graph.loadedOk)
     {
+        this.logPicking();
         // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
@@ -188,9 +209,7 @@ XMLscene.prototype.display = function() {
 		// Draw axis
 		this.axis.display();
 	}
-
-	this.myText.bind(1);
-
+    this.registerForPick(i+1, this.objects[i]);
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
@@ -204,8 +223,6 @@ XMLscene.prototype.display = function() {
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
     this.testShaders[0].setUniformsValues({timeFactor: this.myTime(currTime)});
-    this.testShaders[0].setUniformsValues({uSampler2: this.myTime(currTime)});
 
-    //console.log(this.testShaders[0].getUniformsValues());
 };
 

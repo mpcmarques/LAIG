@@ -42,6 +42,8 @@ function MySceneGraph(filename, scene) {
      */
 
     this.reader.open('scenes/' + filename, this);
+
+    this.setPickEnabled(true);
 }
 
 /*
@@ -162,6 +164,9 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
         if ((error = this.parseNodes(nodes[index])) != null)
             return error;
     }
+
+
+
     this.isAllParsed = true;
 };
 
@@ -1568,6 +1573,10 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             this.onXMLMinorError("unknown tag name <" + nodeName);
     }
 
+
+
+    this.scene.objects.push(this.nodes[nodeID]);
+
     console.log("Parsed nodes");
     return null;
 };
@@ -1823,6 +1832,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
 
+    this.registerForPick(i+1, node);
+
 };
 
 /**
@@ -1918,12 +1929,33 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
  */
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
+    this.logPicking();
     var rootNode = this.nodes[this.idRoot];
+
+
+
 
     // render starting from root.
     this.renderNode(rootNode);
 
 };
+
+MySceneGraph.prototype.logPicking = function ()
+{
+    if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+                var obj = this.pickResults[i][0];
+                if (obj)
+                {
+                    var customId = this.pickResults[i][1];
+                    console.log("Picked object: " + obj + ", with pick id " + customId);
+                }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+        }
+    }
+}
 
 /**
  * Updates the scene, independent of rendering.

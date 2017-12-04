@@ -28,6 +28,8 @@ function MyGraphNode(graph, nodeID, selectable) {
 
     this.hasAnimation = false;
 
+    this.picked = false;
+
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
 }
