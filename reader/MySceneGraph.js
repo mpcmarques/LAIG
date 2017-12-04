@@ -43,7 +43,7 @@ function MySceneGraph(filename, scene) {
 
     this.reader.open('scenes/' + filename, this);
 
-    this.setPickEnabled(true);
+
 }
 
 /*
@@ -1575,7 +1575,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
 
 
-    this.scene.objects.push(this.nodes[nodeID]);
+
 
     console.log("Parsed nodes");
     return null;
@@ -1832,7 +1832,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
 
-
+    if (node.picked)
+        this.scene.registerForPick(node.picked, this);
 
 };
 
@@ -1939,22 +1940,7 @@ MySceneGraph.prototype.displayScene = function () {
 
 };
 
-MySceneGraph.prototype.logPicking = function ()
-{
-    if (this.pickMode == false) {
-        if (this.pickResults != null && this.pickResults.length > 0) {
-            for (var i=0; i< this.pickResults.length; i++) {
-                var obj = this.pickResults[i][0];
-                if (obj)
-                {
-                    var customId = this.pickResults[i][1];
-                    console.log("Picked object: " + obj + ", with pick id " + customId);
-                }
-            }
-            this.pickResults.splice(0,this.pickResults.length);
-        }
-    }
-}
+
 
 /**
  * Updates the scene, independent of rendering.
