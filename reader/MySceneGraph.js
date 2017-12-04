@@ -1832,7 +1832,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
 
-    this.registerForPick(i+1, node);
+
 
 };
 
@@ -1929,7 +1929,6 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
  */
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
-    this.logPicking();
     var rootNode = this.nodes[this.idRoot];
 
 
