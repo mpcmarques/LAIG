@@ -33,4 +33,4 @@ MyPieceWorker.prototype.appearance = function(){
   this.material.setSpecular(1, 0, 0, 1);
   this.material.setEmission(1, 0,0, 1);
   this.material.loadTexture('scenes/images/Fundo-Vermelho.jpg');
-}
+};

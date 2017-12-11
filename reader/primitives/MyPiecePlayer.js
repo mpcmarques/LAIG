@@ -48,3 +48,5 @@ MyPiecePlayer.prototype.appearance = function(){
     this.material.loadTexture('scenes/images/black.jpg');
   }
 }
+
+
