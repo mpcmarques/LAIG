@@ -1,17 +1,28 @@
 function MyBoard(scene) {
     MyPrimitive.call(this, scene);
 
-    this.cube = new MyCube(scene);
+    this.base = new MyCube(scene);
+    this.unit = new MyCube(scene);
 
-    // cube appearance
+    // wood appearance
+    var woodAppearance = new CGFappearance(scene);
+    woodAppearance.setAmbient(0.1,0.1,0.1, 1);
+    woodAppearance.setDiffuse(0.55,0.55,0.55,1);
+    woodAppearance.setSpecular(0.7,0.7,0.7,1);
+    woodAppearance.setShininess(0.25);
+    woodAppearance.loadTexture("scenes/images/wood.jpg");
+    this.base.setAppearance(woodAppearance);
+    this.base.scaleTexCoords(0.5, 1);
+
+    // cube top appearance
     var cubeAppearance = new CGFappearance(scene);
-    cubeAppearance.setAmbient(0.3,0.3,0.3,1);
-    cubeAppearance.setDiffuse(0.5,0.5,0.5,1);
-    cubeAppearance.setSpecular(0.5,0.5,0.5,1);
+    cubeAppearance.setAmbient(0.1,0.1,0.1, 1);
+    cubeAppearance.setDiffuse(0.55,0.55,0.55,1);
+    cubeAppearance.setSpecular(0.7,0.7,0.7,1);
+    cubeAppearance.setShininess(0.25);
     cubeAppearance.loadTexture("scenes/images/board_unit.jpg");
-    this.cube.setTopAppearance(cubeAppearance);
-    this.player = new MyPiecePlayer(scene, 0);
-    this.worker = new MyPieceWorker(scene);
+    this.unit.setAppearance(woodAppearance);
+    this.unit.setTopAppearance(cubeAppearance);
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -25,7 +36,7 @@ MyBoard.prototype.display = function () {
     // base
     this.scene.pushMatrix();
         this.scene.scale(11,0.5,11);
-        this.cube.display();
+        this.base.display();
     this.scene.popMatrix();
 
     for(var x = 0; x < 11; x++){
@@ -33,12 +44,10 @@ MyBoard.prototype.display = function () {
             this.scene.pushMatrix();
             this.scene.translate(x, 0.5, z);
             this.scene.scale(1,0.2,1);
-            this.cube.display();
+            this.unit.display();
             this.scene.popMatrix();
         }
     }
-    this.player.display();
-    this.worker.display();
-    this.scene.popMatrix();
 
+    this.scene.popMatrix();
 };
