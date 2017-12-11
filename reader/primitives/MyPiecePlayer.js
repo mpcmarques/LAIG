@@ -22,7 +22,7 @@ MyPiecePlayer.prototype.display = function(){
   this.scene.popMatrix();
 }
 
-MyPieceWorker.prototype.appearance = function(){
+MyPiecePlayer.prototype.appearance = function(){
   if(this.color){
     this.material.setShininess(10);
     this.material.setAmbient(1, 1, 1, 1);

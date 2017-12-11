@@ -1837,8 +1837,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
     if(modifiedShader)
         this.scene.setActiveShader(this.scene.defaultShader);
 
-    if (node.picked)
-        this.scene.registerForPick(node.picked, this);
+  
 
 };
 

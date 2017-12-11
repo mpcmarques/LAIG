@@ -16,7 +16,7 @@ function XMLscene(myInterface) {
 
     this.objects = [];
 
-    this.setPickEnabled(true);
+
 
 }
 
@@ -155,8 +155,6 @@ XMLscene.prototype.display = function() {
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
-    this.logPicking();
-    this.clearPickRegistration();
 
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
@@ -165,7 +163,7 @@ XMLscene.prototype.display = function() {
 
     if (this.graph.loadedOk)
     {
-        this.logPicking();
+
         // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
@@ -204,23 +202,6 @@ XMLscene.prototype.display = function() {
 
 };
 
-XMLscene.prototype.logPicking = function ()
-{
-    if (this.pickMode == false) {
-        if (this.pickResults != null && this.pickResults.length > 0) {
-            for (var i=0; i< this.pickResults.length; i++) {
-                var obj = this.pickResults[i][0];
-                if (obj)
-                {
-                    var customId = this.pickResults[i][1];
-                    console.log("Picked object: " + obj + ", with pick id " + customId);
-                }
-            }
-            this.pickResults.splice(0,this.pickResults.length);
-        }
-    }
-}
-
 /**
  * Callback used when it is necessary to update some internal state independent of the rendering (display) of the scene. Should be reimplemented by descendants.
  * @param currTime Current time.
@@ -230,4 +211,3 @@ XMLscene.prototype.update = function (currTime) {
     this.testShaders[0].setUniformsValues({timeFactor: this.myTime(currTime)});
 
 };
-
