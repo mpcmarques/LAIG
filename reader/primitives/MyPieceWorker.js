@@ -2,10 +2,13 @@ function MyPieceWorker(scene){
   MyPiece.call(this, scene);
 
   this.material = new CGFappearance(scene);
+  var arg = [];
+  arg[0]=1.5;
+  arg[1]=20;
+  arg[2]=20;
+  this.cyl = new MySphere(scene,arg);
 
-  this.cyl = new MyCylinderWithCover(scene,2,2,2,20,20,1,1);
-
-  this.appearance();  
+  this.appearance();
 
 }
 
@@ -13,8 +16,11 @@ MyPieceWorker.prototype = Object.create(MyPiece.prototype);
 MyPieceWorker.prototype.constructor = MyPieceWorker;
 
 MyPieceWorker.prototype.display = function(){
-
   this.scene.pushMatrix();
+  this.scene.scale(0.5,0.25,0.5);
+  this.scene.translate(15,4,15);
+  this.scene.rotate(90 *DEGREE_TO_RAD,1,0,0);
+  this.material.apply();
   this.cyl.display();
   this.scene.popMatrix();
 
@@ -26,4 +32,5 @@ MyPieceWorker.prototype.appearance = function(){
   this.material.setDiffuse(1, 0, 0, 1);
   this.material.setSpecular(1, 0, 0, 1);
   this.material.setEmission(1, 0,0, 1);
+  this.material.loadTexture('scenes/images/Fundo-Vermelho.jpg');
 }
