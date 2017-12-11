@@ -1519,7 +1519,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                 }
                 else if (descendants[j].nodeName == "LEAF") {
                     //  Parse type
-                    var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
+                    var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch', 'board']);
 
                     if (type != null)
                         this.log("   Leaf: " + type);
@@ -1635,6 +1635,8 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
             return new MySphere(this.scene, leaf.args);
         case 'patch':
             return new MyPatch(this.scene, leaf.args);
+        case 'board':
+            return new MyBoard(this.scene);
         default:
             return null;
     }
@@ -1665,6 +1667,9 @@ MySceneGraph.prototype.checkArgs = function (args, type) {
             break;
         case 'patch':
             numArgs = 3;
+            break;
+        case 'board':
+            numArgs = 0;
             break;
         default:
             numArgs = 0;
@@ -1888,40 +1893,6 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
     }
 
     return controlPoints;
-};
-
-/**
- * Parses a primitive based on the leaf type.
- * @param leaf  Leaf.
- * @returns {*} Primitive if the arguments are correct, and the type matches.
- */
-MySceneGraph.prototype.parsePrimitive = function (leaf) {
-    var renderPrimitive;
-
-    if (!this.checkArgs(leaf.args, leaf.type))
-        return;
-
-    switch (leaf.type) {
-        case 'rectangle':
-            renderPrimitive = new MyRectangle(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3]);
-            break;
-        case 'triangle':
-            renderPrimitive = new MyTriangle(this.scene, leaf.args);
-            break;
-        case 'cylinder':
-            renderPrimitive = new MyCylinderWithCover(this.scene, leaf.args[0], leaf.args[1], leaf.args[2], leaf.args[3], leaf.args[4], leaf.args[5], leaf.args[6]);
-            break;
-        case 'sphere':
-            renderPrimitive = new MySphere(this.scene, leaf.args);
-            break;
-        case 'patch':
-            renderPrimitive = new MyPatch(this.scene, leaf.args);
-            break;
-        default:
-            break;
-    }
-
-    return renderPrimitive;
 };
 
 /**
