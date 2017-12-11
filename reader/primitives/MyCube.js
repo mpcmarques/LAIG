@@ -2,10 +2,16 @@ function MyCube(scene){
     MyPrimitive.call(this, scene);
 
     this.rect = new MyRectangle(scene, 0, 1, 1, 0);
+
+    this.topAppearance = null;
 }
 
 MyCube.prototype = Object.create(MyCube);
 MyCube.prototype.constructor = MyCube;
+
+MyCube.prototype.setTopAppearance = function(appearance) {
+    this.topAppearance = appearance;
+};
 
 MyCube.prototype.display = function () {
     this.scene.pushMatrix();
@@ -36,6 +42,9 @@ MyCube.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(0,1,1);
     this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+    if(this.topAppearance != null) {
+        this.topAppearance.apply();
+    }
     this.rect.display();
     this.scene.popMatrix();
 
