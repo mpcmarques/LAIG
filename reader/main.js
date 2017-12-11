@@ -50,8 +50,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
     'primitives/MyCylinder.js', 'primitives/MySphere.js',
     'primitives/MyCylinderWithCover.js', 'primitives/MyCircle.js',
     'primitives/MyPatch.js', 'animation/Animation.js', 'animation/ControlPointAnimation.js','animation/LinearAnimation.js','animation/CircularAnimation.js',
-    'animation/BezierAnimation.js','animation/ComboAnimation.js','primitives/MyBoard.js', 'primitives/MyCube.js', 'primitive/MyPiece.js', 'primitive/MyPiecePlayer.js',
-    'primitive/MyPieceWorker.js',
+    'animation/BezierAnimation.js','animation/ComboAnimation.js','primitives/MyBoard.js', 'primitives/MyCube.js', 'primitives/MyPiece.js', 'primitives/MyPiecePlayer.js',
+    'primitives/MyPieceWorker.js',
 
     main = function() {
         // Standard application, scene and interface setup
