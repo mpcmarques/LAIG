@@ -102,10 +102,24 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:- include('fabrik/fabrik.pl').
 
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
+
+% obtem o tabuleiro inicial.
+parse_input(initialBoard, Res):-
+    tabuleiroInicial(X),
+    Res = X.
+
+% ve se pode movimentar peca.
+parse_input(canMovePiece(Tab, Piece, Line, Column), Res):-
+    podeMoverPeca(Tab, Piece, Line, Column) -> (Res = true; Res = false).
+
+% movimenta peca.
+parse_input(movePiece(Tab,Piece,Line,Column), TabOut):-
+    moverPeca(Tab, Piece, Line, Column, TabOut).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
