@@ -1,0 +1,3 @@
+[submodule "prolog/fabrik"]
+	path = prolog/fabrik
+	url = https://github.com/mpcmarques/plog_tp1
