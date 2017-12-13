@@ -1,4 +1,4 @@
-function MyPieceWorker(scene){
+function MyPieceWorker(scene, posX, posY, name){
   MyPiece.call(this, scene);
 
   this.material = new CGFappearance(scene);
@@ -7,7 +7,9 @@ function MyPieceWorker(scene){
   arg[1]=20;
   arg[2]=20;
   this.cyl = new MySphere(scene,arg);
-
+  this.name = name;
+  this.posX = posX;
+  this.posY = posY;
   this.appearance();
 
 }
@@ -17,8 +19,8 @@ MyPieceWorker.prototype.constructor = MyPieceWorker;
 
 MyPieceWorker.prototype.display = function(){
   this.scene.pushMatrix();
-  this.scene.scale(0.5,0.25,0.5);
-  this.scene.translate(15,4,15);
+  this.scene.translate(this.posY,1,this.posX);
+  this.scene.scale(0.25,0.20,0.25);
   this.scene.rotate(90 *DEGREE_TO_RAD,1,0,0);
   this.material.apply();
   this.cyl.display();
@@ -32,3 +34,4 @@ MyPieceWorker.prototype.appearance = function(){
   this.material.setDiffuse(0.2, 0, 0, 1);
   this.material.setSpecular(0.5, 0.4, 0.4, 1);
 };
+
