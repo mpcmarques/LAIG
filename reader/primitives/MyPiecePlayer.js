@@ -1,6 +1,6 @@
 
 
-function MyPiecePlayer(scene, color)
+function MyPiecePlayer(scene, color, posX, posY)
 {
   MyPiece.call(this,scene)
 
@@ -10,7 +10,8 @@ function MyPiecePlayer(scene, color)
   arg[1]=20;
   arg[2]=20;
   this.cyl = new MySphere(scene,arg);
-
+  this.posX = posX;
+  this.posY = posY;
   this.color = color;
 
   this.appearance();
@@ -23,8 +24,8 @@ MyPiecePlayer.prototype.constructor = MyPiecePlayer;
 MyPiecePlayer.prototype.display = function(){
 
   this.scene.pushMatrix();
-  this.scene.scale(0.5,0.25,0.5);
-  this.scene.translate(10,4,10);
+  this.scene.translate(this.posY,1,this.posX);
+  this.scene.scale(0.25,0.20,0.25);
   this.scene.rotate(90 *DEGREE_TO_RAD,1,0,0);
   this.material.apply();
   this.cyl.display();
