@@ -23,6 +23,11 @@ function MyBoard(scene) {
     cubeAppearance.loadTexture("scenes/images/board_unit.jpg");
     this.unit.setAppearance(woodAppearance);
     this.unit.setTopAppearance(cubeAppearance);
+
+    this.worker = new MyPieceWorker(scene);
+
+    this.player = new MyPiecePlayer(scene, 0);
+
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -48,6 +53,9 @@ MyBoard.prototype.display = function () {
             this.scene.popMatrix();
         }
     }
+
+    this.worker.display();
+    this.player.display();
 
     this.scene.popMatrix();
 };
