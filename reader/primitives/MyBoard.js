@@ -4,56 +4,6 @@ function MyBoard(scene) {
     this.base = new MyCube(scene);
     this.unit = new MyCube(scene);
 
-    /*  this.boardtest = new Array(11);
-
-      for (var i = 0; i < 11; i++) {
-          this.boardtest[i] = new Array(11);
-          for (var j = 0; j < 11; j++)
-              this.boardtest[i][j] = 'e';
-  }
-  */
-//preta p branca b vermelha t1 e t2
-
-    this.boardtest = [
-        ['e','e','e','e','b','e','e','e','e','e','e'],
-        ['e','b','e','b','e','b','b','e','e','b','e'],
-        ['e','b','e','b','e','e','b','p','b','e','e'],
-        ['p','b','b','e','e','e','e','b','b','e','e'],
-        ['b','e','p','e','p','p','p','p','e','e','e'],
-        ['e','p','p','b','b','p','e','p','b','e','e'],
-        ['b','p','e','p','e','p','p','p','e','e','e'],
-        ['e','e','e','e','t1','p','p','e','b','e','e'],
-        ['b','p','e','e','p','p','e','e','e','t2','e'],
-        ['e','e','e','e','e','e','e','e','e','e','e'],
-        ['e','e','p','e','e','e','e','b','e','e','e']
-    ];
-
-
-    this.blackPieces = [];
-    this.whitePieces = [];
-
-
-    for (var i = 0; i < 11; i++) {
-        for (var j = 0; j < 11; j++) {
-            if (this.boardtest[i][j] == 'p') {
-                var aux = new MyPiecePlayer(scene, 0, i, j);
-                this.blackPieces.push(aux);
-            }
-            if (this.boardtest[i][j] == 'b') {
-                var aux = new MyPiecePlayer(scene, 1, i, j);
-                this.whitePieces.push(aux);
-            }
-            if (this.boardtest[i][j] == 't1') {
-                this.t1 = new MyPieceWorker(scene, i, j,'t1');
-            }
-            if (this.boardtest[i][j] == 't2') {
-                this.t2 = new MyPieceWorker(scene, i, j,'t2');
-            }
-        }
-    }
-
-    console.log(this.boardtest);
-
     // wood appearance
     var woodAppearance = new CGFappearance(scene);
     woodAppearance.setAmbient(0.1, 0.1, 0.1, 1);
@@ -74,19 +24,42 @@ function MyBoard(scene) {
     this.unit.setAppearance(woodAppearance);
     this.unit.setTopAppearance(cubeAppearance);
 
-    this.worker = new MyPieceWorker(scene);
-
-    this.player = new MyPiecePlayer(scene, 0);
-
-    console.log(this.t1);
-    console.log(this.t2);
-    console.log(this.blackPieces);
-    console.log(this.whitePieces);
-
+    this.game = new Fabrik();
+    this.game.getInitialBoard(this.loadedBoard);
 };
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
 MyBoard.prototype.constructor = MyBoard;
+
+
+MyBoard.prototype.loadedBoard = function(tab){
+    this.board = tab;
+
+    if(tab != null) {
+
+        this.blackPieces = [];
+        this.whitePieces = [];
+
+        for (var i = 0; i < 11; i++) {
+            for (var j = 0; j < 11; j++) {
+                if (this.board[i][j] == 'p') {
+                    var aux = new MyPiecePlayer(scene, 0, i, j);
+                    this.blackPieces.push(aux);
+                }
+                if (this.board[i][j] == 'b') {
+                    var aux = new MyPiecePlayer(scene, 1, i, j);
+                    this.whitePieces.push(aux);
+                }
+                if (this.board[i][j] == 't1') {
+                    this.t1 = new MyPieceWorker(scene, i, j, 't1');
+                }
+                if (this.board[i][j] == 't2') {
+                    this.t2 = new MyPieceWorker(scene, i, j, 't2');
+                }
+            }
+        }
+    }
+};
 
 MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
@@ -98,7 +71,6 @@ MyBoard.prototype.display = function () {
     this.scene.scale(10, 0.5, 10);
     this.base.display();
     this.scene.popMatrix();
-
 
     for (var x = 0; x < 10; x++) {
         for (var z = 0; z < 10; z++) {

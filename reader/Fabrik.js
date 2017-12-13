@@ -3,7 +3,7 @@ function Fabrik () {}
 Fabrik.prototype.constructor = Fabrik;
 
 Fabrik.prototype.getPrologRequest = function(requestString, onSuccess, onError, port) {
-    var requestPort = port || 8081
+    var requestPort = port || 8081;
     var request = new XMLHttpRequest();
     request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
 
@@ -18,16 +18,18 @@ Fabrik.prototype.getPrologRequest = function(requestString, onSuccess, onError, 
     request.send();
 };
 
-Fabrik.prototype.getInitialBoard = function() {
+Fabrik.prototype.getInitialBoard = function(onSuccess) {
     // get initial board
-    var initialBoard = this.getPrologRequest('initialBoard', this.handleReply);
 
-    if(initialBoard != null)
-        return initialBoard;
+    this.getPrologRequest('initialBoard', function(data){
+        onSuccess(data.target.response);
+    });
+
+
 };
 
 Fabrik.prototype.movePiece = function(tab, piece, line, column){
-    return this.getPrologRequest('movePiece(' + tab + ',' + piece + ',' + line + ',' + column);
+    return this.getPrologRequest('movePiece(' + tab + ',' + piece + ',' + line + ',' + column, this.handleReply);
 };
 
 Fabrik.prototype.handleReply = function(data){
