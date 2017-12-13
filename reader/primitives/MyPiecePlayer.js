@@ -34,18 +34,14 @@ MyPiecePlayer.prototype.display = function(){
 MyPiecePlayer.prototype.appearance = function(){
   if(this.color){
     this.material.setShininess(10);
-    this.material.setAmbient(1, 1, 1, 1);
-    this.material.setDiffuse(1, 1, 1, 1);
-    this.material.setSpecular(1, 1, 1, 1);
-    this.material.setEmission(1, 1, 1, 1);
-    this.material.loadTexture('scenes/images/white.jpg');
+    this.material.setAmbient(0.1, 0.1, 0.1, 1);
+    this.material.setDiffuse(0.55, 0.55, 0.55, 1);
+    this.material.setSpecular(0.7,0.7, 0.7, 1);
   }else if(!this.color){
     this.material.setShininess(10);
-    this.material.setAmbient(1, 1, 1, 1);
-    this.material.setDiffuse(0, 0, 0, 1);
-    this.material.setSpecular(0, 0, 0, 1);
-    this.material.setEmission(0, 0, 0, 1);
-    this.material.loadTexture('scenes/images/black.jpg');
+    this.material.setAmbient(0.1, 0.1, 0.1, 1);
+    this.material.setDiffuse(0.01, 0.01, 0.01, 1);
+    this.material.setSpecular(0.5, 0.5, 0.5, 1);
   }
 }
 
