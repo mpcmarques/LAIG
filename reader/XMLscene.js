@@ -39,8 +39,8 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 
-    this.testShaders=[
-        new CGFshader(this.gl, "shaders/vertex.vert", "shaders/vertex.frag")
+    this.cameras=[
+      this.camera, this.camera2
     ];
 
 
@@ -89,34 +89,15 @@ XMLscene.prototype.initLights = function() {
 };
 
 
-XMLscene.prototype.myTime = function (currTime) {
-
-    if(this.initialTime == null)
-    {
-        this.initialTime = currTime;
-    }
-
-    var time = currTime - this.initialTime;
-
-
-    var arg = Math.sin(time/500);
-
-    if(arg < 0)
-        arg = - arg;
-
-   return arg;
-
-
-
-};
-
-
 /**
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
+
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
-};
+    this.camera2 = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+
+  };
 
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -208,6 +189,5 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-    this.testShaders[0].setUniformsValues({timeFactor: this.myTime(currTime)});
 
 };
