@@ -2,7 +2,11 @@ function MyBoard(scene) {
     MyPrimitive.call(this, scene);
 
     this.base = new MyCube(scene);
-    this.unit = new MyCube(scene);
+    //this.unit = new MyCube(scene);
+    this.unit = new Array(10);
+    for (var i = 0; i < 10; i++) {
+        this.unit[i] = new Array(10);
+    }
 
     // wood appearance
     var woodAppearance = new CGFappearance(scene);
@@ -21,8 +25,15 @@ function MyBoard(scene) {
     cubeAppearance.setSpecular(0.7, 0.7, 0.7, 1);
     cubeAppearance.setShininess(0.25);
     cubeAppearance.loadTexture("scenes/images/board_unit.jpg");
-    this.unit.setAppearance(woodAppearance);
-    this.unit.setTopAppearance(cubeAppearance);
+
+
+    for (var x = 0; x < 10; x++) {
+        for (var z = 0; z < 10; z++) {
+            this.unit[x][z] = new MyCube(scene,x,z);
+            this.unit[x][z].setAppearance(woodAppearance);
+            this.unit[x][z].setTopAppearance(cubeAppearance);
+        }
+    }
 
     this.game = new Fabrik();
     this.game.getInitialBoard(this.loadedBoard);
@@ -77,7 +88,7 @@ MyBoard.prototype.display = function () {
             this.scene.pushMatrix();
             this.scene.translate(x, 0.5, z);
             this.scene.scale(1, 0.2, 1);
-            this.unit.display();
+            this.unit[x][z].display();
             this.scene.popMatrix();
         }
     }

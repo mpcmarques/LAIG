@@ -1,10 +1,13 @@
-function MyCube(scene){
+function MyCube(scene,x,z){
     MyPrimitive.call(this, scene);
 
     this.rect = new MyRectangle(scene, 0, 1, 1, 0);
 
     this.topAppearance = null;
     this.appearance = null;
+
+    this.x = x || 0;
+    this.z = z || 0;
 }
 
 MyCube.prototype = Object.create(MyCube);
@@ -64,6 +67,8 @@ MyCube.prototype.display = function () {
 
     this.scene.popMatrix();
 };
+
+
 
 MyCube.prototype.scaleTexCoords = function(ampS, ampT){
     this.rect.scaleTexCoords(ampS, ampT);
