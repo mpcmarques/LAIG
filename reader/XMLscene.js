@@ -14,8 +14,8 @@ function XMLscene(myInterface) {
 
     this.selectable = [];
 
-    this.objects = [];
 
+    this.setPickEnabled(true);
 
 
 }
@@ -43,8 +43,6 @@ XMLscene.prototype.init = function(application) {
       this.camera, this.camera2
     ];
 
-
-//    this.myText = new CGFtexture(this, "scenes/images/flag.png");
 
 
     this.axis = new CGFaxis(this);
@@ -137,6 +135,11 @@ XMLscene.prototype.display = function() {
     this.updateProjectionMatrix();
     this.loadIdentity();
 
+
+    this.logPicking();
+    this.clearPickRegistration();
+
+
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
@@ -170,6 +173,7 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
 
+
     }
 	else
 	{
@@ -191,3 +195,26 @@ XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
 
 };
+
+
+XMLscene.prototype.changeCamera = function () {
+
+};
+
+XMLscene.prototype.logPicking = function ()
+{
+    if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+                var obj = this.pickResults[i][0];
+                if (obj)
+                {
+
+                    var customId = this.pickResults[i][1];
+                   console.log(customId + " picked");
+                }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+        }
+    }
+}

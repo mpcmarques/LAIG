@@ -28,7 +28,7 @@ function MyGraphNode(graph, nodeID, selectable) {
 
     this.hasAnimation = false;
 
-    this.picked = true;
+    this.picked = null;
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
@@ -45,8 +45,8 @@ MyGraphNode.prototype.addAnimation = function (animationID) {
     this.animations.push(animationID);
 };
 
-MyGraphNode.prototype.setPick = function (pickID) {
-    this.picked = pickID;
+MyGraphNode.prototype.setPick = function (picked) {
+    this.picked = pickedD;
 }
 
 /**

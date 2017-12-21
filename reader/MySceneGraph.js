@@ -1776,6 +1776,7 @@ MySceneGraph.prototype.mixNodeAppearance = function (appearance, texture) {
 MySceneGraph.prototype.displayScene = function () {
     // entry point for graph rendering.
     var rootNode = this.nodes[this.idRoot];
+
     // render starting from root.
     this.renderNode(rootNode);
 };
@@ -1892,22 +1893,6 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
     }
 
     return controlPoints;
-};
-
-/**
- *
- * Displays the scene, processing each node, starting in the root node.
- */
-MySceneGraph.prototype.displayScene = function () {
-    // entry point for graph rendering.
-    var rootNode = this.nodes[this.idRoot];
-
-
-
-
-    // render starting from root.
-    this.renderNode(rootNode);
-
 };
 
 
