@@ -26,7 +26,7 @@ MyEdge.prototype.display = function () {
 
     if (this.appearance != null)
         this.appearance.apply();
-
+    var obj = 0;
     //this.scene.setActiveShader(this.shade);
     for (var t = 0; t < 2 ;t++) {
         this.scene.pushMatrix();
@@ -46,9 +46,11 @@ MyEdge.prototype.display = function () {
                 this.scene.pushMatrix();
                 this.scene.translate(i, 0, 0);
                 this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+                this.scene.registerForPick(obj, this.rect);
                 this.topAppearance.apply();
                 this.rect.display();
                 this.scene.popMatrix();
+                obj++;
             }
             this.scene.popMatrix();
     }

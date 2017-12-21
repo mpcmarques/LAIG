@@ -89,7 +89,7 @@ MyBoard.prototype.display = function () {
             this.scene.pushMatrix();
             this.scene.translate(x, 0.5, z);
             this.scene.scale(1, 0.2, 1);
-            this.scene.registerForPick(obj, this.unit[x][z]);
+            //this.scene.registerForPick(obj, this.unit[x][z]);
             this.unit[x][z].display();
             this.scene.popMatrix();
             obj++;
