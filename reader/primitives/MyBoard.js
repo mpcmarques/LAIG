@@ -34,6 +34,7 @@ function MyBoard(scene) {
             this.unit[x][z].setTopAppearance(cubeAppearance);
         }
     }
+    this.edge = new MyEdge(scene);
 
     this.game = new Fabrik();
     this.game.getInitialBoard(this.loadedBoard);
@@ -121,6 +122,10 @@ MyBoard.prototype.display = function () {
         }
     }
 
+    this.scene.pushMatrix();
+    this.scene.translate(0,0,0);
+    this.edge.display();
+    this.scene.popMatrix();
 
     this.scene.popMatrix();
 };
