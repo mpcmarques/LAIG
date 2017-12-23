@@ -78,6 +78,8 @@ MyBoard.prototype.display = function () {
 
     var obj = 0;
 
+    this.scene.translate(-5,0,-5);
+
     // base
     this.scene.pushMatrix();
     this.scene.scale(10, 0.5, 10);
@@ -123,8 +125,8 @@ MyBoard.prototype.display = function () {
     }
 
     this.scene.pushMatrix();
-    this.scene.translate(0,0,0);
-    this.edge.display();
+    this.scene.translate(0,-0.1,0);
+    //this.edge.display();
     this.scene.popMatrix();
 
     this.scene.popMatrix();

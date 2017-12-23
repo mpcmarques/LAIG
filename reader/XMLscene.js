@@ -14,6 +14,10 @@ function XMLscene(myInterface) {
 
     this.selectable = [];
 
+    this.selectedCamera = 0;
+    this.cameras=[
+      vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15)
+    ];
 
     this.setPickEnabled(true);
 
@@ -39,9 +43,7 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 
-    this.cameras=[
-      this.camera, this.camera2
-    ];
+
 
 
 
@@ -92,8 +94,7 @@ XMLscene.prototype.initLights = function() {
  */
 XMLscene.prototype.initCameras = function() {
 
-    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
-    this.camera2 = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4,0.1,500,this.cameras[this.selectedCamera],vec3.fromValues(0, 0, 0));
 
   };
 
@@ -193,12 +194,17 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-
+    this.camera.setPosition(this.cameras[this.selectedCamera]);
+    if(this.selectedCamera == 0)
+      console.log(this.selectedCamera);
+      else {
+        console.log(this.selectedCamera);
+      }
 };
 
 
 XMLscene.prototype.changeCamera = function () {
-
+    return this.camera;
 };
 
 XMLscene.prototype.logPicking = function ()

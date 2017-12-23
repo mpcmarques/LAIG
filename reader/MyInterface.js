@@ -50,12 +50,8 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 
 MyInterface.prototype.AddSelected = function () {
 
-    this.gui.add(this.scene, 'cameras', {
+    this.gui.add(this.scene, 'selectedCamera', {
         'Camera One' : 0,
         'Camera Two' : 1
     }).name('Cameras');
-
-
-    
-
 };
