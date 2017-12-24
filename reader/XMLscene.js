@@ -208,7 +208,7 @@ XMLscene.prototype.animateCamera = function(currTime){
 
     // update camera Y.
     if(this.camera.position[1] != newPosition[1]){
-        this.camera.position[1] += newPosition[1] - this.camera.position[1] > 0 ? 1 : -1;;
+        this.camera.position[1] += newPosition[1] - this.camera.position[1] > 0 ? 1 : -1;
     }
 
     // update camera Z.
