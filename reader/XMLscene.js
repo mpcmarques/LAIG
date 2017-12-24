@@ -18,7 +18,7 @@ function XMLscene(myInterface) {
     this.lastSelectedCamera = 0;
     this.needToUpdateCamera = false;
     this.cameras=[
-      vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15)
+      vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15), vec3.fromValues(2, 20, 0)
     ];
 
     this.setPickEnabled(true);

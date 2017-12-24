@@ -52,7 +52,8 @@ MyInterface.prototype.AddSelected = function () {
 
     var selectedCamera = this.gui.add(this.scene, 'selectedCamera', {
         'Camera One' : 0,
-        'Camera Two' : 1
+        'Camera Two' : 1,
+        'Camera Three': 2
     }).name('Cameras');
 
     selectedCamera.onFinishChange(this.onCameraChange);
