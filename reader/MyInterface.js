@@ -50,8 +50,18 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 
 MyInterface.prototype.AddSelected = function () {
 
-    this.gui.add(this.scene, 'selectedCamera', {
+    var selectedCamera = this.gui.add(this.scene, 'selectedCamera', {
         'Camera One' : 0,
         'Camera Two' : 1
     }).name('Cameras');
+
+    selectedCamera.onFinishChange(this.onCameraChange);
 };
+
+MyInterface.prototype.onCameraChange = function(value){
+    // check if selected camera has changed.
+    if(this.object.lastSelectedCamera != value) {
+        this.object.needToUpdateCamera = true;
+        this.object.lastSelectedCamera = value;
+    }
+ };

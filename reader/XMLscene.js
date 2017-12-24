@@ -15,13 +15,13 @@ function XMLscene(myInterface) {
     this.selectable = [];
 
     this.selectedCamera = 0;
+    this.lastSelectedCamera = 0;
+    this.needToUpdateCamera = false;
     this.cameras=[
       vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15)
     ];
 
     this.setPickEnabled(true);
-
-
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -41,11 +41,6 @@ XMLscene.prototype.init = function(application) {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
-
-
-
-
 
     this.axis = new CGFaxis(this);
 
@@ -114,6 +109,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
+    // initialize interface
     this.interface.AddSelected();
 
     // Adds lights group.
@@ -194,17 +190,32 @@ XMLscene.prototype.display = function() {
  */
 XMLscene.prototype.update = function (currTime) {
     this.graph.update(currTime);
-    this.camera.setPosition(this.cameras[this.selectedCamera]);
-    if(this.selectedCamera == 0)
-      console.log(this.selectedCamera);
-      else {
-        console.log(this.selectedCamera);
-      }
+    //this.camera.setPosition(this.cameras[this.selectedCamera]);
+    //console.log(this.needToUpdateCamera);
+    if(this.needToUpdateCamera)
+        this.animateCamera(currTime);
 };
 
+XMLscene.prototype.animateCamera = function(currTime){
+    // selected camera position.
+    var newPosition = this.cameras[this.selectedCamera];
 
-XMLscene.prototype.changeCamera = function () {
-    return this.camera;
+    // animating camera.
+    // update camera X.
+    if(this.camera.position[0] != newPosition[0]){
+        this.camera.position[0] += newPosition[0] - this.camera.position[0] > 0 ? 1 : -1;
+    }
+
+    // update camera Y.
+    if(this.camera.position[1] != newPosition[1]){
+        this.camera.position[1] += newPosition[1] - this.camera.position[1] > 0 ? 1 : -1;;
+    }
+
+    // update camera Z.
+    if(this.camera.position[2] != newPosition[2]){
+        this.camera.position[2] += newPosition[2] - this.camera.position[2] > 0 ? 1 : -1;
+    }
+
 };
 
 XMLscene.prototype.logPicking = function ()
