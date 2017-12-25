@@ -16,10 +16,14 @@ function XMLscene(myInterface) {
 
     this.selectedCamera = 0;
     this.lastSelectedCamera = 0;
+    this.difficulty = 0;
     this.needToUpdateCamera = false;
     this.cameras=[
       vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15), vec3.fromValues(2, 20, 0)
     ];
+    this.gameType = 0;
+    this.startingPlayer = 0;
+    this.gameStarted = false;
 
     this.setPickEnabled(true);
 }
@@ -110,10 +114,10 @@ XMLscene.prototype.onGraphLoaded = function()
     this.initLights();
 
     // initialize interface
-    this.interface.AddSelected();
+    this.interface.loadGameInterface();
 
     // Adds lights group.
-    this.interface.addLightsGroup(this.graph.lights);
+    //this.interface.addLightsGroup(this.graph.lights);
 
 };
 
@@ -234,4 +238,14 @@ XMLscene.prototype.logPicking = function ()
             this.pickResults.splice(0,this.pickResults.length);
         }
     }
-}
+};
+
+XMLscene.prototype.startGame = function(){
+    this.gameStarted = true;
+    // remove options from interface.
+    this.interface.removeGameOptions();
+};
+
+XMLscene.prototype.undo = function(){
+
+};

@@ -45,6 +45,7 @@ MyBoard.prototype.constructor = MyBoard;
 
 
 MyBoard.prototype.loadedBoard = function(tab){
+
     this.board = tab;
 
     if(tab != null) {

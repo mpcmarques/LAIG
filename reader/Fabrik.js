@@ -20,8 +20,9 @@ Fabrik.prototype.getPrologRequest = function(requestString, onSuccess, onError, 
 
 Fabrik.prototype.getInitialBoard = function(onSuccess) {
     // get initial board
-
+    // loading board
     this.getPrologRequest('initialBoard', function(data){
+        // finished loading board
         onSuccess(data.target.response);
     });
 
