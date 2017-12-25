@@ -49,6 +49,7 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 };
 
 MyInterface.prototype.loadGameInterface = function () {
+
     // camera selection
     var selectedCamera = this.gui.add(this.scene, 'selectedCamera', {
         'Camera One' : 0,

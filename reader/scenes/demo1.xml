@@ -199,6 +199,7 @@
 
             <DESCENDANTS>
                 <NODEREF id="board"/>
+                <NODEREF id="floor"/>
             </DESCENDANTS>
         </NODE>
 
@@ -206,10 +207,83 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
+            <TRANSLATION x="25" y="6" z="25"/>
+
             <DESCENDANTS>
                 <LEAF id="board" type="board" args=""/>
             </DESCENDANTS>
         </NODE>
+
+        <NODE id="floor">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0" z="50"/>
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                <LEAF type="rectangle" args="0 50 50 0"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <!--
+        <NODE id="walls">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <DESCENDANTS>
+                <NODEREF id="wall"/>
+                <NODEREF id="wall2"/>
+                <NODEREF id="wall3"/>
+                <NODEREF id="wall4"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="wall4">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="50" y="0" z="50"/>
+            <ROTATION axis="y" angle="-180"/>
+
+            <DESCENDANTS>
+                <NODEREF id="wall"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="wall3">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="50" y="0" z="0"/>
+            <ROTATION axis="y" angle="-90"/>
+
+            <DESCENDANTS>
+                <NODEREF id="wall"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="wall2">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0" z="50"/>
+            <ROTATION axis="y" angle="90"/>
+
+            <DESCENDANTS>
+                <NODEREF id="wall"/>
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id="wall">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <DESCENDANTS>
+                <LEAF type="rectangle" args="0 30 50 0"/>
+            </DESCENDANTS>
+        </NODE>-->
 
     </NODES>
 </SCENE>
