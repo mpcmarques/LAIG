@@ -21,16 +21,23 @@ MyInterface.prototype.init = function(application) {
 
     // init GUI. For more information on the methods, check:
     //  http://workshop.chromeexperiments.com/examples/gui
-
+    var self = this;
     this.gui = new dat.GUI();
     // add a group of controls (and open/expand by defult)
 
 
-    this.gui.add(this.scene, 'chooseScene', {
+   this.controller = this.gui.add(this.scene, 'chooseScene', {
         'One': 0,
         'Two': 1
     }).name('Theme');
 
+    this.controller.onChange(function(value) {
+        var fr = new FileReader();
+        fr.onload = function () {
+
+        }
+        location.reload();
+    });
 
     this.obj = this;
 

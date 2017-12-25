@@ -19,7 +19,7 @@ function XMLscene(myInterface) {
     this.difficulty = 0;
     this.needToUpdateCamera = false;
     this.cameras=[
-        vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15), vec3.fromValues(2, 20, 0)
+      vec3.fromValues(25, 3, 20), vec3.fromValues(0, 20, 25), vec3.fromValues(2, 20, 0)
     ];
     this.gameType = 0;
     this.startingPlayer = 0;
@@ -202,7 +202,7 @@ XMLscene.prototype.update = function (currTime) {
     if(this.needToUpdateCamera)
         this.animateCamera(currTime);
 
-    this.myTheme();
+   this.myTheme();
 };
 
 
@@ -210,10 +210,12 @@ XMLscene.prototype.update = function (currTime) {
 
 
 XMLscene.prototype.myTheme = function () {
-    var themeList = [
-        "scene.xml","demo1.xml"
+    this.themeList = [
+        "scene2.xml","scene.xml"
     ];
-    return themeList[this.chooseScene];
+
+
+    return this.themeList[this.chooseScene];
 };
 
 XMLscene.prototype.animateCamera = function(currTime){
@@ -260,6 +262,7 @@ XMLscene.prototype.startGame = function(){
     this.gameStarted = true;
     // remove options from interface.
     this.interface.removeGameOptions();
+
 };
 
 XMLscene.prototype.undo = function(){
