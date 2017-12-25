@@ -5,6 +5,7 @@
 function MyInterface() {
     //call CGFinterface constructor
     CGFinterface.call(this);
+
 }
 
 MyInterface.prototype = Object.create(CGFinterface.prototype);
@@ -23,6 +24,13 @@ MyInterface.prototype.init = function(application) {
 
     this.gui = new dat.GUI();
     // add a group of controls (and open/expand by defult)
+
+
+    this.gui.add(this.scene, 'chooseScene', {
+        'One': 0,
+        'Two': 1
+    }).name('Theme');
+
 
     this.obj = this;
 

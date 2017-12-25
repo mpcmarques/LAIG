@@ -11,7 +11,7 @@ function XMLscene(myInterface) {
     this.lightValues = {};
     this.selectedShader = 0;
     this.selectedNode = 0;
-
+    this.chooseScene = 0;
     this.selectable = [];
 
     this.selectedCamera = 0;
@@ -23,6 +23,9 @@ function XMLscene(myInterface) {
     ];
     this.gameType = 0;
     this.startingPlayer = 0;
+
+
+
     this.gameStarted = false;
 
     this.setPickEnabled(true);
@@ -198,6 +201,19 @@ XMLscene.prototype.update = function (currTime) {
     //console.log(this.needToUpdateCamera);
     if(this.needToUpdateCamera)
         this.animateCamera(currTime);
+
+    this.myTheme();
+};
+
+
+
+
+
+XMLscene.prototype.myTheme = function () {
+    var themeList = [
+        "scene2.xml","demo1.xml"
+    ];
+    return themeList[this.chooseScene];
 };
 
 XMLscene.prototype.animateCamera = function(currTime){
