@@ -198,21 +198,12 @@
             <TEXTURE id="null"/>
 
             <DESCENDANTS>
-                <NODEREF id="board"/>
                 <NODEREF id="floor"/>
+                <NODEREF id="board"/>
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="board">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
 
-            <TRANSLATION x="25" y="6" z="25"/>
-
-            <DESCENDANTS>
-                <LEAF id="board" type="board" args=""/>
-            </DESCENDANTS>
-        </NODE>
 
         <NODE id="floor">
             <MATERIAL id="null"/>
@@ -223,6 +214,19 @@
 
             <DESCENDANTS>
                 <LEAF type="rectangle" args="0 50 50 0"/>
+            </DESCENDANTS>
+        </NODE>
+
+
+
+        <NODE id="board">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="25" y="6" z="25"/>
+
+            <DESCENDANTS>
+                <LEAF id="board" type="board" args=""/>
             </DESCENDANTS>
         </NODE>
 
