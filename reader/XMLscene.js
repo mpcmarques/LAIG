@@ -19,7 +19,7 @@ function XMLscene(myInterface) {
     this.difficulty = 0;
     this.needToUpdateCamera = false;
     this.cameras=[
-      vec3.fromValues(25, 3, 20), vec3.fromValues(0, 20, 25), vec3.fromValues(2, 20, 0)
+        vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15), vec3.fromValues(2, 20, 0)
     ];
     this.gameType = 0;
     this.startingPlayer = 0;
@@ -211,7 +211,7 @@ XMLscene.prototype.update = function (currTime) {
 
 XMLscene.prototype.myTheme = function () {
     var themeList = [
-        "scene2.xml","demo1.xml"
+        "scene.xml","demo1.xml"
     ];
     return themeList[this.chooseScene];
 };
