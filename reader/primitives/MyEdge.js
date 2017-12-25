@@ -26,7 +26,9 @@ MyEdge.prototype.display = function () {
 
     if (this.appearance != null)
         this.appearance.apply();
+
     var obj = 0;
+
     //this.scene.setActiveShader(this.shade);
     for (var t = 0; t < 2 ;t++) {
         this.scene.pushMatrix();

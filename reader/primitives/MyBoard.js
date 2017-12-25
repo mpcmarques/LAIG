@@ -126,8 +126,7 @@ MyBoard.prototype.display = function () {
     }
 
     this.scene.pushMatrix();
-    this.scene.translate(0,-0.1,0);
-    //this.edge.display();
+    this.edge.display();
     this.scene.popMatrix();
 
     this.scene.popMatrix();
