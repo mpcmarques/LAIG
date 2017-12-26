@@ -72,10 +72,6 @@ MyInterface.prototype.loadGameInterface = function () {
     selectedCamera.name('Cameras');
     selectedCamera.onFinishChange(this.onCameraChange);
 
-    // undo option
-    var undo = this.gui.add(this.scene, 'undo');
-    undo.name('Undo last play');
-
     // game mode selection
     this.gameOptions = this.gui.addFolder('Game');
     this.gameOptions.open();
@@ -137,6 +133,22 @@ MyInterface.prototype.removeGameOptions = function(){
     this.gameOptions.remove(this.gameType);
     this.gameOptions.remove(this.startButton);
     this.gameOptions.remove(this.startingPlayer);
+};
+
+MyInterface.prototype.addGameProperties = function(){
+    this.numberBlackPieces = this.gameOptions.add(this.scene, 'numberBlackPieces').name('Black pieces:');
+    this.numberWhitePieces = this.gameOptions.add(this.scene, 'numberWhitePieces').name('White pieces:');
+    this.timeLeft = this.gameOptions.add(this.scene, 'timeLeft').name('Time left');
+
+    // disable changes
+    this.numberBlackPieces.domElement.style.pointerEvents = 'none';
+    this.numberWhitePieces.domElement.style.pointerEvents = 'none';
+    this.timeLeft.domElement.style.pointerEvents = 'none';
+    this.timeLeft.listen();
+
+    // undo option
+    var undo = this.gui.add(this.scene, 'undo');
+    undo.name('Undo last play');
 };
 
 MyInterface.prototype.onCameraChange = function(value){

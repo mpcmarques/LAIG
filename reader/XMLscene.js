@@ -16,6 +16,9 @@ function XMLscene(myInterface) {
     this.graphs = [];
     this.currentGraph = 0;
     this.numberGraphsLoaded = 0;
+    this.numberBlackPieces = 0;
+    this.numberWhitePieces = 0;
+    this.timeLeft = 60;
 
     this.selectedCamera = 0;
     this.lastSelectedCamera = 0;
@@ -221,6 +224,14 @@ XMLscene.prototype.update = function (currTime) {
     // update camera position
     if(this.needToUpdateCamera)
         this.animateCamera(currTime);
+
+    // update time left
+    if(this.gameStarted) {
+        this.timeLeft -= 1/60;
+        if(this.timeLeft < 0){
+            this.timeLeft = 60;
+        }
+    }
 };
 
 XMLscene.prototype.animateCamera = function(currTime){
@@ -267,7 +278,8 @@ XMLscene.prototype.startGame = function(){
     this.gameStarted = true;
     // remove options from interface.
     this.interface.removeGameOptions();
-
+    // add game properties
+    this.interface.addGameProperties();
 };
 
 XMLscene.prototype.undo = function(){
