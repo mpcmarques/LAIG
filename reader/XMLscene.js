@@ -227,7 +227,7 @@ XMLscene.prototype.update = function (currTime) {
 
     // update time left
     if(this.gameStarted) {
-        this.timeLeft -= 1/60;
+        this.timeLeft -= 1/30;
         if(this.timeLeft < 0){
             this.timeLeft = 60;
         }
