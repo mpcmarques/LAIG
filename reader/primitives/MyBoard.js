@@ -86,8 +86,8 @@ MyBoard.prototype.display = function () {
     for(var j = 0; j < 11; j++) {
     this.scene.pushMatrix();
         for (var i = 0; i < 11; i++) {
-            this.scene.registerForPick(obj, this.point);
-            this.point.display();
+
+            this.point.display(obj);
             this.scene.translate(0, 0, 1);
             obj++;
         }
