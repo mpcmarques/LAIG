@@ -67,9 +67,11 @@ MyInterface.prototype.loadGameInterface = function () {
 
     // camera selection
     var selectedCamera = this.gui.add(this.scene, 'selectedCamera', {
-        'Camera One' : 0,
-        'Camera Two' : 1,
-        'Camera Three': 2
+        'Side' : 0,
+        'Player one' : 1,
+        'Player two': 2,
+        'Above': 3,
+        'Room': 4
     });
     selectedCamera.name('Cameras');
     selectedCamera.onFinishChange(this.onCameraChange);

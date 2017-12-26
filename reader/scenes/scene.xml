@@ -20,28 +20,21 @@
 
     <!-- Lights -->
     <LIGHTS>
-        <LIGHT id="light0">
+
+        <LIGHT id="sun">
             <enable value="1"/>
-            <position x="40" y="10" z="40" w="1"/>
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
-            <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+            <position x="15" y="10" z="-28" w="1"/>
+            <ambient r="0" g="0" b="0" a="1.0"/>
+            <diffuse r="1" g="1" b="1" a="1.0"/>
+            <specular r="1" g="1" b="1" a="1.0"/>
         </LIGHT>
 
-        <LIGHT id="light1">
+        <LIGHT id="tungsten">
             <enable value="1"/>
-            <position x="10" y="0" z="1" w="1"/>
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
-            <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
-        </LIGHT>
-
-        <LIGHT id="sunLight">
-            <enable value="1"/>
-            <position x="15" y="10" z="-25" w="1"/>
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
-            <diffuse r="1" g="0.46" b="0.1" a="1.0"/>
-            <specular r="1" g="0.46" b="0.1" a="1.0"/>
+            <position x="20" y="15" z="70" w="0.5"/>
+            <ambient r="0" g="0" b="0" a="1.0"/>
+            <diffuse r="1" g="0.94" b="0.87" a="1.0"/>
+            <specular r="1" g="0.94" b="0.87" a="1.0"/>
         </LIGHT>
 
     </LIGHTS>

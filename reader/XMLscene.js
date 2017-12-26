@@ -19,7 +19,7 @@ function XMLscene(myInterface) {
     this.difficulty = 0;
     this.needToUpdateCamera = false;
     this.cameras=[
-        vec3.fromValues(15, 10, 0), vec3.fromValues(0, 10, 15), vec3.fromValues(2, 20, 0)
+        vec3.fromValues(-8, 8, 0), vec3.fromValues(0, 5, 10), vec3.fromValues(0, 10, -6), vec3.fromValues(2, 20, 0), vec3.fromValues(-3, 10, 13)
     ];
     this.gameType = 0;
     this.startingPlayer = 0;
