@@ -29,12 +29,13 @@
             <specular r="1" g="1" b="1" a="1.0"/>
         </LIGHT>
 
-        <LIGHT id="tungsten">
+
+        <LIGHT id="fire">
             <enable value="1"/>
-            <position x="20" y="15" z="70" w="0.5"/>
+            <position x="-6" y="4" z="0" w="1"/>
             <ambient r="0" g="0" b="0" a="1.0"/>
-            <diffuse r="1" g="0.94" b="0.87" a="1.0"/>
-            <specular r="1" g="0.94" b="0.87" a="1.0"/>
+            <diffuse r="1" g="0.5764" b="0.1607" a="1.0"/>
+            <specular r="1" g="0.5764" b="0.1607" a="1.0"/>
         </LIGHT>
 
     </LIGHTS>
@@ -90,53 +91,58 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
+        <!-- Aluminium -->
+        <TEXTURE id="aluminium">
+            <file path="images/aluminium.jpg"/>
+            <amplif_factor s="1" t="1"/>
+        </TEXTURE>
+
+        <!-- Concrete 2 -->
+        <TEXTURE id="concrete2">
+            <file path="images/concrete2.jpg"/>
+            <amplif_factor s="0.5" t="0.5"/>
+        </TEXTURE>
+
+        <!-- Candle -->
+        <TEXTURE id="candle">
+            <file path="images/candle.jpg"/>
+            <amplif_factor s="0.5" t="0.5"/>
+        </TEXTURE>
+
+        <!-- Fire -->
+        <TEXTURE id="fire">
+            <file path="images/fire.jpg"/>
+            <amplif_factor s="1" t="1"/>
+        </TEXTURE>
 
     </TEXTURES>
 
 
     <MATERIALS>
         <!-- floor -->
-        <MATERIAL id="floorMaterial">
-            <shininess value="1"/>
-            <specular r="0" g="0" b="0" a="1"/>
-            <diffuse r="1.0" g="0.68" b="0.4" a="1"/>
-            <ambient r="0.2" g="0.2" b="0.2" a="1"/>
-            <emission r="0.0" g="0.0" b="0.0" a="1"/>
-        </MATERIAL>
-
-        <!-- PC Screen Material -->
-        <MATERIAL id="pcScreenMaterial">
-            <shininess value="100"/>
-            <specular r="0.2" g="0.2" b="0.2" a="1"/>
-            <diffuse r="0.0" g="0.207" b="0.0" a="1"/>
+        <MATERIAL id="concrete">
+            <shininess value="32"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+            <diffuse r="0.55" g="0.55" b="0.55" a="1"/>
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
-            <emission r="1" g="1" b="1" a="1"/>
+            <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
         <!-- Metal material -->
         <MATERIAL id="metal">
-            <shininess value="0.4"/>
-            <specular r="0.508273" g="0.508273" b="0.508273" a="1"/>
-            <diffuse r="0.50754" g="0.50754" b="0.50754" a="1"/>
-            <ambient r="0.19225" g="0.19225" b="0.19225" a="1"/>
+            <shininess value="76"/>
+            <specular r="0.77" g="0.77" b="0.77" a="1"/>
+            <diffuse r="0.5" g="0.5" b="0.5" a="1"/>
+            <ambient r="0.05" g="0.05" b="0.05" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
-        <!-- Gold material -->
-        <MATERIAL id="gold">
-            <shininess value="0.4"/>
-            <specular r="0.75" g="0.555802" b="0.366065" a="1"/>
-            <diffuse r="0.85" g="0.60648" b="0.22648" a="1"/>
-            <ambient r="0.3" g="0.1995" b="0.0745" a="1"/>
-            <emission r="0.0" g="0.0" b="0.0" a="1"/>
-        </MATERIAL>
-
-        <!-- Black plastic -->
-        <MATERIAL id="blackPlasticMaterial">
-            <shininess value="32"/>
-            <specular r="0.5" g="0.5" b="0.5" a="1"/>
-            <diffuse r="0.01" g="0.01" b="0.01" a="1"/>
-            <ambient r="0" g="0" b="0" a="1"/>
+        <!-- Black metal -->
+        <MATERIAL id="blackMetal">
+            <shininess value="38.4"/>
+            <specular r="0.332741" g="0.328634" b="0.346435" a="1"/>
+            <diffuse r="0.18275" g="0.17" b="0.22525" a="1"/>
+            <ambient r="0.05375" g="0.05" b="0.06625" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
 
@@ -144,9 +150,18 @@
         <MATERIAL id="rubber">
             <shininess value="10"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
-            <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
-            <ambient r="0.2" g="0.2" b="0.2" a="1"/>
+            <diffuse r="0.5" g="0.5" b="0.5" a="1"/>
+            <ambient r="0.05" g="0.05" b="0.05" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
+        </MATERIAL>
+
+        <!-- fire -->
+        <MATERIAL id="fire">
+            <shininess value="10"/>
+            <specular r="1" g="1" b="0" a="1"/>
+            <diffuse r="1" g="1" b="0" a="1"/>
+            <ambient r="1" g="1" b="0" a="1"/>
+            <emission r="1" g="1" b="0.0" a="1"/>
         </MATERIAL>
 
         <!-- A default material -->
@@ -155,16 +170,6 @@
             <specular r="0.0" g="0.0" b="0.0" a="1"/>
             <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
             <ambient r="0.4" g="0.4" b="0.4" a="1"/>
-            <emission r="0.0" g="0.0" b="0.0" a="1"/>
-        </MATERIAL>
-
-
-        <!-- Ligh bulb Material -->
-        <MATERIAL id="lightMaterial">
-            <shininess value="0.6"/>
-            <specular r="0.774597" g="0.774597" b="0.774597" a="1"/>
-            <diffuse r="0.4" g="0.4" b="0.4" a="1"/>
-            <ambient r="0.05" g="0.05" b="0.05" a="1"/>
             <emission r="0.0" g="0.0" b="0.0" a="1"/>
         </MATERIAL>
     </MATERIALS>
@@ -193,6 +198,16 @@
             </DESCENDANTS>
         </NODE>
 
+
+        <NODE id="board">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <DESCENDANTS>
+                <LEAF id="board" type="board" args=""/>
+            </DESCENDANTS>
+        </NODE>
+
         <NODE id="theme">
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
@@ -208,15 +223,99 @@
                 <NODEREF id="table"/>
                 <NODEREF id="door"/>
                 <NODEREF id="landscape"/>
+                <NODEREF id="sink"/>
+                <NODEREF id="lamp"/>
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="board">
+        <NODE id="lamp">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="18.5" y="8" z="25"/>
+
+            <DESCENDANTS>
+                <NODEREF id="candle"/>
+                <NODEREF id="fire"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="candle">
+            <MATERIAL id="rubber"/>
+            <TEXTURE id="candle"/>
+
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="3 0.18 0.18 30 30 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="fire">
+            <MATERIAL id="fire"/>
+            <TEXTURE id="fire"/>
+
+            <TRANSLATION x="0" y="3.2" z="0"/>
+
+            <DESCENDANTS>
+                <NODEREF id="fire_top"/>
+                <NODEREF id="fire_base"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="fire_top">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0" y="0.6" z="0"/>
+            <ROTATION axis="x" angle="90"/>
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="0.6 0 0.18 30 30 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="fire_base">
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
             <DESCENDANTS>
-                <LEAF id="board" type="board" args=""/>
+                <LEAF type="sphere" args="0.171 30 30"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="sink">
+            <MATERIAL id="metal"/>
+            <TEXTURE id="aluminium"/>
+
+            <TRANSLATION x="4" y="8" z="5"/>
+
+            <DESCENDANTS>
+                <NODEREF id="sink_top"/>
+                <NODEREF id="sink_bottom"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="sink_top">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <ROTATION axis="x" angle="90"/>
+            <SCALE sx="-1" sy="1" sz="1"/>
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="2 3 0 30 30 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="sink_bottom">
+            <MATERIAL id="null"/>
+            <TEXTURE id="null"/>
+
+            <ROTATION axis="x" angle="90"/>
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="8 3 3 30 30 0 0"/>
             </DESCENDANTS>
         </NODE>
 
@@ -234,8 +333,8 @@
 
 
         <NODE id="floor">
-            <MATERIAL id="null"/>
-            <TEXTURE id="concrete"/>
+            <MATERIAL id="concrete"/>
+            <TEXTURE id="concrete2"/>
 
             <TRANSLATION x="0" y="0" z="100"/>
             <ROTATION axis="x" angle="-90"/>
@@ -325,7 +424,7 @@
 
         <NODE id="door_handle">
             <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
+            <TEXTURE id="aluminium"/>
 
             <TRANSLATION x="2" y="-18" z="0"/>
             <SCALE sx="2.5" sy="5" sz="0.5"/>
@@ -404,7 +503,7 @@
         </NODE>
 
         <NODE id="table">
-            <MATERIAL id="null"/>
+            <MATERIAL id="concrete"/>
             <TEXTURE id="concrete"/>
 
             <TRANSLATION x="25" y="0" z="25"/>
@@ -440,7 +539,7 @@
         </NODE>
 
         <NODE id="chairs">
-            <MATERIAL id="null"/>
+            <MATERIAL id="concrete"/>
             <TEXTURE id="concrete"/>
 
             <DESCENDANTS>
@@ -594,7 +693,7 @@
         </NODE>
 
         <NODE id="bed_supports">
-            <MATERIAL id="null"/>
+            <MATERIAL id="metal"/>
             <TEXTURE id="galvanized_metal"/>
 
             <DESCENDANTS>
@@ -661,7 +760,7 @@
             <TEXTURE id="cloth"/>
 
             <TRANSLATION x="0" y="2" z="0"/>
-            <SCALE sx="28.5" sy="3" sz="14.5"/>
+            <SCALE sx="28" sy="3" sz="14"/>
 
             <DESCENDANTS>
                 <NODEREF id="cube"/>
@@ -670,7 +769,7 @@
 
         <NODE id="bed_base">
             <MATERIAL id="metal"/>
-            <TEXTURE id="galvanized_metal"/>
+            <TEXTURE id="aluminium"/>
 
             <SCALE sx="31" sy="1" sz="16"/>
 
@@ -680,7 +779,7 @@
         </NODE>
 
         <NODE id="walls">
-            <MATERIAL id="null"/>
+            <MATERIAL id="concrete"/>
             <TEXTURE id="brick_wall"/>
 
             <DESCENDANTS>

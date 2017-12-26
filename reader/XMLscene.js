@@ -118,7 +118,7 @@ XMLscene.prototype.onGraphsLoaded = function() {
         this.interface.loadGameInterface();
 
         // Adds lights group.
-        //this.interface.addLightsGroup(this.graph.lights);
+        this.interface.addLightsGroup(this.graphs[this.currentGraph].lights);
 
         // load first graph on screen.
         this.onGraphChange();

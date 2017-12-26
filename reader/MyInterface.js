@@ -42,7 +42,7 @@ MyInterface.prototype.init = function(application) {
 
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
- */
+*/
 MyInterface.prototype.addLightsGroup = function(lights) {
 
     var group = this.gui.addFolder("Lights");
@@ -138,7 +138,7 @@ MyInterface.prototype.removeGameOptions = function(){
 MyInterface.prototype.addGameProperties = function(){
     this.numberBlackPieces = this.gameOptions.add(this.scene, 'numberBlackPieces').name('Black pieces:');
     this.numberWhitePieces = this.gameOptions.add(this.scene, 'numberWhitePieces').name('White pieces:');
-    this.timeLeft = this.gameOptions.add(this.scene, 'timeLeft').name('Time left');
+    this.timeLeft = this.gameOptions.add(this.scene, 'timeLeft').name('Time left:');
 
     // disable changes
     this.numberBlackPieces.domElement.style.pointerEvents = 'none';
