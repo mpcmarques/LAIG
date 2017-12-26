@@ -18,7 +18,7 @@ function MySceneGraph(filename, scene) {
 
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
-    scene.graph = this;
+    scene.graphs.push(this);
 
     this.nodes = [];
     this.animations = {};
@@ -64,7 +64,8 @@ MySceneGraph.prototype.onXMLReady = function () {
     this.loadedOk = true;
 
     // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-    this.scene.onGraphLoaded();
+    this.scene.numberGraphsLoaded++;
+    this.scene.onGraphsLoaded();
 };
 
 /**

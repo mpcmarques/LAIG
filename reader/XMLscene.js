@@ -11,8 +11,11 @@ function XMLscene(myInterface) {
     this.lightValues = {};
     this.selectedShader = 0;
     this.selectedNode = 0;
-    this.chooseScene = 0;
+
     this.selectable = [];
+    this.graphs = [];
+    this.currentGraph = 0;
+    this.numberGraphsLoaded = 0;
 
     this.selectedCamera = 0;
     this.lastSelectedCamera = 0;
@@ -64,12 +67,14 @@ XMLscene.prototype.initLights = function() {
     // Lights index.
 
     // Reads the lights from the scene graph.
-    for (var key in this.graph.lights) {
+    var graph = this.graphs[this.currentGraph];
+
+    for (var key in graph.lights) {
         if (i >= 8)
             break;              // Only eight lights allowed by WebGL.
 
-        if (this.graph.lights.hasOwnProperty(key)) {
-            var light = this.graph.lights[key];
+        if (graph.lights.hasOwnProperty(key)) {
+            var light = graph.lights[key];
 
             this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
             this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
@@ -100,28 +105,36 @@ XMLscene.prototype.initCameras = function() {
 
   };
 
-/* Handler called when the graph is finally loaded.
+/* Handler called when all the graphs are finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphLoaded = function()
-{
-    this.camera.near = this.graph.near;
-    this.camera.far = this.graph.far;
-    this.axis = new CGFaxis(this,this.graph.referenceLength);
+XMLscene.prototype.onGraphsLoaded = function() {
+    // loaded all graphs
+    if(this.numberGraphsLoaded == this.graphs.length) {
+        // initialize interface
+        this.interface.loadGameInterface();
 
-    this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
-    this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
+        // Adds lights group.
+        //this.interface.addLightsGroup(this.graph.lights);
 
-    this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+        // load first graph on screen.
+        this.onGraphChange();
+    }
+};
+
+XMLscene.prototype.onGraphChange = function(){
+    var graph = this.graphs[this.currentGraph];
+
+    this.camera.near = graph.near;
+    this.camera.far = graph.far;
+    this.axis = new CGFaxis(this,graph.referenceLength);
+
+    this.setGlobalAmbientLight(graph.ambientIllumination[0], graph.ambientIllumination[1],
+        graph.ambientIllumination[2], graph.ambientIllumination[3]);
+
+    this.gl.clearColor(graph.background[0], graph.background[1], graph.background[2], graph.background[3]);
 
     this.initLights();
-
-    // initialize interface
-    this.interface.loadGameInterface();
-
-    // Adds lights group.
-    //this.interface.addLightsGroup(this.graph.lights);
-
 };
 
 /**
@@ -149,11 +162,14 @@ XMLscene.prototype.display = function() {
 
     this.pushMatrix();
 
-    if (this.graph.loadedOk)
+    // graph
+    var graph = this.graphs[this.currentGraph];
+
+    if (graph.loadedOk)
     {
 
         // Applies initial transformations.
-        this.multMatrix(this.graph.initialTransforms);
+        this.multMatrix(graph.initialTransforms);
 
 		// Draw axis
 		this.axis.display();
@@ -175,7 +191,7 @@ XMLscene.prototype.display = function() {
         }
 
         // Displays the scene.
-        this.graph.displayScene();
+        graph.displayScene();
 
 
     }
@@ -196,26 +212,15 @@ XMLscene.prototype.display = function() {
  * @param currTime Current time.
  */
 XMLscene.prototype.update = function (currTime) {
-    this.graph.update(currTime);
-    //this.camera.setPosition(this.cameras[this.selectedCamera]);
-    //console.log(this.needToUpdateCamera);
+
+    // update current graph
+    if(this.graphs.length > 0){
+        this.graphs[this.currentGraph].update(currTime);
+    }
+
+    // update camera position
     if(this.needToUpdateCamera)
         this.animateCamera(currTime);
-
-   this.myTheme();
-};
-
-
-
-
-
-XMLscene.prototype.myTheme = function () {
-    this.themeList = [
-        "scene.xml","scene.xml"
-    ];
-
-
-    return this.themeList[this.chooseScene];
 };
 
 XMLscene.prototype.animateCamera = function(currTime){

@@ -26,17 +26,13 @@ MyInterface.prototype.init = function(application) {
     // add a group of controls (and open/expand by defult)
 
 
-   this.controller = this.gui.add(this.scene, 'chooseScene', {
-        'One': 0,
-        'Two': 1
+   this.controller = this.gui.add(this.scene, 'currentGraph', {
+        'Prison': 0,
+        'Space': 1
     }).name('Theme');
 
     this.controller.onChange(function(value) {
-        var fr = new FileReader();
-        fr.onload = function () {
-
-        }
-        location.reload();
+        this.object.onGraphChange();
     });
 
     this.obj = this;
