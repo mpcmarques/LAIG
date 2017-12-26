@@ -28,8 +28,9 @@ MyInterface.prototype.init = function(application) {
 
    this.controller = this.gui.add(this.scene, 'currentGraph', {
         'Prison': 0,
-        'Space': 1
-    }).name('Theme');
+        'Space': 1,
+       'Ocean': 2
+   }).name('Theme');
 
     this.controller.onChange(function(value) {
         this.object.onGraphChange();
