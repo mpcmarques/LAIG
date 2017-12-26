@@ -164,6 +164,15 @@
             <emission r="1" g="1" b="0.0" a="1"/>
         </MATERIAL>
 
+        <!-- Landscape -->
+        <MATERIAL id="landscape">
+            <shininess value="0.5"/>
+            <specular r="1" g="1" b="1" a="1"/>
+            <diffuse r="1" g="1" b="1" a="1"/>
+            <ambient r="1" g="1" b="1" a="1"/>
+            <emission r="1" g="1" b="1" a="1"/>
+        </MATERIAL>
+
         <!-- A default material -->
         <MATERIAL id="defaultMaterial">
             <shininess value="1"/>
@@ -320,7 +329,7 @@
         </NODE>
 
         <NODE id="landscape">
-            <MATERIAL id="null"/>
+            <MATERIAL id="landscape"/>
             <TEXTURE id="mountains"/>
 
             <TRANSLATION x="53" y="22" z="-5"/>
