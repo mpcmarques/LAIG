@@ -1,11 +1,11 @@
 function MyPoint(scene){
     MyPrimitive.call(this, scene);
 
-    this.rect = new MyRectangle(scene, 0, 0.2, 0.2, 0);
+    this.rect = new MyRectangle(scene, 0, 0.3, 0.3, 0);
     this.appearance = new CGFappearance(scene);
     this.appearance.setShininess(1);
     this.appearance.setSpecular(0, 0, 0, 1);
-    this.appearance.setDiffuse(0, 0, 0, 1);
+    this.appearance.setDiffuse(1, 1, 1, 1);
     this.appearance.setAmbient(0, 0, 0, 1);
     this.appearance.setEmission(0, 0, 0, 1);
 
@@ -19,7 +19,7 @@ MyPoint.prototype.constructor = MyPoint;
 
 
 
-MyPoint.prototype.display = function (i) {
+MyPoint.prototype.display = function () {
 
     this.scene.pushMatrix();
 
@@ -30,7 +30,6 @@ MyPoint.prototype.display = function (i) {
     this.scene.translate(0,1,0);
     this.scene.rotate(-Math.PI / 2, 1, 0, 0);
     this.scene.translate(0,-0.2,0);
-    this.scene.registerForPick(i, this.rect);
     this.rect.display();
 
 

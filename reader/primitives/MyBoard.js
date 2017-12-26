@@ -46,7 +46,7 @@ MyBoard.prototype.loadedBoard = function(tab){
 MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
 
-    var obj = 1;
+
 
     this.scene.translate(-5,0,-5);
 
@@ -79,17 +79,20 @@ MyBoard.prototype.display = function () {
 
 
     this.scene.pushMatrix();
-    this.edge.display();
+    //this.edge.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    for(var j = 0; j < 11; j++) {
-    this.scene.pushMatrix();
-        for (var i = 0; i < 11; i++) {
+    var obj = 0;
+    for(var j = 1; j <= 11; j++) {
 
-            this.point.display(obj);
-            this.scene.translate(0, 0, 1);
+    this.scene.pushMatrix();
+        for (var i = 1; i <= 11; i++) {
             obj++;
+            this.scene.registerForPick(obj, this.point);
+            this.point.display();
+            this.scene.translate(0, 0, 1);
+
         }
         this.scene.popMatrix();
         this.scene.translate(1,0,0);

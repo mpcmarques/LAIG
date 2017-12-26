@@ -1,7 +1,7 @@
 function MyEdge(scene){
     MyPrimitive.call(this, scene);
 
-    this.rect = new MyRectangle(scene, 0, 0.2, 1, 0);
+    this.rect = new MyRectangle(scene, 0, 0.3, 1, 0);
 
     this.topAppearance = new CGFappearance(scene);
     this.appearance = null;
@@ -40,7 +40,7 @@ MyEdge.prototype.display = function () {
         for (k = 0; k < 11; k++) {
             this.scene.pushMatrix();
             if (k == 0) {
-                this.scene.translate(0, 1, 0.2 + k);
+                this.scene.translate(0, 1, 0.3 + k);
             }
             else
                 this.scene.translate(0, 1, k);

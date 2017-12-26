@@ -120,6 +120,11 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
+        <TEXTURE id="sun">
+            <file path="images/sun.jpg"/>
+            <amplif_factor s="1" t="1"/>
+        </TEXTURE>
+
     </TEXTURES>
 
 
@@ -217,10 +222,14 @@
             centerx="0" centery="0" centerz="0"
             radius="20" startang="90" rotang="18000"/>
 
+            <ANIMATION id="volta3" speed="1" type="circular"
+              centerx="0" centery="0" centerz="0"
+              radius="10" startang="0" rotang="18000"/>
+
         <ANIMATION id="curva" speed="1" type="bezier">
             <controlpoint xx="0" yy="0" zz="0"/>
-            <controlpoint xx="30" yy="10" zz="0"/>
-            <controlpoint xx="30" yy="20" zz="30"/>
+            <controlpoint xx="30" yy="10" zz="30"/>
+            <controlpoint xx="40" yy="20" zz="30"/>
             <controlpoint xx="0" yy="30" zz="30"/>
         </ANIMATION>
 
@@ -275,19 +284,17 @@
                <NODEREF id="floor"/>
                <NODEREF id="marte"/>
                <NODEREF id="earth"/>
+               <NODEREF id="sun"/>
                <NODEREF id="satellite"/>
             </DESCENDANTS>
         </NODE>
-
 
 
         <NODE id="marte">
           <MATERIAL id="null"/>
           <TEXTURE id="mars" />
 
-
           <TRANSLATION x="0" y="1" z="0"/>
-
 
           <ANIMATIONREFS>
                 <ANIMATIONREF id="volta"/>
@@ -298,6 +305,21 @@
           </DESCENDANTS>
       </NODE>
 
+
+      <NODE id="sun">
+        <MATERIAL id="null"/>
+        <TEXTURE id="sun" />
+
+        <TRANSLATION x="0" y="10" z="0"/>
+
+        <ANIMATIONREFS>
+              <ANIMATIONREF id="volta3"/>
+          </ANIMATIONREFS>
+
+        <DESCENDANTS>
+            <LEAF type="sphere" args="2.5 20 20" />
+        </DESCENDANTS>
+    </NODE>
 
       <NODE id="satellite">
         <MATERIAL id="null"/>
