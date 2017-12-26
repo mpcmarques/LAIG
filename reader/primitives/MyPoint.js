@@ -1,32 +1,32 @@
-function MyEdge(scene){
+function MyPoint(scene){
     MyPrimitive.call(this, scene);
 
-    this.rect = new MyRectangle(scene, 0, 0.2, 1, 0);
+    this.rect = new MyRectangle(scene, 0, 0.2, 0.2, 0);
+    this.appearance = new CGFappearance(scene);
+    this.appearance.setShininess(1);
+    this.appearance.setSpecular(0, 0, 0, 1);
+    this.appearance.setDiffuse(0, 0, 0, 1);
+    this.appearance.setAmbient(0, 0, 0, 1);
+    this.appearance.setEmission(0, 0, 0, 1);
 
-    this.topAppearance = new CGFappearance(scene);
-    this.appearance = null;
     this.shade =  new CGFshader(this.scene.gl, "shaders/vertex.vert", "shaders/vertex.frag");
 
 }
 
-MyEdge.prototype = Object.create(MyCube);
-MyEdge.prototype.constructor = MyCube;
+MyPoint.prototype = Object.create(MyPoint);
+MyPoint.prototype.constructor = MyPoint;
 
-MyEdge.prototype.setTopAppearance = function(appearance) {
-    this.topAppearance = appearance;
-};
 
-MyEdge.prototype.setAppearance = function(apperance){
-    this.appearance = apperance;
-};
 
-MyEdge.prototype.display = function () {
+
+MyPoint.prototype.display = function () {
 
     this.scene.pushMatrix();
 
-    if (this.appearance != null)
+
         this.appearance.apply();
 
+/*
     var obj = 1;
 
     //this.scene.setActiveShader(this.shade);
@@ -55,13 +55,14 @@ MyEdge.prototype.display = function () {
                 obj++;
             }
             this.scene.popMatrix();
+        }
+
+        this.scene.popMatrix();
     }
-
-    this.scene.popMatrix();
-}
-
-
-
+*/
+    this.scene.translate(0,1,0);
+    this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+    this.rect.display();
 
 
     this.scene.popMatrix();
@@ -70,6 +71,6 @@ MyEdge.prototype.display = function () {
 
 
 
-MyEdge.prototype.scaleTexCoords = function(ampS, ampT){
+MyPoint.prototype.scaleTexCoords = function(ampS, ampT){
     this.rect.scaleTexCoords(ampS, ampT);
 };

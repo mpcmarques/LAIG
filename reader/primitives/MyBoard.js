@@ -3,6 +3,8 @@ function MyBoard(scene) {
 
     this.edge = new MyEdge(scene);
 
+    this.point = new MyPoint(scene);
+
     this.game = new Fabrik();
     this.game.getInitialBoard(this.loadedBoard);
 }
@@ -77,6 +79,10 @@ MyBoard.prototype.display = function () {
 
     this.scene.pushMatrix();
     this.edge.display();
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    this.point.display();
     this.scene.popMatrix();
 
 
