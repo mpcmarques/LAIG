@@ -3,7 +3,12 @@ function MyBoard(scene) {
 
     this.edge = new MyEdge(scene);
 
+
+
     this.point = new MyPoint(scene);
+
+    this.worker1 = new MyPieceWorker(scene,0,0,"t1");
+
 
     this.game = new Fabrik();
     this.game.getInitialBoard(this.loadedBoard);
@@ -77,9 +82,10 @@ MyBoard.prototype.display = function () {
         }
     }
 
-
     this.scene.pushMatrix();
-    //this.edge.display();
+    this.scene.translate(0,1,0);
+    this.animatePiece(this.worker1);
+    this.worker1.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
@@ -103,4 +109,15 @@ MyBoard.prototype.display = function () {
 
 
     this.scene.popMatrix();
+};
+
+
+MyBoard.prototype.animatePiece = function (piece) {
+    //var origin = [piece.posX,piece.posY];
+    var vec = [[0, 1, 0], [1, 1, 1]];
+    var myPos = [];
+
+    this.scene.translate(parseInt((this.scene.position-1) / 11), 1, (this.scene.position-1) % 11);
+
+
 };

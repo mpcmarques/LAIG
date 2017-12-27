@@ -19,7 +19,7 @@ function XMLscene(myInterface) {
     this.numberBlackPieces = 0;
     this.numberWhitePieces = 0;
     this.timeLeft = 60;
-
+    this.position = 0;
     this.selectedCamera = 0;
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
@@ -266,6 +266,7 @@ XMLscene.prototype.logPicking = function ()
                 {
 
                     var customId = this.pickResults[i][1];
+                    this.position = customId;
                    console.log(customId + " picked");
                 }
             }
