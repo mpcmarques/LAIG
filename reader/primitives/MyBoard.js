@@ -56,9 +56,9 @@ MyBoard.prototype.updateBoard = function () {
 
     for(var i = 0;i < 10; i++)
     {
-        var auxblack = new MyPiecePlayer(this.scene, 0, i, 0);
+        var auxblack = new MyPiecePlayer(this.scene, 0, i, -2);
         this.blackPieces.push(auxblack);
-        var auxwhite = new MyPiecePlayer(this.scene, 1, i, 0);
+        var auxwhite = new MyPiecePlayer(this.scene, 1, i, -2);
         this.whitePieces.push(auxwhite);
     }
 }
@@ -87,18 +87,20 @@ MyBoard.prototype.display = function () {
     for(var i = 0;i <  this.whitePieces.length; i++)
     {
         this.scene.pushMatrix();
-        this.scene.translate(-2,1,0);
+        this.scene.translate(0,1,0);
         this.scene.registerForPick(1003 + i,this.whitePieces[i]);
         this.whitePieces[i].display();
+        this.whitePieces[i].posY = -2;
         this.scene.popMatrix();
     }
 
     for(var i = 0;i <  this.blackPieces.length; i++)
     {
         this.scene.pushMatrix();
-        this.scene.translate(-2,0,0);
+        this.scene.translate(0,0,0);
         this.scene.registerForPick(1013 + i,this.blackPieces[i]);
         this.blackPieces[i].display();
+        this.blackPieces[i].posY = -2;
         this.scene.popMatrix();
     }
     /*if(this.blackPieces != null)
