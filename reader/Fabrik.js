@@ -38,7 +38,8 @@ Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
     console.warn(call);
 
     this.getPrologRequest(call, function(data){
-        callback(data.target.response);
+        var newBoard = parseBoard(data.target.response);
+        callback(newBoard);
     }
     );
 };
@@ -47,6 +48,12 @@ Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
 
 Fabrik.prototype.handleReply = function(data){
     return data.target.response;
+};
+
+
+Fabrik.prototype.parseBoard = function(stringBoard){
+    return JSON.parse(stringBoard);
+
 };
 
 
