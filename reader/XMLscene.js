@@ -30,7 +30,7 @@ function XMLscene(myInterface) {
     this.gameType = 0;
     this.startingPlayer = 0;
 
-
+    this.playerTurn = null;
 
     this.gameStarted = false;
 
@@ -229,7 +229,8 @@ XMLscene.prototype.update = function (currTime) {
     if(this.gameStarted) {
         this.timeLeft -= 1/30;
         if(this.timeLeft < 0){
-            this.timeLeft = 60;
+            // change player turn
+            this.changePlayerTurn();
         }
     }
 };
@@ -256,6 +257,17 @@ XMLscene.prototype.animateCamera = function(currTime){
 
 };
 
+XMLscene.prototype.changePlayerTurn = function(){
+    if (this.playerTurn == 'Black'){
+        this.playerTurn = 'White';
+    } else {
+        this.playerTurn = 'Black';
+    }
+
+    // update player time turn
+    this.timeLeft = 60;
+};
+
 XMLscene.prototype.logPicking = function ()
 {
     if (this.pickMode == false) {
@@ -276,6 +288,13 @@ XMLscene.prototype.logPicking = function ()
 };
 
 XMLscene.prototype.startGame = function(){
+    // setup player turn
+    if(this.startingPlayer == 0){
+        this.playerTurn = 'Black';
+    } else {
+        this.playerTurn = 'White';
+    }
+
     this.gameStarted = true;
     // remove options from interface.
     this.interface.removeGameOptions();

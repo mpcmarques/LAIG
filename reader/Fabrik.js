@@ -1,4 +1,8 @@
-function Fabrik () {}
+function Fabrik () {
+    this.currentBoard = null;
+
+
+}
 
 Fabrik.prototype.constructor = Fabrik;
 
@@ -32,6 +36,8 @@ Fabrik.prototype.getInitialBoard = function(onSuccess) {
 Fabrik.prototype.movePiece = function(tab, piece, line, column){
     return this.getPrologRequest('movePiece(' + tab + ',' + piece + ',' + line + ',' + column, this.handleReply);
 };
+
+
 
 Fabrik.prototype.handleReply = function(data){
     return data.target.response;

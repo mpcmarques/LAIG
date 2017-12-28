@@ -140,13 +140,18 @@ MyInterface.prototype.addGameProperties = function(){
     this.numberBlackPieces = this.gameOptions.add(this.scene, 'numberBlackPieces').name('Black pieces:');
     this.numberWhitePieces = this.gameOptions.add(this.scene, 'numberWhitePieces').name('White pieces:');
     this.timeLeft = this.gameOptions.add(this.scene, 'timeLeft').name('Time left:');
+    this.playerTurn = this.gameOptions.add(this.scene, 'playerTurn').name('Player turn: ');
 
     // disable changes
     this.numberBlackPieces.domElement.style.pointerEvents = 'none';
     this.numberWhitePieces.domElement.style.pointerEvents = 'none';
     this.timeLeft.domElement.style.pointerEvents = 'none';
-    this.timeLeft.listen();
+    this.playerTurn.domElement.style.pointerEvents = 'none';
 
+    // listen to changes
+    this.timeLeft.listen();
+    this.playerTurn.listen();
+    
     // undo option
     var undo = this.gui.add(this.scene, 'undo');
     undo.name('Undo last play');
