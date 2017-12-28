@@ -342,7 +342,8 @@ XMLscene.prototype.canMove = function () {
 
 
 
-    if(this.position != null && this.position < 1000) {
+    if(this.position < 1000) {
+        console.log("ok");
         var newBoard = this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
             this.boardModel = board;
             console.log('update board', board);
@@ -352,8 +353,8 @@ XMLscene.prototype.canMove = function () {
 
 
      console.log(Line,Collumn);
-    if(this.position != null && this.position > 1000)
-     this.updateBoard(newBoard);
+    if(this.position > 1000)
+        this.updateBoard(newBoard);
 
 }
 
@@ -386,6 +387,4 @@ XMLscene.prototype.loadedBoard = function(tab){
             }
         }
     }*/
-
-
 };
