@@ -25,16 +25,21 @@ Fabrik.prototype.getPrologRequest = function(requestString, onSuccess, onError, 
 Fabrik.prototype.getInitialBoard = function(onSuccess) {
     // get initial board
     // loading board
+    var self = this;
+
     this.getPrologRequest('initialBoard', function(data){
         // finished loading board
-        onSuccess(data.target.response);
+        var newBoard = self.parseBoard(data.target.response);
+        onSuccess(newBoard);
     });
 
 
 };
 
 Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
-    var call = 'movePiece(' + tab + ',' + piece + ',' + line + ',' + column + ')';
+    var stringTab = this.boardToString(tab);
+
+    var call = 'movePiece(' + stringTab + ',' + piece + ',' + line + ',' + column + ')';
     var self = this;
 
     this.getPrologRequest(call, function(data){
@@ -44,10 +49,31 @@ Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
     );
 };
 
+Fabrik.prototype.boardToString = function(board){
 
+    var string = '[';
 
-Fabrik.prototype.handleReply = function(data){
-    return data.target.response;
+    for(var i = 0; i < board.length; i++){
+
+        string += '[';
+
+        for(var j = 0; j < board[i].length; j++){
+            string += board[i][j];
+
+            if(j < board[i].length-1)
+                string += ',';
+        }
+
+        string  += ']';
+
+        if(i < board.length-1)
+            string += ',';
+
+    }
+
+    string += ']';
+
+    return string;
 };
 
 
