@@ -340,19 +340,19 @@ XMLscene.prototype.canMove = function () {
     var Line = parseInt((this.position-1) / 11);
     var Collumn = (this.position-1) % 11;
 
-    console.log(this.boardPrimitive);
 
-    if(this.position != null)
-     var newBoard = this.fabrik.movePiece(this.boardModel,'t1',Line,Collumn,function (board){
-         this.boardModel = board;
-         console.log('update board', board);
-     });
 
+    if(this.position != null && this.position < 1000) {
+        var newBoard = this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
+            this.boardModel = board;
+            console.log('update board', board);
+        });
+    }
 
 
 
      console.log(Line,Collumn);
-     if(this.position != null)
+    if(this.position != null && this.position > 1000)
      this.updateBoard(newBoard);
 
 }

@@ -13,6 +13,14 @@ function MyPiecePlayer(scene, color, posX, posY)
   this.posX = posX;
   this.posY = posY;
   this.color = color;
+  if(this.color == 0)
+  {
+    this.name = "p";
+  }
+  if(this.color == 1)
+  {
+        this.name = "b";
+  }
 
   this.appearance();
 

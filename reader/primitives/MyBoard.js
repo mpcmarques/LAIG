@@ -51,13 +51,14 @@ MyBoard.prototype.display = function () {
 
 
     this.scene.pushMatrix();
-    //this.scene.translate(-1,1,0);
+    this.scene.translate(-1,1,0);
     this.scene.registerForPick(1002, this.t2);
     this.t2.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
+    this.scene.translate(-1,1,1);
     this.scene.registerForPick(1001, this.t1);
     this.t1.display();
     this.scene.popMatrix();
