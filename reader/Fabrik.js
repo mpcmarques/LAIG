@@ -38,7 +38,7 @@ Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
     console.warn(call);
 
     this.getPrologRequest(call, function(data){
-        var newBoard = parseBoard(data.target.response);
+        var newBoard = this.parseBoard(data.target.response);
         callback(newBoard);
     }
     );
