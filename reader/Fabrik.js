@@ -52,8 +52,37 @@ Fabrik.prototype.handleReply = function(data){
 
 
 Fabrik.prototype.parseBoard = function(stringBoard){
-    return JSON.parse(stringBoard);
 
+    var board = [];
+    var line = [];
+
+    for(var i= 0; i < stringBoard.length; i++) {
+        var char = stringBoard.charAt(i);
+
+        if(board.length == 11)
+            break;
+
+        switch (char) {
+            case '[':
+                break;
+            case ',':
+                break;
+            case 't':
+                var aux = stringBoard.charAt(i+1);
+                line.push(char + aux);
+                i++;
+                break;
+            case ']':
+                board.push(line);
+                line = [];
+                break;
+            default:
+                line.push(char);
+                break;
+        }
+    }
+
+    return board;
 };
 
 
