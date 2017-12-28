@@ -118,7 +118,8 @@ parse_input(canMovePiece(Tab, Piece, Line, Column), Res):-
     podeMoverPeca(Tab, Piece, Line, Column) -> (Res = true; Res = false).
 
 % movimenta peca.
-parse_input(movePiece(Tab,Piece,Line,Column), TabOut):-
+parse_input(movePiece(Tab, Piece, Line, Column), TabOut):-
+    write('mover peca called.'),nl,
     moverPeca(Tab, Piece, Line, Column, TabOut).
 
 test(_,[],N) :- N =< 0.

@@ -131,8 +131,9 @@ XMLscene.prototype.onGraphsLoaded = function() {
         this.onGraphChange();
 
         this.game = new Fabrik();
+        var self = this;
         this.game.getInitialBoard(function (board) {
-            console.warn(this);
+            self.boardModel = board;
         });
     }
 };
@@ -329,15 +330,23 @@ XMLscene.prototype.updateBoard = function (board) {
 XMLscene.prototype.canMove = function () {
     var piece = this.boardPrimitive;
 
+    var arr = '[[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e]]';
 
-     var newBoard = this.fabrik.movePiece(this.boardModel, this.boardPrimitive.worker1.name,this.boardPrimitive.worker1.posX,this.boardPrimitive.worker1.posY);
+
+
+     var newBoard = this.fabrik.movePiece(this.boardModel, this.boardPrimitive.worker1.name,this.boardPrimitive.worker1.posX,this.boardPrimitive.worker1.posY,function (board){
+         this.boardModel = board;
+         console.log('update board', board);
+     });
+
+     this.updateBoard(newBoard);
 
 }
 
 
 XMLscene.prototype.loadedBoard = function(tab){
 
-    this.boardModel = tab;
+    self.boardModel = tab;
 /*
     if(tab != null) {
 
