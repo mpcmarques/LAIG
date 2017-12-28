@@ -23,7 +23,7 @@
 
         <LIGHT id="sun">
             <enable value="1"/>
-            <position x="15" y="10" z="-28" w="1"/>
+            <position x="15" y="10" z="-45" w="1"/>
             <ambient r="0" g="0" b="0" a="1.0"/>
             <diffuse r="1" g="1" b="1" a="1.0"/>
             <specular r="1" g="1" b="1" a="1.0"/>
@@ -221,7 +221,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="-25" y="-8" z="-25"/>
+            <TRANSLATION x="-25" y="-8" z="-43"/>
 
             <DESCENDANTS>
                 <NODEREF id="floor"/>
@@ -233,7 +233,6 @@
                 <NODEREF id="door"/>
                 <NODEREF id="landscape"/>
                 <NODEREF id="sink"/>
-                <NODEREF id="lamp"/>
             </DESCENDANTS>
         </NODE>
 
@@ -241,7 +240,7 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="18.5" y="8" z="25"/>
+            <TRANSLATION x="-6" y="8" z="0"/>
 
             <DESCENDANTS>
                 <NODEREF id="candle"/>
@@ -515,11 +514,12 @@
             <MATERIAL id="concrete"/>
             <TEXTURE id="concrete"/>
 
-            <TRANSLATION x="25" y="0" z="25"/>
+            <TRANSLATION x="25" y="0" z="43"/>
 
             <DESCENDANTS>
                 <NODEREF id="table_top"/>
                 <NODEREF id="table_base"/>
+                <NODEREF id="lamp"/>
             </DESCENDANTS>
         </NODE>
 
@@ -551,6 +551,8 @@
             <MATERIAL id="concrete"/>
             <TEXTURE id="concrete"/>
 
+            <TRANSLATION x="0" y="0" z="20"/>
+
             <DESCENDANTS>
                 <NODEREF id="chair"/>
                 <NODEREF id="chair1"/>
@@ -561,7 +563,6 @@
             <MATERIAL id="null"/>
             <TEXTURE id="null"/>
 
-            <TRANSLATION x="0" y="0" z="2"/>
 
             <DESCENDANTS>
                 <NODEREF id="chair_top"/>
