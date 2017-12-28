@@ -35,10 +35,10 @@ Fabrik.prototype.getInitialBoard = function(onSuccess) {
 
 Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
     var call = 'movePiece(' + tab + ',' + piece + ',' + line + ',' + column + ')';
-    console.warn(call);
+    var self = this;
 
     this.getPrologRequest(call, function(data){
-        var newBoard = this.parseBoard(data.target.response);
+        var newBoard = self.parseBoard(data.target.response);
         callback(newBoard);
     }
     );
