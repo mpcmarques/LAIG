@@ -3,12 +3,12 @@ function MyBoard(scene) {
 
     this.edge = new MyEdge(scene);
 
-
-
+    this.isItClicked1 = false;
+    this.isItClicked2 = false;
     this.point = new MyPoint(scene);
 
     this.worker1 = new MyPieceWorker(scene,0,0,"t1");
-
+    this.worker2 = new MyPieceWorker(scene,0,0,"t1");
 
     this.game = new Fabrik();
     this.game.getInitialBoard(this.loadedBoard);
@@ -83,9 +83,24 @@ MyBoard.prototype.display = function () {
     }
 
     this.scene.pushMatrix();
-    this.scene.translate(0,0,0);
-    this.animatePiece(this.worker1);
+    this.scene.translate(0,1,0);
+    if(this.scene.position == 1000 ||this.isItClicked2){
+        this.animatePiece();
+        this.isItClicked2 = true;
+    }
+    this.scene.registerForPick(1000, this.point);
     this.worker1.display();
+    this.scene.popMatrix();
+
+
+    this.scene.pushMatrix();
+    this.scene.translate(2,1,2);
+    if(this.scene.position == 999 ||this.isItClicked1){
+        this.animatePiece();
+        this.isItClicked1 = true;
+    }
+    this.scene.registerForPick(999, this.point);
+    this.worker2.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
@@ -114,6 +129,8 @@ MyBoard.prototype.display = function () {
 
 MyBoard.prototype.animatePiece = function (piece) {
 
+    if(this.scene.position < 200)
     this.scene.translate(parseInt((this.scene.position-1) / 11), 1, (this.scene.position-1) % 11);
+    //console.log(parseInt((this.scene.position-1) / 11),((this.scene.position-1) % 11));
 
 };
