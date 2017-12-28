@@ -8,45 +8,15 @@ function MyBoard(scene) {
     this.point = new MyPoint(scene);
 
     this.worker1 = new MyPieceWorker(scene,0,0,"t1");
-    this.worker2 = new MyPieceWorker(scene,0,0,"t1");
+    this.worker2 = new MyPieceWorker(scene,0,0,"t2");
 
-    this.game = new Fabrik();
-    this.game.getInitialBoard(this.loadedBoard);
+
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
 MyBoard.prototype.constructor = MyBoard;
 
 
-MyBoard.prototype.loadedBoard = function(tab){
-
-    this.board = tab;
-
-    if(tab != null) {
-
-        this.blackPieces = [];
-        this.whitePieces = [];
-
-        for (var i = 0; i < 11; i++) {
-            for (var j = 0; j < 11; j++) {
-                if (this.board[i][j] == 'p') {
-                    var aux = new MyPiecePlayer(scene, 0, i, j);
-                    this.blackPieces.push(aux);
-                }
-                if (this.board[i][j] == 'b') {
-                    var aux = new MyPiecePlayer(scene, 1, i, j);
-                    this.whitePieces.push(aux);
-                }
-                if (this.board[i][j] == 't1') {
-                    this.t1 = new MyPieceWorker(scene, i, j, 't1');
-                }
-                if (this.board[i][j] == 't2') {
-                    this.t2 = new MyPieceWorker(scene, i, j, 't2');
-                }
-            }
-        }
-    }
-};
 
 MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
@@ -82,26 +52,7 @@ MyBoard.prototype.display = function () {
         }
     }
 
-    this.scene.pushMatrix();
-    this.scene.translate(0,1,0);
-    if(this.scene.position == 1000 ||this.isItClicked2){
-        this.animatePiece();
-        this.isItClicked2 = true;
-    }
-    this.scene.registerForPick(1000, this.point);
-    this.worker1.display();
-    this.scene.popMatrix();
 
-
-    this.scene.pushMatrix();
-    this.scene.translate(2,1,2);
-    if(this.scene.position == 999 ||this.isItClicked1){
-        this.animatePiece();
-        this.isItClicked1 = true;
-    }
-    this.scene.registerForPick(999, this.point);
-    this.worker2.display();
-    this.scene.popMatrix();
 
     this.scene.pushMatrix();
     var obj = 0;
