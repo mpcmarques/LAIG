@@ -1637,7 +1637,8 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
         case 'patch':
             return new MyPatch(this.scene, leaf.args);
         case 'board':
-            return new MyBoard(this.scene);
+                this.scene.boardPrimitive = new MyBoard(this.scene);
+            return this.scene.boardPrimitive;
         default:
             return null;
     }
@@ -1830,6 +1831,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, texturePara
                 var newMatrix = mat4.create();
                 mat4.multiply(newMatrix, currentTransformMatrix, currentNode.transformMatrix);
                 // render children node
+
                 this.renderNode(currentNode, newMatrix, texture, appearance);
             } else {
                 console.warn('Can´t find node ' + leafNode);

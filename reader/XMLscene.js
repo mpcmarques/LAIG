@@ -8,6 +8,8 @@ function XMLscene(myInterface) {
     CGFscene.call(this);
 
     this.interface = myInterface;
+    this.fabrik = new Fabrik();
+
     this.lightValues = {};
     this.selectedShader = 0;
     this.selectedNode = 0;
@@ -24,6 +26,11 @@ function XMLscene(myInterface) {
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
     this.needToUpdateCamera = false;
+
+    this.boardPrimitive = null;
+
+
+
     this.cameras=[
         vec3.fromValues(-8, 8, 0), vec3.fromValues(0, 5, 10), vec3.fromValues(0, 10, -6), vec3.fromValues(2, 20, 0), vec3.fromValues(-3, 10, 13)
     ];
@@ -122,6 +129,11 @@ XMLscene.prototype.onGraphsLoaded = function() {
 
         // load first graph on screen.
         this.onGraphChange();
+
+        this.game = new Fabrik();
+        this.game.getInitialBoard(function (board) {
+            console.warn(this);
+        });
     }
 };
 
@@ -233,6 +245,7 @@ XMLscene.prototype.update = function (currTime) {
             this.changePlayerTurn();
         }
     }
+
 };
 
 XMLscene.prototype.animateCamera = function(currTime){
@@ -280,6 +293,7 @@ XMLscene.prototype.logPicking = function ()
                     var customId = this.pickResults[i][1];
                     this.position = customId;
                    console.log(customId + " picked");
+                   this.canMove();
                 }
             }
             this.pickResults.splice(0,this.pickResults.length);
@@ -303,5 +317,52 @@ XMLscene.prototype.startGame = function(){
 };
 
 XMLscene.prototype.undo = function(){
+
+};
+
+
+XMLscene.prototype.updateBoard = function (board) {
+    this.boardModified = board;
+};
+
+
+XMLscene.prototype.canMove = function () {
+    var piece = this.boardPrimitive;
+
+
+     var newBoard = this.fabrik.movePiece(this.boardModel, this.boardPrimitive.worker1.name,this.boardPrimitive.worker1.posX,this.boardPrimitive.worker1.posY);
+
+}
+
+
+XMLscene.prototype.loadedBoard = function(tab){
+
+    this.boardModel = tab;
+/*
+    if(tab != null) {
+
+        this.blackPieces = [];
+        this.whitePieces = [];
+
+        for (var i = 0; i < 11; i++) {
+            for (var j = 0; j < 11; j++) {
+                if (this.board[i][j] == 'p') {
+                    var aux = new MyPiecePlayer(scene, 0, i, j);
+                    this.blackPieces.push(aux);
+                }
+                if (this.board[i][j] == 'b') {
+                    var aux = new MyPiecePlayer(scene, 1, i, j);
+                    this.whitePieces.push(aux);
+                }
+                if (this.board[i][j] == 't1') {
+                    this.t1 = new MyPieceWorker(scene, i, j, 't1');
+                }
+                if (this.board[i][j] == 't2') {
+                    this.t2 = new MyPieceWorker(scene, i, j, 't2');
+                }
+            }
+        }
+    }*/
+
 
 };
