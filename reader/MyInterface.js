@@ -88,12 +88,17 @@ MyInterface.prototype.loadGameInterface = function () {
         this.object.interface.setGameType(value);
     });
 
-
     // load first game type options.
     this.startingPlayer = this.gameOptions.add(this.scene, 'startingPlayer', {
         'Black': 0,
         'White': 1
     }).name('Starting player');
+
+    // Time per turn
+    this.timePerTurn = this.gameOptions.add(this.scene, 'timePerTurn');
+    this.timePerTurn.name('Time per turn');
+    this.timePerTurn.max(300);
+    this.timePerTurn.min(20);
 
     // add start game button
     this.addStartGameButton();

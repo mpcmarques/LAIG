@@ -28,6 +28,7 @@ function XMLscene(myInterface) {
     this.needToUpdateCamera = false;
 
     this.boardPrimitive = null;
+    this.timePerTurn = 60;
 
 
 
@@ -280,7 +281,7 @@ XMLscene.prototype.changePlayerTurn = function(){
     }
 
     // update player time turn
-    this.timeLeft = 60;
+    this.timeLeft = this.timePerTurn;
 };
 
 XMLscene.prototype.logPicking = function ()
@@ -312,6 +313,7 @@ XMLscene.prototype.startGame = function(){
     }
 
     this.gameStarted = true;
+    this.timeLeft = this.timePerTurn;
     // remove options from interface.
     this.interface.removeGameOptions();
     // add game properties
