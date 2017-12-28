@@ -83,7 +83,7 @@ MyBoard.prototype.display = function () {
     }
 
     this.scene.pushMatrix();
-    this.scene.translate(0,1,0);
+    this.scene.translate(0,0,0);
     this.animatePiece(this.worker1);
     this.worker1.display();
     this.scene.popMatrix();
@@ -113,11 +113,7 @@ MyBoard.prototype.display = function () {
 
 
 MyBoard.prototype.animatePiece = function (piece) {
-    //var origin = [piece.posX,piece.posY];
-    var vec = [[0, 1, 0], [1, 1, 1]];
-    var myPos = [];
 
     this.scene.translate(parseInt((this.scene.position-1) / 11), 1, (this.scene.position-1) % 11);
-
 
 };
