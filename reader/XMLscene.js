@@ -134,6 +134,7 @@ XMLscene.prototype.onGraphsLoaded = function() {
         var self = this;
         this.game.getInitialBoard(function (board) {
             self.boardModel = board;
+            console.warn(self.boardModel);
         });
     }
 };
@@ -324,21 +325,34 @@ XMLscene.prototype.undo = function(){
 
 XMLscene.prototype.updateBoard = function (board) {
     this.boardModified = board;
+
+    //this.worker1 = new MyPieceWorker(this,0,0,'t1');
+
+
+
 };
 
 
 XMLscene.prototype.canMove = function () {
     var piece = this.boardPrimitive;
 
-    var arr = '[[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e]]';
+    //var arr = '[[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e]]';
+    var Line = parseInt((this.position-1) / 11);
+    var Collumn = (this.position-1) % 11;
 
+    console.log(this.boardPrimitive);
 
-
-     var newBoard = this.fabrik.movePiece(this.boardModel, this.boardPrimitive.worker1.name,this.boardPrimitive.worker1.posX,this.boardPrimitive.worker1.posY,function (board){
+    if(this.position != null)
+     var newBoard = this.fabrik.movePiece(this.boardModel,'t1',Line,Collumn,function (board){
          this.boardModel = board;
          console.log('update board', board);
      });
 
+
+
+
+     console.log(Line,Collumn);
+     if(this.position != null)
      this.updateBoard(newBoard);
 
 }

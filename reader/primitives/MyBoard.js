@@ -3,38 +3,65 @@ function MyBoard(scene) {
 
     this.edge = new MyEdge(scene);
 
-    this.isItClicked1 = false;
-    this.isItClicked2 = false;
+
     this.point = new MyPoint(scene);
-
-    this.worker1 = new MyPieceWorker(scene,0,0,"t1");
-    this.worker2 = new MyPieceWorker(scene,0,0,"t2");
-
 
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
 MyBoard.prototype.constructor = MyBoard;
 
+MyBoard.prototype.updateBoard = function () {
 
+    /*
+    if(this.scene.boardModified != null) {
+
+        this.blackPieces = [];
+        this.whitePieces = [];
+
+        for (var i = 0; i < 11; i++) {
+            for (var j = 0; j < 11; j++) {
+                if (this.scene.boardModified[i][j] == 'p') {
+                    var aux = new MyPiecePlayer(this.scene, 0, i, j);
+                    this.blackPieces.push(aux);
+                }
+                if (this.scene.boardModified[i][j] == 'b') {
+                    var aux = new MyPiecePlayer(this.scene, 1, i, j);
+                    this.whitePieces.push(aux);
+                }
+                if (this.scene.boardModified[i][j] == 't1') {
+                    this.t1 = new MyPieceWorker(this.scene, i, j, 't1');
+                }
+                if (this.scene.boardModified[i][j] == 't2') {
+                    this.t2 = new MyPieceWorker(this.scene, i, j, 't2');
+                }
+            }
+        }
+    }*/
+
+    this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1');
+    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2');
+}
 
 MyBoard.prototype.display = function () {
+    this.updateBoard();
+
     this.scene.pushMatrix();
-
-
-
     this.scene.translate(-5,0,-5);
 
-    if(this.t1 != null) {
-        this.scene.pushMatrix();
-        this.t2.display();
-        this.scene.popMatrix();
-    }
-    if(this.t2 != null) {
-        this.scene.pushMatrix();
-        this.t1.display();
-        this.scene.popMatrix();
-    }
+
+    this.scene.pushMatrix();
+    //this.scene.translate(-1,1,0);
+    this.scene.registerForPick(1002, this.t2);
+    this.t2.display();
+    this.scene.popMatrix();
+
+
+    this.scene.pushMatrix();
+    this.scene.registerForPick(1001, this.t1);
+    this.t1.display();
+    this.scene.popMatrix();
+
     if(this.blackPieces != null)
     {
         for (var i in this.blackPieces) {
@@ -51,6 +78,7 @@ MyBoard.prototype.display = function () {
             this.scene.popMatrix();
         }
     }
+
 
 
 
