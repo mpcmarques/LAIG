@@ -137,7 +137,6 @@ XMLscene.prototype.onGraphsLoaded = function() {
         this.game.getInitialBoard(function (board) {
             self.boardModel = board;
             self.updateBoard(board);
-            console.warn(self.boardModel);
         });
     }
 };
@@ -351,7 +350,6 @@ XMLscene.prototype.canMove = function () {
         this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
             self.boardModel = board;
 
-            console.log('update board', board);
             self.updateBoard(board);
         });
         this.cacheBoards.push(this.boardModel);
@@ -360,11 +358,7 @@ XMLscene.prototype.canMove = function () {
 
 
 
-     console.log(Line,Collumn);
-
-
-
-}
+};
 
 
 XMLscene.prototype.loadedBoard = function(tab){

@@ -1912,7 +1912,7 @@ MySceneGraph.prototype.update = function (currTime) {
 
         // update board animations
         if(this.scene.boardPrimitive != null) {
-            // TODO: this.scene.boardPrimitive.update(currTime);
+            this.scene.boardPrimitive.update(currTime);
         }
     }
 };

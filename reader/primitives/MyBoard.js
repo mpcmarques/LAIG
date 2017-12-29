@@ -82,8 +82,9 @@ MyBoard.prototype.updateBoard = function (board) {
     var posYAnt = null;
     var posXCurr = null;
     var posYCurr = null;
-    console.log(this.lastBoard,this.currentBoard);
 
+    // TODO: DEBUG
+    console.log(this.lastBoard,this.currentBoard);
 
     if(this.lastBoard != null){
         for(var i = 0; i < this.lastBoard.length; i++)
@@ -113,7 +114,7 @@ MyBoard.prototype.updateBoard = function (board) {
     }
 
     console.log(posXAnt,posYAnt, posXCurr,posYCurr);
-}
+};
 
 
 MyBoard.prototype.addPieceAnimation = function () {
@@ -140,4 +141,19 @@ MyBoard.prototype.findPiece = function(board, piece){
     }
 
     return null;
+};
+
+
+MyBoard.prototype.update = function(currTime){
+    // update all
+    this.t1.update(currTime);
+    this.t2.update(currTime);
+
+    for(var i = 0; i < this.whitePieces.length; i++){
+        this.whitePieces[i].update(currTime);
+    }
+
+    for(var j = 0; j < this.blackPieces.length; j++){
+        this.blackPieces.update(currTime);
+    }
 };
