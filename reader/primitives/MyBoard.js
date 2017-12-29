@@ -4,7 +4,6 @@ function MyBoard(scene) {
     this.point = new MyPoint(scene);
     this.whitePieces = [];
     this.blackPieces = [];
-
     this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1');
     this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2');
 
@@ -34,6 +33,8 @@ MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-1,1,0);
     this.scene.registerForPick(1002, this.t2);
+    if(this.t2.animation != null)
+        this.t2.animation.apply();
     this.t2.display();
     this.scene.popMatrix();
 
@@ -41,6 +42,12 @@ MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-1,1,1);
     this.scene.registerForPick(1001, this.t1);
+
+    if(this.t1.animation != null) {
+        //console.log(this.t1.animation);
+        this.t1.animation.apply();
+    }
+
     this.t1.display();
     this.scene.popMatrix();
 
@@ -118,15 +125,16 @@ MyBoard.prototype.updateBoard = function (board) {
     var piecePrimitive = this.parsePiece(piece1);
 
     if(piecePrimitive != null) {
+        var pos2, pos3, controlPoints;
         //var controlPoints = [[posXAnt,1,posYAnt],[posXAnt,2,posYAnt],[posXCurr,2,posYCurr],[posXCurr,1,posYCurr]];
         if (posAnt != null) {
-        var pos2 = new Position(posAnt.x, posAnt.y + 1, posAnt.z);
-        var pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
-        var controlPoints = [posAnt, pos2, pos3, posCurr];
+            pos2 = new Position(posAnt.x, posAnt.y + 1, posAnt.z);
+            pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
+            controlPoints = [posAnt, pos2, pos3, posCurr];
         }else {
-            var pos2 = new Position(this.t1startPos.x, this.t1startPos.y + 1, this.t1startPos.z);
-            var pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
-            var controlPoints = [this.t1startPos, pos2, pos3, posCurr];
+            pos2 = new Position(this.t1startPos.x, this.t1startPos.y + 1, this.t1startPos.z);
+            pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
+            controlPoints = [this.t1startPos, pos2, pos3, posCurr];
         }
         piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 3);
     }

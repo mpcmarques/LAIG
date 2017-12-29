@@ -1636,9 +1636,6 @@ MySceneGraph.prototype.parsePrimitive = function (leaf) {
             return new MySphere(this.scene, leaf.args);
         case 'patch':
             return new MyPatch(this.scene, leaf.args);
-        case 'board':
-                this.scene.boardPrimitive = new MyBoard(this.scene);
-            return this.scene.boardPrimitive;
         default:
             return null;
     }
@@ -1908,11 +1905,6 @@ MySceneGraph.prototype.update = function (currTime) {
                 var animation = this.animations[animationId];
                 animation.update(currTime);
             }
-        }
-
-        // update board animations
-        if(this.scene.boardPrimitive != null) {
-            this.scene.boardPrimitive.update(currTime);
         }
     }
 };

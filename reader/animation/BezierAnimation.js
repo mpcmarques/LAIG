@@ -117,8 +117,21 @@ BezierAnimation.prototype.display = function () {
     if (this.lastPosition != null) {
         var dx = this.position.x - this.lastPosition.x;
         var dz = this.position.z - this.lastPosition.z;
-        mat4.rotate(newMatrix, newMatrix, Math.atan2(dx,dz), [0, 1, 0]);
+        mat4.rotate(newMatrix, newMatrix, Math.atan2(dx, dz), [0, 1, 0]);
     }
 
     return newMatrix;
+};
+
+BezierAnimation.prototype.apply = function () {
+
+    console.log(this.position.x, this.position.y, this.position.z);
+
+    this.scene.translate(this.position.x, this.position.y, this.position.z);
+
+    if (this.lastPosition != null) {
+        var dx = this.position.x - this.lastPosition.x;
+        var dz = this.position.z - this.lastPosition.z;
+        this.scene.rotate(Math.atan2(dx, dz), 0, 1, 0);
+    }
 };

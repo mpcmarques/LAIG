@@ -203,17 +203,6 @@
 
             <DESCENDANTS>
                 <NODEREF id="theme"/>
-                <NODEREF id="board"/>
-            </DESCENDANTS>
-        </NODE>
-
-
-        <NODE id="board">
-            <MATERIAL id="null"/>
-            <TEXTURE id="null"/>
-
-            <DESCENDANTS>
-                <LEAF id="board" type="board" args=""/>
             </DESCENDANTS>
         </NODE>
 

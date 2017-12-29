@@ -31,6 +31,8 @@ function XMLscene(myInterface) {
     this.cacheBoards = [];
     this.timePerTurn = 60;
 
+    this.blackPlayerMoved = false;
+    this.whitePlayerMoved = false;
 
 
     this.cameras=[
@@ -132,6 +134,9 @@ XMLscene.prototype.onGraphsLoaded = function() {
         // load first graph on screen.
         this.onGraphChange();
 
+        // create board.
+        this.board = new MyBoard(this);
+
         this.game = new Fabrik();
         var self = this;
         this.game.getInitialBoard(function (board) {
@@ -212,7 +217,8 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         graph.displayScene();
 
-
+        if(this.board != null)
+            this.board.display();
     }
 	else
 	{
@@ -249,6 +255,9 @@ XMLscene.prototype.update = function (currTime) {
             this.changePlayerTurn();
         }
     }
+
+    if(this.board != null)
+        this.board.update(currTime);
 
 };
 
@@ -327,7 +336,8 @@ XMLscene.prototype.undo = function(){
 
 
 XMLscene.prototype.updateBoard = function (board) {
-    this.boardPrimitive.updateBoard(board);
+    if(this.board != null)
+        this.board.updateBoard(board);
 };
 
 

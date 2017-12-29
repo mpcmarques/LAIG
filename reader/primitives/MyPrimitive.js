@@ -4,7 +4,7 @@ function MyPrimitive (scene) {
     this.isTexturedScaled = false;
     this.scene = scene;
 
-    this.animations = [];
+    this.animation= null;
 }
 
 MyPrimitive.prototype = Object.create(CGFobject.prototype);
@@ -16,7 +16,7 @@ MyPrimitive.prototype.scaleTexCoords = function(){
 
 MyPrimitive.prototype.update = function(currTime){
     // update primitive animations
-    for(var i = 0; i < this.animations.length; i++){
-        this.animations[i].update(currTime);
+    if(this.animation != null) {
+        this.animation.update(currTime);
     }
 };
