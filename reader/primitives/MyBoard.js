@@ -14,8 +14,8 @@ function MyBoard(scene) {
     this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
     this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
 
-    this.blackStartPos = {x: 0, y: -2};
-    this.whiteStartPos = {x: 1, y: -2};
+    this.blackStartPos = new Position(0, -2, 1);
+    this.whiteStartPos = new Position(1, -2, 1);
 
 }
 
@@ -81,10 +81,8 @@ MyBoard.prototype.display = function () {
 MyBoard.prototype.updateBoard = function (board) {
     this.lastBoard = this.currentBoard;
     this.currentBoard = board;
-    var posXAnt = null;
-    var posYAnt = null;
-    var posXCurr = null;
-    var posYCurr = null;
+    var posAnt = null;
+    var posCurr = null;
     var piece1;
 
     // TODO: DEBUG
@@ -101,16 +99,14 @@ MyBoard.prototype.updateBoard = function (board) {
                     piece1 = this.currentBoard[i][j];
 
                     var pos = this.findPiece(this.currentBoard, piece1);
-                    var posAnt = this.findPiece(this.lastBoard,piece1);
+                    var lastPos = this.findPiece(this.lastBoard,piece1);
                     if(pos != null){
-                        posXCurr = pos[0];
-                        posYCurr = pos[1];
+                        posCurr = pos;
                     }
 
                     if(posAnt != null)
                     {
-                        posXAnt = posAnt[0];
-                        posYAnt = posAnt[1];
+                        posAnt = lastPos;
                     }
                 }
             }
@@ -124,7 +120,7 @@ MyBoard.prototype.updateBoard = function (board) {
         piecePrimitive.animations.push(new BezierAnimation(this.scene, controlPoints, 3));
     }
 
-    console.log(posXAnt,posYAnt, posXCurr,posYCurr);
+    console.log(posAnt,posCurr);
 };
 
 MyBoard.prototype.parsePiece = function(pieceName){
@@ -148,26 +144,12 @@ MyBoard.prototype.parsePiece = function(pieceName){
 
 };
 
-
-MyBoard.prototype.addPieceAnimation = function () {
-
-
-
-
-    var ani = new BezierAnimation(this.scene,controlPoints ,1);
-
-
-
-
-};
-
-
 MyBoard.prototype.findPiece = function(board, piece){
 
     for(var i = 0; i < board.length; i++){
         for (var j = 0; j < board[i].length; j++){
             if(board[i][j] == piece){
-                return [i,j];
+                return new Position(i, 0, j);
             }
         }
     }
