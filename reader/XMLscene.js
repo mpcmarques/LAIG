@@ -275,13 +275,13 @@ XMLscene.prototype.update = function (currTime) {
 
 XMLscene.prototype.firstTurnLogic = function () {
     // first turn
-    this.selectedPiece = this.t1;
+    this.selectedPiece = this.board.t1;
     var finishedFirstTurn = false;
 
     if (this.startingPlayer == 0) {
         // wait player 0 to move t1
         if (this.t1Moved)
-            this.selectedPiece = this.t2;
+            this.selectedPiece = this.board.t2;
         // wait to player 1 to move t2
         if (this.t2Moved) {
             finishedFirstTurn = true;
@@ -289,7 +289,7 @@ XMLscene.prototype.firstTurnLogic = function () {
     } else {
         // wait player 1 to move t1
         if (this.t1Moved)
-            this.selectedPiece = this.t2;
+            this.selectedPiece = this.board.t2;
         // wait player 0 to move t2
         if (this.t2Moved) {
             finishedFirstTurn = true;
@@ -393,18 +393,21 @@ XMLscene.prototype.canMove = function () {
     if (this.position < 1000) {
         var self = this;
 
-        this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
-            self.boardModel = board;
+        if(this.selectedPiece != null) {
 
-            self.updateBoard(board);
+            this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
+                self.boardModel = board;
 
-            if(this.selectedPiece == 't1')
-                this.t1Moved = true;
+                self.updateBoard(board);
 
-            if(this.selectedPiece == 't2')
-                this.t2Moved = true;
-        });
-        this.cacheBoards.push(this.boardModel);
+                if (this.selectedPiece == 't1')
+                    this.t1Moved = true;
+
+                if (this.selectedPiece == 't2')
+                    this.t2Moved = true;
+            });
+            this.cacheBoards.push(this.boardModel);
+        }
 
     }
 
