@@ -28,6 +28,7 @@ function XMLscene(myInterface) {
     this.needToUpdateCamera = false;
 
     this.boardPrimitive = null;
+    this.cacheBoards = [];
     this.timePerTurn = 60;
 
 
@@ -135,6 +136,7 @@ XMLscene.prototype.onGraphsLoaded = function() {
         var self = this;
         this.game.getInitialBoard(function (board) {
             self.boardModel = board;
+            self.updateBoard(board);
             console.warn(self.boardModel);
         });
     }
@@ -326,9 +328,9 @@ XMLscene.prototype.undo = function(){
 
 
 XMLscene.prototype.updateBoard = function (board) {
-    this.boardModified = board;
 
-    //this.worker1 = new MyPieceWorker(this,0,0,'t1');
+
+    this.boardPrimitive.updateBoard(board);
 
 
 
@@ -336,27 +338,31 @@ XMLscene.prototype.updateBoard = function (board) {
 
 
 XMLscene.prototype.canMove = function () {
-    var piece = this.boardPrimitive;
 
-    //var arr = '[[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e],[e,e,e,e,e,e,e,e,e,e,e]]';
+
     var Line = parseInt((this.position-1) / 11);
     var Collumn = (this.position-1) % 11;
 
 
 
     if(this.position < 1000) {
-        console.log("ok");
-        var newBoard = this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
-            this.boardModel = board;
+        var self = this;
+
+        this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
+            self.boardModel = board;
+
             console.log('update board', board);
+            self.updateBoard(board);
         });
+        this.cacheBoards.push(this.boardModel);
+
     }
 
 
 
      console.log(Line,Collumn);
-    if(this.position > 1000)
-        this.updateBoard(newBoard);
+
+
 
 }
 
