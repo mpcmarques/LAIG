@@ -5,8 +5,8 @@ function MyBoard(scene) {
     this.whitePieces = [];
     this.blackPieces = [];
     this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1',new Position(-1,1,0));
-    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2',new Position(-1,1,-1));
-
+    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2',new Position(-1,1,0));
+    this.lastPrimitive = null;
     this.lastBoard = null;
     this.currentBoard = null;
 
@@ -29,6 +29,17 @@ MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-5,0,-5);
 
+
+    this.scene.pushMatrix();
+    this.scene.translate(-1,1,1);
+    this.scene.registerForPick(1001, this.t1);
+    if(this.t1.animation != null) {
+        //console.log(this.t1.animation);
+        this.t1.animation.apply();
+    }
+    this.t1.display();
+    this.scene.popMatrix();
+
     this.scene.pushMatrix();
     this.scene.translate(-1,1,0);
     this.scene.registerForPick(1002, this.t2);
@@ -38,17 +49,7 @@ MyBoard.prototype.display = function () {
     this.scene.popMatrix();
 
 
-    this.scene.pushMatrix();
-    this.scene.translate(-1,1,1);
-    this.scene.registerForPick(1001, this.t1);
 
-    if(this.t1.animation != null) {
-        //console.log(this.t1.animation);
-        this.t1.animation.apply();
-    }
-
-    this.t1.display();
-    this.scene.popMatrix();
 
     this.scene.pushMatrix();
     this.scene.registerForPick(1003,this.auxwhite);
@@ -126,23 +127,30 @@ MyBoard.prototype.updateBoard = function (board) {
     var piecePrimitive = this.parsePiece(piece1);
 
     if(piecePrimitive != null) {
-
+        console.log(piecePrimitive);
         var pos2, pos3, controlPoints;
 
 
-        if (this.actual == null) {
-            this.actual = this.t1.startPos;
+        if (this.actual == null || piecePrimitive != this.lastPrimitive) {
+            this.actual = piecePrimitive.startPos;
+            console.log(piecePrimitive.startPos);
         }
 
         pos2 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
-        pos3 = new Position(this.actual.x,this.actual.y + 3, this.actual.z);
+        pos3 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
+        if (piecePrimitive.name == 't1') {
+
         posCurr.x += 1;
         posCurr.z += -1;
+        }else if(piecePrimitive.name == 't2')
+        {
+            posCurr.x += 1;
+        }
         console.log(this.actual,posCurr);
         controlPoints = [this.actual, pos2, pos3, posCurr];
-        piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 3);
+        piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 5);
         this.actual = posCurr;
-
+        this.lastPrimitive = piecePrimitive;
     }
 
 
