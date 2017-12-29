@@ -26,6 +26,7 @@ function XMLscene(myInterface) {
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
     this.needToUpdateCamera = false;
+    this.needToChangeTurn = false;
 
     this.selectedPiece = null;
 
@@ -271,6 +272,12 @@ XMLscene.prototype.update = function (currTime) {
     if (this.board != null)
         this.board.update(currTime);
 
+
+    if(this.needToChangeTurn){
+        this.changePlayerTurn();
+        this.needToChangeTurn = false;
+    }
+
 };
 
 XMLscene.prototype.firstTurnLogic = function () {
@@ -280,16 +287,18 @@ XMLscene.prototype.firstTurnLogic = function () {
 
     if (this.startingPlayer == 0) {
         // wait player 0 to move t1
-        if (this.t1Moved)
+        if (this.t1Moved) {
             this.selectedPiece = this.board.t2;
+        }
         // wait to player 1 to move t2
         if (this.t2Moved) {
             finishedFirstTurn = true;
         }
     } else {
         // wait player 1 to move t1
-        if (this.t1Moved)
+        if (this.t1Moved) {
             this.selectedPiece = this.board.t2;
+        }
         // wait player 0 to move t2
         if (this.t2Moved) {
             finishedFirstTurn = true;
@@ -393,7 +402,7 @@ XMLscene.prototype.canMove = function () {
 
     if(this.pieceID < 1000) {
         var self = this;
-    console.log(this.selectedPiece);
+
         if(this.selectedPiece != null) {
 
             this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
@@ -401,11 +410,12 @@ XMLscene.prototype.canMove = function () {
 
                 self.updateBoard(board);
 
-                if (this.selectedPiece == 't1')
-                    this.t1Moved = true;
 
-                if (this.selectedPiece == 't2')
-                    this.t2Moved = true;
+                if (self.selectedPiece.name == 't1')
+                    self.t1Moved = true;
+
+                if (self.selectedPiece.name == 't2')
+                    self.t2Moved = true;
             });
             this.cacheBoards.push(this.boardModel);
         }
