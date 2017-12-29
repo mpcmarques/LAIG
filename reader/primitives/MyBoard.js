@@ -96,16 +96,23 @@ MyBoard.prototype.updateBoard = function (board) {
                     var piece1 = this.currentBoard[i][j];
 
                     var pos = this.findPiece(this.currentBoard, piece1);
-
+                    var posAnt = this.findPiece(this.lastBoard,piece1);
                     if(pos != null){
                         posXCurr = pos[0];
                         posYCurr = pos[1];
+                    }
+
+                    if(posAnt != null)
+                    {
+                        posXAnt = posAnt[0];
+                        posYAnt = posAnt[1];
                     }
                 }
             }
         }
     }
 
+    console.log(posXAnt,posYAnt, posXCurr,posYCurr);
 }
 
 
