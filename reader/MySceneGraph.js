@@ -1898,8 +1898,6 @@ MySceneGraph.prototype.parsePatchControlPoints = function (xmlelem) {
     return controlPoints;
 };
 
-
-
 /**
  * Updates the scene, independent of rendering.
  */
@@ -1910,6 +1908,11 @@ MySceneGraph.prototype.update = function (currTime) {
                 var animation = this.animations[animationId];
                 animation.update(currTime);
             }
+        }
+
+        // update board animations
+        if(this.scene.boardPrimitive != null) {
+            // TODO: this.scene.boardPrimitive.update(currTime);
         }
     }
 };

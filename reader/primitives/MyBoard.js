@@ -156,3 +156,17 @@ MyBoard.prototype.animatePiece = function (piece) {
     //console.log(parseInt((this.scene.position-1) / 11),((this.scene.position-1) % 11));
 
 };
+
+
+MyBoard.prototype.findPiece = function(board, piece){
+
+    for(var i = 0; i < board.length; i++){
+        for (var j = 0; j < board[i].length; j++){
+            if(board[i][j] == piece){
+                return [i,j];
+            }
+        }
+    }
+
+    return null;
+};
