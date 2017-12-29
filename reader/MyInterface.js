@@ -139,6 +139,8 @@ MyInterface.prototype.removeGameOptions = function(){
     this.gameOptions.remove(this.gameType);
     this.gameOptions.remove(this.startButton);
     this.gameOptions.remove(this.startingPlayer);
+
+    //this.gameOptions.remove(this.timePerTurn);
 };
 
 MyInterface.prototype.addGameProperties = function(){

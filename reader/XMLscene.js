@@ -30,7 +30,6 @@ function XMLscene(myInterface) {
 
     this.selectedPiece = null;
 
-    this.boardPrimitive = null;
     this.cacheBoards = [];
     this.timePerTurn = 60;
 
@@ -38,8 +37,6 @@ function XMLscene(myInterface) {
 
     this.t1Moved = false;
     this.t2Moved = false;
-    this.whitePlayerPlayed = false;
-    this.blackPlayerPlayed = false;
 
 
     this.cameras = [
@@ -262,55 +259,11 @@ XMLscene.prototype.update = function (currTime) {
             this.changePlayerTurn();
         }
 
-        // first turn
-        if (this.numberOfPlays == 0) {
-            this.firstTurnLogic();
-        }
-
     }
     // update board animations
     if (this.board != null)
         this.board.update(currTime);
 
-
-    if(this.needToChangeTurn){
-        this.changePlayerTurn();
-        this.needToChangeTurn = false;
-    }
-
-};
-
-XMLscene.prototype.firstTurnLogic = function () {
-    // first turn
-    this.selectedPiece = this.board.t1;
-    var finishedFirstTurn = false;
-
-    if (this.startingPlayer == 0) {
-        // wait player 0 to move t1
-        if (this.t1Moved) {
-            this.selectedPiece = this.board.t2;
-        }
-        // wait to player 1 to move t2
-        if (this.t2Moved) {
-            finishedFirstTurn = true;
-        }
-    } else {
-        // wait player 1 to move t1
-        if (this.t1Moved) {
-            this.selectedPiece = this.board.t2;
-        }
-        // wait player 0 to move t2
-        if (this.t2Moved) {
-            finishedFirstTurn = true;
-        }
-    }
-
-    if (finishedFirstTurn) {
-        this.numberOfPlays++;
-        this.t1Moved = false;
-        this.t2Moved = false;
-        this.selectedPiece = null;
-    }
 };
 
 
@@ -356,8 +309,8 @@ XMLscene.prototype.logPicking = function () {
 
                     var customId = this.pickResults[i][1];
                     this.pieceID = customId;
-                   console.log(customId + " picked");
-                   this.canMove();
+                    console.log(customId + " picked");
+                    this.canMove();
                 }
             }
             this.pickResults.splice(0, this.pickResults.length);
@@ -379,6 +332,9 @@ XMLscene.prototype.startGame = function () {
     this.interface.removeGameOptions();
     // add game properties
     this.interface.addGameProperties();
+
+    // first turn logic
+    this.firstTurnLogic();
 };
 
 XMLscene.prototype.undo = function () {
@@ -395,15 +351,14 @@ XMLscene.prototype.updateBoard = function (board) {
 XMLscene.prototype.canMove = function () {
 
 
-    var Line = parseInt((this.pieceID-1) / 11);
-    var Collumn = (this.pieceID-1) % 11;
+    var Line = parseInt((this.pieceID - 1) / 11);
+    var Collumn = (this.pieceID - 1) % 11;
 
 
-
-    if(this.pieceID < 1000) {
+    if (this.pieceID < 1000) {
         var self = this;
 
-        if(this.selectedPiece != null) {
+        if (this.selectedPiece != null) {
 
             this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
                 self.boardModel = board;
@@ -416,14 +371,51 @@ XMLscene.prototype.canMove = function () {
 
                 if (self.selectedPiece.name == 't2')
                     self.t2Moved = true;
-            });
-            this.cacheBoards.push(this.boardModel);
-        }
 
+                self.updateLogic();
+
+                self.cacheBoards.push(board);
+            });
+        }
+    }
+};
+
+XMLscene.prototype.updateLogic = function() {
+    // first turn.
+    if(this.numberOfPlays == 0){
+        this.firstTurnLogic();
     }
 
-
+    // TODO: other turns.
 };
+
+
+XMLscene.prototype.firstTurnLogic = function () {
+    // first turn
+    this.selectedPiece = this.board.t1;
+    var finishedFirstTurn = false;
+
+    // wait player 0 to move t1
+    if (this.t1Moved) {
+        this.selectedPiece = this.board.t2;
+        this.changePlayerTurn();
+        this.t1Moved = false;
+    }
+
+    // wait to player 1 to move t2
+    if (this.t2Moved) {
+        finishedFirstTurn = true;
+        this.t2Moved = false;
+    }
+
+    if (finishedFirstTurn) {
+        this.numberOfPlays++;
+        this.selectedPiece = null;
+        this.changePlayerTurn();
+    }
+};
+
+
 
 
 XMLscene.prototype.loadedBoard = function (tab) {
