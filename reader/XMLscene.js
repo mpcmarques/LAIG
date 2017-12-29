@@ -27,15 +27,21 @@ function XMLscene(myInterface) {
     this.difficulty = 0;
     this.needToUpdateCamera = false;
 
+    this.selectedPiece = null;
+
     this.boardPrimitive = null;
     this.cacheBoards = [];
     this.timePerTurn = 60;
 
-    this.blackPlayerMoved = false;
-    this.whitePlayerMoved = false;
+    this.numberOfPlays = 0;
+
+    this.t1Moved = false;
+    this.t2Moved = false;
+    this.whitePlayerPlayed = false;
+    this.blackPlayerPlayed = false;
 
 
-    this.cameras=[
+    this.cameras = [
         vec3.fromValues(-8, 8, 0), vec3.fromValues(0, 5, 10), vec3.fromValues(0, 10, -6), vec3.fromValues(2, 20, 0), vec3.fromValues(-3, 10, 13)
     ];
     this.gameType = 0;
@@ -54,7 +60,7 @@ XMLscene.prototype.constructor = XMLscene;
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
  */
-XMLscene.prototype.init = function(application) {
+XMLscene.prototype.init = function (application) {
     CGFscene.prototype.init.call(this, application);
 
     this.initCameras();
@@ -76,7 +82,7 @@ XMLscene.prototype.init = function(application) {
 /**
  * Initializes the scene lights with the values read from the LSX file.
  */
-XMLscene.prototype.initLights = function() {
+XMLscene.prototype.initLights = function () {
     var i = 0;
     // Lights index.
 
@@ -113,18 +119,18 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function() {
+XMLscene.prototype.initCameras = function () {
 
-    this.camera = new CGFcamera(0.4,0.1,500,this.cameras[this.selectedCamera],vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4, 0.1, 500, this.cameras[this.selectedCamera], vec3.fromValues(0, 0, 0));
 
-  };
+};
 
 /* Handler called when all the graphs are finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphsLoaded = function() {
+XMLscene.prototype.onGraphsLoaded = function () {
     // loaded all graphs
-    if(this.numberGraphsLoaded == this.graphs.length) {
+    if (this.numberGraphsLoaded == this.graphs.length) {
         // initialize interface
         this.interface.loadGameInterface();
 
@@ -146,12 +152,12 @@ XMLscene.prototype.onGraphsLoaded = function() {
     }
 };
 
-XMLscene.prototype.onGraphChange = function(){
+XMLscene.prototype.onGraphChange = function () {
     var graph = this.graphs[this.currentGraph];
 
     this.camera.near = graph.near;
     this.camera.far = graph.far;
-    this.axis = new CGFaxis(this,graph.referenceLength);
+    this.axis = new CGFaxis(this, graph.referenceLength);
 
     this.setGlobalAmbientLight(graph.ambientIllumination[0], graph.ambientIllumination[1],
         graph.ambientIllumination[2], graph.ambientIllumination[3]);
@@ -164,7 +170,7 @@ XMLscene.prototype.onGraphChange = function(){
 /**
  * Displays the scene.
  */
-XMLscene.prototype.display = function() {
+XMLscene.prototype.display = function () {
     // ---- BEGIN Background, camera and axis setup
 
 
@@ -189,14 +195,13 @@ XMLscene.prototype.display = function() {
     // graph
     var graph = this.graphs[this.currentGraph];
 
-    if (graph.loadedOk)
-    {
+    if (graph.loadedOk) {
 
         // Applies initial transformations.
         this.multMatrix(graph.initialTransforms);
 
-		// Draw axis
-		this.axis.display();
+        // Draw axis
+        this.axis.display();
 
         var i = 0;
         for (var key in this.lightValues) {
@@ -217,14 +222,13 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         graph.displayScene();
 
-        if(this.board != null)
+        if (this.board != null)
             this.board.display();
     }
-	else
-	{
-		// Draw axis
-		this.axis.display();
-	}
+    else {
+        // Draw axis
+        this.axis.display();
+    }
 
     this.popMatrix();
 
@@ -239,52 +243,92 @@ XMLscene.prototype.display = function() {
 XMLscene.prototype.update = function (currTime) {
 
     // update current graph
-    if(this.graphs.length > 0){
+    if (this.graphs.length > 0) {
         this.graphs[this.currentGraph].update(currTime);
     }
 
     // update camera position
-    if(this.needToUpdateCamera)
+    if (this.needToUpdateCamera)
         this.animateCamera(currTime);
 
-    // update time left
-    if(this.gameStarted) {
-        this.timeLeft -= 1/30;
-        if(this.timeLeft < 0){
+    // game started
+    if (this.gameStarted) {
+
+        // update time left
+        this.timeLeft -= 1 / 30;
+        if (this.timeLeft < 0) {
             // change player turn
             this.changePlayerTurn();
         }
-    }
 
-    if(this.board != null)
+        // first turn
+        if (this.numberOfPlays == 0) {
+            this.firstTurnLogic();
+        }
+
+    }
+    // update board animations
+    if (this.board != null)
         this.board.update(currTime);
 
 };
 
-XMLscene.prototype.animateCamera = function(currTime){
+XMLscene.prototype.firstTurnLogic = function () {
+    // first turn
+    this.selectedPiece = this.t1;
+    var finishedFirstTurn = false;
+
+    if (this.startingPlayer == 0) {
+        // wait player 0 to move t1
+        if (this.t1Moved)
+            this.selectedPiece = this.t2;
+        // wait to player 1 to move t2
+        if (this.t2Moved) {
+            finishedFirstTurn = true;
+        }
+    } else {
+        // wait player 1 to move t1
+        if (this.t1Moved)
+            this.selectedPiece = this.t2;
+        // wait player 0 to move t2
+        if (this.t2Moved) {
+            finishedFirstTurn = true;
+        }
+    }
+
+    if (finishedFirstTurn) {
+        this.numberOfPlays++;
+        this.t1Moved = false;
+        this.t2Moved = false;
+        this.selectedPiece = null;
+    }
+};
+
+
+XMLscene.prototype.animateCamera = function (currTime) {
     // selected camera position.
     var newPosition = this.cameras[this.selectedCamera];
 
     // animating camera.
     // update camera X.
-    if(this.camera.position[0] != newPosition[0]){
+    if (this.camera.position[0] != newPosition[0]) {
         this.camera.position[0] += newPosition[0] - this.camera.position[0] > 0 ? 1 : -1;
     }
 
     // update camera Y.
-    if(this.camera.position[1] != newPosition[1]){
+    if (this.camera.position[1] != newPosition[1]) {
         this.camera.position[1] += newPosition[1] - this.camera.position[1] > 0 ? 1 : -1;
     }
 
     // update camera Z.
-    if(this.camera.position[2] != newPosition[2]){
+    if (this.camera.position[2] != newPosition[2]) {
         this.camera.position[2] += newPosition[2] - this.camera.position[2] > 0 ? 1 : -1;
     }
 
 };
 
-XMLscene.prototype.changePlayerTurn = function(){
-    if (this.playerTurn == 'Black'){
+XMLscene.prototype.changePlayerTurn = function () {
+    if (this.playerTurn == 'Black') {
         this.playerTurn = 'White';
     } else {
         this.playerTurn = 'Black';
@@ -294,29 +338,27 @@ XMLscene.prototype.changePlayerTurn = function(){
     this.timeLeft = this.timePerTurn;
 };
 
-XMLscene.prototype.logPicking = function ()
-{
+XMLscene.prototype.logPicking = function () {
     if (this.pickMode == false) {
         if (this.pickResults != null && this.pickResults.length > 0) {
-            for (var i=0; i< this.pickResults.length; i++) {
+            for (var i = 0; i < this.pickResults.length; i++) {
                 var obj = this.pickResults[i][0];
-                if (obj)
-                {
+                if (obj) {
 
                     var customId = this.pickResults[i][1];
                     this.position = customId;
-                   console.log(customId + " picked");
-                   this.canMove();
+                    console.log(customId + " picked");
+                    this.canMove();
                 }
             }
-            this.pickResults.splice(0,this.pickResults.length);
+            this.pickResults.splice(0, this.pickResults.length);
         }
     }
 };
 
-XMLscene.prototype.startGame = function(){
+XMLscene.prototype.startGame = function () {
     // setup player turn
-    if(this.startingPlayer == 0){
+    if (this.startingPlayer == 0) {
         this.playerTurn = 'Black';
     } else {
         this.playerTurn = 'White';
@@ -330,13 +372,13 @@ XMLscene.prototype.startGame = function(){
     this.interface.addGameProperties();
 };
 
-XMLscene.prototype.undo = function(){
+XMLscene.prototype.undo = function () {
 
 };
 
 
 XMLscene.prototype.updateBoard = function (board) {
-    if(this.board != null)
+    if (this.board != null)
         this.board.updateBoard(board);
 };
 
@@ -344,54 +386,58 @@ XMLscene.prototype.updateBoard = function (board) {
 XMLscene.prototype.canMove = function () {
 
 
-    var Line = parseInt((this.position-1) / 11);
-    var Collumn = (this.position-1) % 11;
+    var Line = parseInt((this.position - 1) / 11);
+    var Collumn = (this.position - 1) % 11;
 
 
-
-    if(this.position < 1000) {
+    if (this.position < 1000) {
         var self = this;
 
-        this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
+        this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
             self.boardModel = board;
 
             self.updateBoard(board);
+
+            if(this.selectedPiece == 't1')
+                this.t1Moved = true;
+
+            if(this.selectedPiece == 't2')
+                this.t2Moved = true;
         });
         this.cacheBoards.push(this.boardModel);
 
     }
 
 
-
 };
 
 
-XMLscene.prototype.loadedBoard = function(tab){
+XMLscene.prototype.loadedBoard = function (tab) {
 
     self.boardModel = tab;
-/*
-    if(tab != null) {
+    /*
+     if(tab != null) {
 
-        this.blackPieces = [];
-        this.whitePieces = [];
+     this.blackPieces = [];
+     this.whitePieces = [];
 
-        for (var i = 0; i < 11; i++) {
-            for (var j = 0; j < 11; j++) {
-                if (this.board[i][j] == 'p') {
-                    var aux = new MyPiecePlayer(scene, 0, i, j);
-                    this.blackPieces.push(aux);
-                }
-                if (this.board[i][j] == 'b') {
-                    var aux = new MyPiecePlayer(scene, 1, i, j);
-                    this.whitePieces.push(aux);
-                }
-                if (this.board[i][j] == 't1') {
-                    this.t1 = new MyPieceWorker(scene, i, j, 't1');
-                }
-                if (this.board[i][j] == 't2') {
-                    this.t2 = new MyPieceWorker(scene, i, j, 't2');
-                }
-            }
-        }
-    }*/
+     for (var i = 0; i < 11; i++) {
+     for (var j = 0; j < 11; j++) {
+     if (this.board[i][j] == 'p') {
+     var aux = new MyPiecePlayer(scene, 0, i, j);
+     this.blackPieces.push(aux);
+     }
+     if (this.board[i][j] == 'b') {
+     var aux = new MyPiecePlayer(scene, 1, i, j);
+     this.whitePieces.push(aux);
+     }
+     if (this.board[i][j] == 't1') {
+     this.t1 = new MyPieceWorker(scene, i, j, 't1');
+     }
+     if (this.board[i][j] == 't2') {
+     this.t2 = new MyPieceWorker(scene, i, j, 't2');
+     }
+     }
+     }
+     }*/
 };
