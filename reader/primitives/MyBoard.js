@@ -14,8 +14,10 @@ function MyBoard(scene) {
     this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
     this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
 
-    this.blackStartPos = new Position(0, -2, 1);
-    this.whiteStartPos = new Position(1, -2, 1);
+    this.blackStartPos = new Position(-2, 1, 0);
+    this.whiteStartPos = new Position(-2, 1, 1);
+    this.t1startPos = new Position(-1,1,0);
+    this.t2startPos = new Position(-1,1,-1);
 
 }
 
@@ -115,10 +117,20 @@ MyBoard.prototype.updateBoard = function (board) {
 
     var piecePrimitive = this.parsePiece(piece1);
 
-    if(piecePrimitive != null){
-        var controlPoints = [[posXAnt,1,posYAnt],[posXAnt,2,posYAnt],[posXCurr,2,posYCurr],[posXCurr,1,posYCurr]];
-        piecePrimitive.animations.push(new BezierAnimation(this.scene, controlPoints, 3));
+    if(piecePrimitive != null) {
+        //var controlPoints = [[posXAnt,1,posYAnt],[posXAnt,2,posYAnt],[posXCurr,2,posYCurr],[posXCurr,1,posYCurr]];
+        if (posAnt != null) {
+        var pos2 = new Position(posAnt.x, posAnt.y + 1, posAnt.z);
+        var pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
+        var controlPoints = [posAnt, pos2, pos3, posCurr];
+        }else {
+            var pos2 = new Position(this.t1startPos.x, this.t1startPos.y + 1, this.t1startPos.z);
+            var pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
+            var controlPoints = [this.t1startPos, pos2, pos3, posCurr];
+        }
+        piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 3);
     }
+
 
     console.log(posAnt,posCurr);
 };
