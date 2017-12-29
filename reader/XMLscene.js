@@ -346,7 +346,7 @@ XMLscene.prototype.logPicking = function () {
                 if (obj) {
 
                     var customId = this.pickResults[i][1];
-                    this.position = customId;
+                    this.pieceID = customId;
                    console.log(customId + " picked");
                    this.canMove();
                 }
@@ -393,7 +393,7 @@ XMLscene.prototype.canMove = function () {
 
     if(this.pieceID < 1000) {
         var self = this;
-
+    console.log(this.selectedPiece);
         if(this.selectedPiece != null) {
 
             this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
