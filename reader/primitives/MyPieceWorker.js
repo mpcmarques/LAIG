@@ -1,4 +1,4 @@
-function MyPieceWorker(scene, posX, posY, name){
+function MyPieceWorker(scene, posX, posY, name,startPos){
   MyPiece.call(this, scene);
 
   this.material = new CGFappearance(scene);
@@ -10,6 +10,7 @@ function MyPieceWorker(scene, posX, posY, name){
   this.name = name;
   this.posX = posX;
   this.posY = posY;
+  this.startPos = startPos;
   this.appearance();
 
 }

@@ -4,19 +4,18 @@ function MyBoard(scene) {
     this.point = new MyPoint(scene);
     this.whitePieces = [];
     this.blackPieces = [];
-    this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1');
-    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2');
+    this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1',new Position(-1,1,0));
+    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2',new Position(-1,1,-1));
 
     this.lastBoard = null;
     this.currentBoard = null;
 
+    this.actual = null;
     this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
     this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
-    this.t1startPos = new Position(-1,1,0);
-    this.t2startPos = new Position(-1,1,-1);
 
 }
 
@@ -95,7 +94,7 @@ MyBoard.prototype.updateBoard = function (board) {
     var piece1;
 
     // TODO: DEBUG
-    console.log(this.lastBoard,this.currentBoard);
+   // console.log(this.lastBoard,this.currentBoard);
 
     if(this.lastBoard != null){
         for(var i = 0; i < this.lastBoard.length; i++)
@@ -104,16 +103,18 @@ MyBoard.prototype.updateBoard = function (board) {
             {
                 if(this.lastBoard[i][j] != this.currentBoard[i][j])
                 {
+
                     //usar find para ver a pos actual e ant
                     piece1 = this.currentBoard[i][j];
 
                     var pos = this.findPiece(this.currentBoard, piece1);
                     var lastPos = this.findPiece(this.lastBoard,piece1);
+
                     if(pos != null){
                         posCurr = pos;
                     }
 
-                    if(posAnt != null)
+                    if(lastPos != null)
                     {
                         posAnt = lastPos;
                     }
@@ -125,22 +126,27 @@ MyBoard.prototype.updateBoard = function (board) {
     var piecePrimitive = this.parsePiece(piece1);
 
     if(piecePrimitive != null) {
+
         var pos2, pos3, controlPoints;
-        //var controlPoints = [[posXAnt,1,posYAnt],[posXAnt,2,posYAnt],[posXCurr,2,posYCurr],[posXCurr,1,posYCurr]];
-        if (posAnt != null) {
-            pos2 = new Position(posAnt.x, posAnt.y + 1, posAnt.z);
-            pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
-            controlPoints = [posAnt, pos2, pos3, posCurr];
-        }else {
-            pos2 = new Position(this.t1startPos.x, this.t1startPos.y + 1, this.t1startPos.z);
-            pos3 = new Position(posCurr.x, posCurr.y + 1, posCurr.z);
-            controlPoints = [this.t1startPos, pos2, pos3, posCurr];
+
+
+        if (this.actual == null) {
+            this.actual = this.t1.startPos;
         }
+
+        pos2 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
+        pos3 = new Position(this.actual.x,this.actual.y + 3, this.actual.z);
+        posCurr.x += 1;
+        posCurr.z += -1;
+        console.log(this.actual,posCurr);
+        controlPoints = [this.actual, pos2, pos3, posCurr];
         piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 3);
+        this.actual = posCurr;
+
     }
 
 
-    console.log(posAnt,posCurr);
+
 };
 
 MyBoard.prototype.parsePiece = function(pieceName){

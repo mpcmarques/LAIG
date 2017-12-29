@@ -12,6 +12,7 @@ function MyPiecePlayer(scene, color, posX, posY)
   this.cyl = new MySphere(scene,arg);
   this.posX = posX;
   this.posY = posY;
+  this.startPos = null;
   this.color = color;
   if(this.color == 0)
   {

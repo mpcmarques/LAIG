@@ -125,7 +125,7 @@ BezierAnimation.prototype.display = function () {
 
 BezierAnimation.prototype.apply = function () {
 
-    console.log(this.position.x, this.position.y, this.position.z);
+
 
     this.scene.translate(this.position.x, this.position.y, this.position.z);
 

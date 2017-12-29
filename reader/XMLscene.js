@@ -21,7 +21,7 @@ function XMLscene(myInterface) {
     this.numberBlackPieces = 0;
     this.numberWhitePieces = 0;
     this.timeLeft = 60;
-    this.position = 0;
+    this.pieceID = 0;
     this.selectedCamera = 0;
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
@@ -304,7 +304,7 @@ XMLscene.prototype.logPicking = function ()
                 {
 
                     var customId = this.pickResults[i][1];
-                    this.position = customId;
+                    this.pieceID = customId;
                    console.log(customId + " picked");
                    this.canMove();
                 }
@@ -344,12 +344,12 @@ XMLscene.prototype.updateBoard = function (board) {
 XMLscene.prototype.canMove = function () {
 
 
-    var Line = parseInt((this.position-1) / 11);
-    var Collumn = (this.position-1) % 11;
+    var Line = parseInt((this.pieceID-1) / 11);
+    var Collumn = (this.pieceID-1) % 11;
 
 
 
-    if(this.position < 1000) {
+    if(this.pieceID < 1000) {
         var self = this;
 
         this.fabrik.movePiece(this.boardModel, 't1', Line, Collumn, function (board) {
