@@ -14,6 +14,9 @@ function MyBoard(scene) {
     this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
     this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
 
+    this.blackStartPos = {x: 0, y: -2};
+    this.whiteStartPos = {x: 1, y: -2};
+
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -82,6 +85,7 @@ MyBoard.prototype.updateBoard = function (board) {
     var posYAnt = null;
     var posXCurr = null;
     var posYCurr = null;
+    var piece1;
 
     // TODO: DEBUG
     console.log(this.lastBoard,this.currentBoard);
@@ -94,7 +98,7 @@ MyBoard.prototype.updateBoard = function (board) {
                 if(this.lastBoard[i][j] != this.currentBoard[i][j])
                 {
                     //usar find para ver a pos actual e ant
-                    var piece1 = this.currentBoard[i][j];
+                    piece1 = this.currentBoard[i][j];
 
                     var pos = this.findPiece(this.currentBoard, piece1);
                     var posAnt = this.findPiece(this.lastBoard,piece1);
@@ -113,7 +117,35 @@ MyBoard.prototype.updateBoard = function (board) {
         }
     }
 
+    var piecePrimitive = this.parsePiece(piece1);
+
+    if(piecePrimitive != null){
+        var controlPoints = [[posXAnt,1,posYAnt],[posXAnt,2,posYAnt],[posXCurr,2,posYCurr],[posXCurr,1,posYCurr]];
+        piecePrimitive.animations.push(new BezierAnimation(this.scene, controlPoints, 3));
+    }
+
     console.log(posXAnt,posYAnt, posXCurr,posYCurr);
+};
+
+MyBoard.prototype.parsePiece = function(pieceName){
+
+    switch (pieceName){
+        case 't1':
+            return this.t1;
+        case 't2':
+            return this.t2;
+        case 'b':
+            var blackPiece = new MyPiecePlayer(this.scene, 0, this.blackStartPos.x, this.blackStartPos.y);
+            this.blackPieces.push(blackPiece);
+            return blackPiece;
+        case 'p':
+            var whitePiece = new MyPiecePlayer(this.scene, 1, this.whiteStartPos.x, this.whiteStartPos.y);
+            this.whitePieces.push(whitePiece);
+            return whitePiece;
+        default:
+            return null;
+    }
+
 };
 
 

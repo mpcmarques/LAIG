@@ -327,12 +327,7 @@ XMLscene.prototype.undo = function(){
 
 
 XMLscene.prototype.updateBoard = function (board) {
-
-
     this.boardPrimitive.updateBoard(board);
-
-
-
 };
 
 
