@@ -24,6 +24,7 @@ function MyBoard(scene) {
             this.positions[i][j]= new Position(i,0,j);
         }
     }
+
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -38,7 +39,7 @@ MyBoard.prototype.display = function () {
 
 
     this.scene.pushMatrix();
-    this.scene.translate(-1,1,1);
+    this.scene.translate(0,1,0);
     this.scene.registerForPick(1001, this.t1);
     if(this.t1.animation != null) {
         //console.log(this.t1.animation);
@@ -48,10 +49,11 @@ MyBoard.prototype.display = function () {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.translate(-1,1,0);
+    this.scene.translate(0,1,0);
     this.scene.registerForPick(1002, this.t2);
-    if(this.t2.animation != null)
+    if(this.t2.animation != null) {
         this.t2.animation.apply();
+    }
     this.t2.display();
     this.scene.popMatrix();
 
@@ -84,14 +86,14 @@ MyBoard.prototype.display = function () {
 
 
     this.scene.pushMatrix();
-    this.scene.translate(-2,0,1);
+    this.scene.translate(0,1,0);
     this.scene.registerForPick(1003,this.auxwhite);
     //this.auxwhite.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
-    this.scene.translate(-2,0,0);
+    this.scene.translate(0,1,0);
     this.scene.registerForPick(1004,this.auxblack);
     //this.auxblack.display();
     this.scene.popMatrix();
@@ -282,7 +284,7 @@ MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
     var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
     var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
 
-    this.fixFirstPlayPosition(piece,newPos);
+    //this.fixFirstPlayPosition(piece,newPos);
 
     var controlPoints = [lastPos, point2, point3, newPos];
 
