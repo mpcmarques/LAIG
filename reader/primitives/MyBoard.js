@@ -9,7 +9,7 @@ function MyBoard(scene) {
     this.lastPrimitive = null;
     this.lastBoard = null;
     this.currentBoard = null;
-
+    this.primitiveUndo = null;
     this.actual = null;
     this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
     this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
@@ -17,6 +17,17 @@ function MyBoard(scene) {
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
 
+
+
+    var Positions = new Array();
+
+    for (var i=0;i<11;i++) {
+        Positions[i]=new Array();
+        for (var j=0;j<11;j++) {
+            Positions[i][j]= new Position(i,1,j);
+        }
+    }
+    console.log(Positions);
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -94,6 +105,9 @@ MyBoard.prototype.updateBoard = function (board) {
     var posCurr = null;
     var piece1;
 
+
+    this.actual = new Position(0,0,0);
+
     // TODO: DEBUG
    // console.log(this.lastBoard,this.currentBoard);
 
@@ -123,37 +137,53 @@ MyBoard.prototype.updateBoard = function (board) {
             }
         }
     }
-    console.warn(posCurr);
+
     var piecePrimitive = this.parsePiece(piece1);
 
-    if(piecePrimitive != null) {
-       // console.log(piecePrimitive);
-        var pos2, pos3, controlPoints;
+    var piecePrimitiveUndo = this.parsePiece(piece1);
 
 
-        if (this.actual == null || piecePrimitive != this.lastPrimitive) {
-            this.actual = piecePrimitive.startPos;
-            //console.log(piecePrimitive.startPos);
+
+    if(posCurr != null) {
+        if (piecePrimitive != null) {
+            var pos2, pos3, controlPoints;
+
+
+            if (this.actual == null || piecePrimitive != this.lastPrimitive) {
+                this.actual = piecePrimitive.startPos;
+                console.log(piecePrimitive.startPos);
+            }
+
+            pos2 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
+            pos3 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
+            if (piecePrimitive.name == 't1') {
+                posCurr.x += 1;
+                posCurr.z += -1;
+            } else if (piecePrimitive.name == 't2') {
+                posCurr.x += 1;
+            }
+
+            controlPoints = [this.actual, pos2, pos3, posCurr];
+            piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 5);
+            this.actual = posCurr;
+            this.lastPrimitive = piecePrimitive;
         }
+    }else if(posCurr == null) {
+        if (this.primitiveUndo != null) {
+            var pos2, pos3, controlPoints;
 
-        pos2 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
-        pos3 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
-        if (piecePrimitive.name == 't1') {
 
-        posCurr.x += 1;
-        posCurr.z += -1;
-        }else if(piecePrimitive.name == 't2')
-        {
-            posCurr.x += 1;
+            pos2 = new Position(this.actual.x,this.actual.y + 3, this.actual.z);
+            pos3 = new Position(this.primitiveUndo.startPos.x, this.primitiveUndo.startPos.y + 3, this.primitiveUndo.startPos.z);
+
+            controlPoints = [this.actual, pos2, pos3, this.primitiveUndo.startPos];
+            this.primitiveUndo.animation = new BezierAnimation(this.scene, controlPoints, 5);
+            posCurr = this.primitiveUndo.startPos;
         }
-        //console.log(this.actual,posCurr);
-        controlPoints = [this.actual, pos2, pos3, posCurr];
-        piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 5);
-        this.actual = posCurr;
-        this.lastPrimitive = piecePrimitive;
     }
 
 
+    this.primitiveUndo = piecePrimitive;
 
 };
 

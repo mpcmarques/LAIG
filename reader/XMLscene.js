@@ -338,7 +338,12 @@ XMLscene.prototype.startGame = function () {
 };
 
 XMLscene.prototype.undo = function () {
-
+    if(this.cacheBoards != null)
+    {
+        this.board.updateBoard(this.cacheBoards[this.cacheBoards.length-1]);
+        this.selectedPiece = this.board.primitiveUndo;
+        this.changePlayerTurn();
+    }
 };
 
 
