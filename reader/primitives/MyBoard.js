@@ -10,8 +10,8 @@ function MyBoard(scene) {
     this.lastBoard = null;
     this.currentBoard = null;
 
-    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, 0, new Position(0, 1, 0));
-    this.auxwhite = new MyPiecePlayer(this.scene, 1, 0, 0,new Position(0, 1, 0));
+    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2, new Position(0, 1, 0));
+    this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2,new Position(0, 1, 0));
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
@@ -67,6 +67,8 @@ MyBoard.prototype.display = function () {
         this.scene.popMatrix();
     }
 
+
+
     // loop black pieces
     for(var k = 0; k < this.blackPieces.length; k++){
         this.scene.pushMatrix();
@@ -80,22 +82,17 @@ MyBoard.prototype.display = function () {
     }
 
 
+
     this.scene.pushMatrix();
+    this.scene.translate(-2,0,1);
     this.scene.registerForPick(1003,this.auxwhite);
-    if(this.auxwhite.animation != null)
-    {
-        this.auxwhite.animation.apply();
-    }
     this.auxwhite.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
+    this.scene.translate(-2,0,0);
     this.scene.registerForPick(1004,this.auxblack);
-    if(this.auxblack.animation != null)
-    {
-        this.auxblack.animation.apply();
-    }
     this.auxblack.display();
     this.scene.popMatrix();
 
@@ -284,6 +281,8 @@ MyBoard.prototype.fixFirstPlayPosition = function(piece,newPos){
         case 't2':
             newPos.x = newPos.x +1;
             break;
+        case 'p':
+            newPos.x = newPos.x;
         default:
             break;
     }
@@ -292,7 +291,9 @@ MyBoard.prototype.fixFirstPlayPosition = function(piece,newPos){
 MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
     var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
     var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
+
     this.fixFirstPlayPosition(piece,newPos);
+
     var controlPoints = [lastPos, point2, point3, newPos];
 
     piece.animation = new BezierAnimation(this.scene, controlPoints, 10);
