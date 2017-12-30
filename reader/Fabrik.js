@@ -56,9 +56,7 @@ Fabrik.prototype.canMovePiece = function(tab, piece, line, column, callback){
     var self = this;
 
     this.getPrologRequest(call, function(data){
-        callback(data.target.response);
-    }, function(){
-        callback(false);
+        callback(data.target.response == 'true');
     });
 };
 

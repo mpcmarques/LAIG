@@ -380,14 +380,11 @@ XMLscene.prototype.canMove = function () {
         if (this.selectedPiece != null) {
             
             this.fabrik.canMovePiece(self.boardModel, this.selectedPiece.name, Line, Collumn, function (result) {
-                
+
                 if (result){
 
                     self.fabrik.movePiece(self.boardModel, self.selectedPiece.name, Line, Collumn, function (board) {
-                        if(board == null)
-                        {
-                            return;
-                        }
+                        
                         self.boardModel = board;
         
                         self.updateBoard(board);
