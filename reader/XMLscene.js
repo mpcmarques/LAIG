@@ -503,3 +503,4 @@ XMLscene.prototype.otherTurnsLogic = function(){
 
     }
 };
+

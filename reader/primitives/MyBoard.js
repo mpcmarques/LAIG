@@ -63,12 +63,20 @@ MyBoard.prototype.display = function () {
 
     this.scene.pushMatrix();
     this.scene.registerForPick(1003,this.auxwhite);
+    if(this.auxwhite.animation != null)
+    {
+        this.auxwhite.animation.apply();
+    }
     this.auxwhite.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
     this.scene.registerForPick(1004,this.auxblack);
+    if(this.auxblack.animation != null)
+    {
+        this.auxblack.animation.apply();
+    }
     this.auxblack.display();
     this.scene.popMatrix();
 
