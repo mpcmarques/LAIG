@@ -11,6 +11,7 @@ function MyPieceWorker(scene, posX, posY, name,startPos){
   this.posX = posX;
   this.posY = posY;
   this.startPos = startPos;
+  this.startPos = new Position(startPos.x, startPos.y, startPos.z);
   this.appearance();
 
 }

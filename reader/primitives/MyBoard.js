@@ -86,14 +86,14 @@ MyBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-2,0,1);
     this.scene.registerForPick(1003,this.auxwhite);
-    this.auxwhite.display();
+    //this.auxwhite.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
     this.scene.translate(-2,0,0);
     this.scene.registerForPick(1004,this.auxblack);
-    this.auxblack.display();
+    //this.auxblack.display();
     this.scene.popMatrix();
 
 
@@ -157,8 +157,6 @@ MyBoard.prototype.updateBoard = function (board) {
                     if (posTab != null && lastTabPos == null){
 
                         piecePrimitive = this.parsePiece(currentPiece);
-
-                        console.log('loaded piece', piecePrimitive);
                         
                         if (piecePrimitive != null){
 
@@ -283,6 +281,7 @@ MyBoard.prototype.fixFirstPlayPosition = function(piece,newPos){
             break;
         case 'p':
             newPos.x = newPos.x;
+            break;
         default:
             break;
     }
@@ -339,11 +338,13 @@ MyBoard.prototype.update = function(currTime){
     this.t1.update(currTime);
     this.t2.update(currTime);
 
+    //console.log(this.blackPieces, this.whitePieces);
+
     for(var i = 0; i < this.whitePieces.length; i++){
         this.whitePieces[i].update(currTime);
     }
 
     for(var j = 0; j < this.blackPieces.length; j++){
-        this.blackPieces[i].update(currTime);
+        this.blackPieces[j].update(currTime);
     }
 };

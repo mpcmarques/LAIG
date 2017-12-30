@@ -388,24 +388,28 @@ XMLscene.prototype.canMove = function () {
                         self.boardModel = board;
         
                         self.updateBoard(board);
-        
-        
-                        if (self.selectedPiece.name == 't1')
-                            self.t1Moved = true;
-        
-                        if (self.selectedPiece.name == 't2')
-                            self.t2Moved = true;
-        
-        
-        
-        
+                        
+                        switch (self.selectedPiece.name) {
+                            case 't1':
+                                self.t1Moved = true;
+                            break;
+                            case 't2':
+                                self.t2Moved = true;
+                            break;
+                            case 'p':
+                                self.blackPieceMoved = true;
+                            break;
+                            case 'b':
+                                self.whitePieceMoved = true;
+                            break;
+                            default:
+                            break;
+                        }
+     
                         self.updateLogic();
                     });
-
                 }
-
             });
-
         }
     }
 
@@ -479,14 +483,14 @@ XMLscene.prototype.otherTurnsLogic = function(){
             // select black piece
             this.selectedPiece = this.board.auxblack;
             this.t1Moved = false;
-            console.warn('black piece selected.');
+            
             return;
         }
         else if (this.selectedPiece.name == 't2' && this.t2Moved){
             // select black piece
             this.selectedPiece = this.board.auxblack;
             this.t2Moved = false;
-            console.warn('black piece selected.');
+           
             return;
         }
 
@@ -496,6 +500,7 @@ XMLscene.prototype.otherTurnsLogic = function(){
             this.selectedPiece = null;
             this.changePlayerTurn();
             this.updateLogic();
+            this.blackPieceMoved = false;
         }
 
     } else if (this.playerTurn == 'White') {
@@ -525,6 +530,7 @@ XMLscene.prototype.otherTurnsLogic = function(){
             this.selectedPiece = null;
             this.changePlayerTurn();
             this.updateLogic();
+            this.whitePieceMoved = false;
         }
     }
 };
