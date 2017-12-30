@@ -6,7 +6,7 @@ function MyPiecePlayer(scene, color, posX, posY, startPos)
 
   this.material = new CGFappearance(scene);
   var arg = [];
-  arg[0]=1;
+  arg[0]=1.5;
   arg[1]=20;
   arg[2]=20;
   this.cyl = new MySphere(scene,arg);
@@ -33,7 +33,7 @@ MyPiecePlayer.prototype.constructor = MyPiecePlayer;
 MyPiecePlayer.prototype.display = function(){
 
   this.scene.pushMatrix();
-  this.scene.translate(this.posY,1,this.posX);
+  this.scene.translate(0,1,0);
   this.scene.scale(0.25,0.20,0.25);
   this.scene.rotate(90 *DEGREE_TO_RAD,1,0,0);
   this.material.apply();
