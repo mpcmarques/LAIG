@@ -26,7 +26,6 @@ function XMLscene(myInterface) {
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
     this.needToUpdateCamera = false;
-    this.needToChangeTurn = false;
 
     this.selectedPiece = null;
 
@@ -37,6 +36,7 @@ function XMLscene(myInterface) {
 
     this.t1Moved = false;
     this.t2Moved = false;
+    this.needToSelectPiece = false;
 
 
     this.cameras = [
@@ -247,7 +247,7 @@ XMLscene.prototype.update = function (currTime) {
 
     // update camera position
     if (this.needToUpdateCamera)
-        this.animateCamera(currTime);
+        this.animateCamera();
 
     // game started
     if (this.gameStarted) {
@@ -267,7 +267,7 @@ XMLscene.prototype.update = function (currTime) {
 };
 
 
-XMLscene.prototype.animateCamera = function (currTime) {
+XMLscene.prototype.animateCamera = function () {
     // selected camera position.
     var newPosition = this.cameras[this.selectedCamera];
 
@@ -343,8 +343,10 @@ XMLscene.prototype.undo = function () {
 
 
 XMLscene.prototype.updateBoard = function (board) {
-    if (this.board != null)
+    if (this.board != null) {
+        console.log(board);
         this.board.updateBoard(board);
+    }
 };
 
 
@@ -359,7 +361,6 @@ XMLscene.prototype.canMove = function () {
         var self = this;
 
         if (this.selectedPiece != null) {
-
             this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
                 self.boardModel = board;
 
@@ -378,15 +379,31 @@ XMLscene.prototype.canMove = function () {
             });
         }
     }
+
+    if(this.needToSelectPiece){
+
+        // select worker.
+        if (this.pieceID == '1002') {
+            this.selectedPiece = this.board.t2;
+        }
+        else if (this.pieceID == '1001'){
+            this.selectedPiece = this.board.t1;
+        }
+
+        console.log('Selected worker:',this.selectedPiece);
+
+        // don't enter in the loop again.
+        this.needToSelectPiece = false;
+    }
 };
 
 XMLscene.prototype.updateLogic = function() {
     // first turn.
-    if(this.numberOfPlays == 0){
+    if (this.numberOfPlays == 0){
         this.firstTurnLogic();
+    } else {
+        this.otherTurnsLogic();
     }
-
-    // TODO: other turns.
 };
 
 
@@ -395,55 +412,78 @@ XMLscene.prototype.firstTurnLogic = function () {
     this.selectedPiece = this.board.t1;
     var finishedFirstTurn = false;
 
-    // wait player 0 to move t1
+    // wait for player 0 to move t1
     if (this.t1Moved) {
         this.selectedPiece = this.board.t2;
         this.changePlayerTurn();
         this.t1Moved = false;
     }
 
-    // wait to player 1 to move t2
+    // wait for player 1 to move t2
     if (this.t2Moved) {
         finishedFirstTurn = true;
         this.t2Moved = false;
     }
 
+    // finished turn
     if (finishedFirstTurn) {
         this.numberOfPlays++;
         this.selectedPiece = null;
         this.changePlayerTurn();
+        this.updateLogic();
     }
 };
 
 
+XMLscene.prototype.otherTurnsLogic = function(){
+
+    if (this.playerTurn == 'Black') {
+
+        // wait for player 1 to select worker
+        if (this.selectedPiece == null) {
+            this.needToSelectPiece = true;
+            return;
+        }
+
+        // wait for player 1 to move worker
+        if (this.selectedPiece.name == 't1' && this.t1Moved){
+            // select black piece
+
+            this.t1Moved = false;
+            return;
+        }
+        else if (this.selectedPiece.name == 't2' && this.t2Moved){
+            // select black piece
+
+            this.t2Moved = false;
+            return;
+        }
+
+        // wait for player 1 to put piece
+
+    } else if (this.playerTurn == 'White') {
+        // wait for player 2 to select worker
+        if (this.selectedPiece == null) {
+            this.needToSelectPiece = true;
+            return;
+        }
+
+        // wait for player 2 to move worker
+        if (this.selectedPiece.name == 't1' && this.t1Moved){
+            // select white piece
+
+            this.t1Moved = false;
+            return;
+        }
+        else if (this.selectedPiece.name == 't2' && this.t2Moved){
+            // select white piece
+
+            this.t2Moved = false;
+            return;
+        }
 
 
-XMLscene.prototype.loadedBoard = function (tab) {
+        // wait for player 2 to put piece
 
-    self.boardModel = tab;
-    /*
-     if(tab != null) {
-
-     this.blackPieces = [];
-     this.whitePieces = [];
-
-     for (var i = 0; i < 11; i++) {
-     for (var j = 0; j < 11; j++) {
-     if (this.board[i][j] == 'p') {
-     var aux = new MyPiecePlayer(scene, 0, i, j);
-     this.blackPieces.push(aux);
-     }
-     if (this.board[i][j] == 'b') {
-     var aux = new MyPiecePlayer(scene, 1, i, j);
-     this.whitePieces.push(aux);
-     }
-     if (this.board[i][j] == 't1') {
-     this.t1 = new MyPieceWorker(scene, i, j, 't1');
-     }
-     if (this.board[i][j] == 't2') {
-     this.t2 = new MyPieceWorker(scene, i, j, 't2');
-     }
-     }
-     }
-     }*/
+    }
 };

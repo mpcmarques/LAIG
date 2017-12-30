@@ -123,17 +123,17 @@ MyBoard.prototype.updateBoard = function (board) {
             }
         }
     }
-
+    console.warn(posCurr);
     var piecePrimitive = this.parsePiece(piece1);
 
     if(piecePrimitive != null) {
-        console.log(piecePrimitive);
+       // console.log(piecePrimitive);
         var pos2, pos3, controlPoints;
 
 
         if (this.actual == null || piecePrimitive != this.lastPrimitive) {
             this.actual = piecePrimitive.startPos;
-            console.log(piecePrimitive.startPos);
+            //console.log(piecePrimitive.startPos);
         }
 
         pos2 = new Position(this.actual.x, this.actual.y + 3, this.actual.z);
@@ -146,7 +146,7 @@ MyBoard.prototype.updateBoard = function (board) {
         {
             posCurr.x += 1;
         }
-        console.log(this.actual,posCurr);
+        //console.log(this.actual,posCurr);
         controlPoints = [this.actual, pos2, pos3, posCurr];
         piecePrimitive.animation = new BezierAnimation(this.scene, controlPoints, 5);
         this.actual = posCurr;
