@@ -18,16 +18,15 @@ function MyBoard(scene) {
     this.whiteStartPos = new Position(-2, 1, 1);
 
 
+    
+    this.positions = [];
 
-    var Positions = new Array();
-
-    for (var i=0;i<11;i++) {
-        Positions[i]=new Array();
+    for (var i=0; i<11 ;i++) {
+        this.positions[i]= [];
         for (var j=0;j<11;j++) {
-            Positions[i][j]= new Position(i,1,j);
+            this.positions[i][j]= new Position(i,0,j);
         }
     }
-    console.log(Positions);
 }
 
 MyBoard.prototype = Object.create(MyPrimitive.prototype);
@@ -119,24 +118,76 @@ MyBoard.prototype.updateBoard = function (board) {
                 if(this.lastBoard[i][j] != this.currentBoard[i][j])
                 {
 
-                    //usar find para ver a pos actual e ant
-                    piece1 = this.currentBoard[i][j];
+                    // usar find para ver a pos actual e ant
+                    currentPiece = this.currentBoard[i][j];
+                    lastPiece = this.lastBoard[i][j];
 
-                    var pos = this.findPiece(this.currentBoard, piece1);
-                    var lastPos = this.findPiece(this.lastBoard,piece1);
+                    var posTab = this.findPiece(this.currentBoard, currentPiece);
+                    var lastTabPos = this.findPiece(this.lastBoard, currentPiece);
+                    
+                    var piecePrimitive, lastPos, newPos;
 
-                    if(pos != null){
-                        posCurr = pos;
+                    console.log(currentPiece, lastPiece);
+                    
+                    // caso da peca nao ter sido colocado no tabuleiro.
+                    if (posTab != null && lastTabPos == null){
+
+                        piecePrimitive = this.parsePiece(currentPiece);
+                        
+                        if (piecePrimitive != null){
+
+                            lastPos = piecePrimitive.startPos;
+
+                            newPos = this.positions[i][j];
+
+
+                            this.animatePiece(piecePrimitive, lastPos, newPos);
+                        }
+
+                    }
+                    
+                    // caso da peca ja existir no tabuleiro
+                    else if (posTab != null && lastTabPos != null){
+
+                        piecePrimitive = this.parsePiece(currentPiece);
+
+                        if (piecePrimitive != null){
+
+                            lastPos = this.positions[lastTabPos.x][lastTabPos.z];
+
+                            newPos = this.positions[i][j];
+
+                            this.animatePiece(piecePrimitive, lastPos, newPos);
+                        }
+
                     }
 
-                    if(lastPos != null)
-                    {
-                        posAnt = lastPos;
+                    // caso da peca ser removida do tabuleiro
+                    else if (posTab == null && lastTabPos != null){
+
+                        piecePrimitive = this.parsePiece(lastPiece);
+
+                        if (piecePrimitive != null){
+
+                            lastPos = this.positions[i][j];
+
+                            newPos = piecePrimitive.startPos;
+
+                            this.animatePiece(piecePrimitive, lastPos, newPos);
+                        }
+                        
                     }
+
+                    break;
                 }
             }
         }
     }
+
+    
+
+
+    /*
 
     var piecePrimitive = this.parsePiece(piece1);
 
@@ -184,7 +235,17 @@ MyBoard.prototype.updateBoard = function (board) {
 
 
     this.primitiveUndo = piecePrimitive;
+    */
 
+};
+
+MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
+    var point2 = new Position(lastPos.x, lastPos.y+5, lastPos.z);
+    var point3 = new Position(newPos.x, newPos.y+5, newPos.z);
+
+    var controlPoints = [lastPos, point2, point3, newPos];
+
+    piece.animation = new BezierAnimation(this.scene, controlPoints, 10);
 };
 
 MyBoard.prototype.parsePiece = function(pieceName){

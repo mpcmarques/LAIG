@@ -338,19 +338,29 @@ XMLscene.prototype.startGame = function () {
 };
 
 XMLscene.prototype.undo = function () {
+    var previousBoard = this.cacheBoards[this.cacheBoards.length-2];
+
+    if (previousBoard != null){
+        this.updateBoard(previousBoard);
+        
+    }
+    
+    /*
     if(this.cacheBoards != null)
     {
-        this.board.updateBoard(this.cacheBoards[this.cacheBoards.length-1]);
+        this.updateBoard(this.cacheBoards[this.cacheBoards.length-2]);
         this.selectedPiece = this.board.primitiveUndo;
         this.changePlayerTurn();
-    }
+    }*/
 };
 
 
 XMLscene.prototype.updateBoard = function (board) {
     if (this.board != null) {
+        console.log('New Board: ');
         console.log(board);
         this.board.updateBoard(board);
+        this.cacheBoards.push(board);
     }
 };
 
@@ -379,8 +389,6 @@ XMLscene.prototype.canMove = function () {
                     self.t2Moved = true;
 
                 self.updateLogic();
-
-                self.cacheBoards.push(board);
             });
         }
     }
@@ -390,15 +398,14 @@ XMLscene.prototype.canMove = function () {
         // select worker.
         if (this.pieceID == '1002') {
             this.selectedPiece = this.board.t2;
+            this.needToSelectPiece = false;
+            console.log('Selected worker:',this.selectedPiece);
         }
         else if (this.pieceID == '1001'){
             this.selectedPiece = this.board.t1;
+            this.needToSelectPiece = false;
+            console.log('Selected worker:',this.selectedPiece);
         }
-
-        console.log('Selected worker:',this.selectedPiece);
-
-        // don't enter in the loop again.
-        this.needToSelectPiece = false;
     }
 };
 
