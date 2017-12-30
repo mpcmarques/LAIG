@@ -242,14 +242,23 @@ MyBoard.prototype.updateBoard = function (board) {
 MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
     var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
     var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
-    if(piece.name == 't1') {
-        newPos.x = newPos.x +1;
-        newPos.z = newPos.z - 1;
+    switch(piece.name) {
+        case 't1':
+            newPos.x = newPos.x +1;
+            newPos.z = newPos.z - 1;
+            break;
+        case 't2':
+            newPos.x = newPos.x +1;
+            break;
+        case 'b':
+            newPos.x = newPos.x + 2;
+            newPos.z = newPos.z - 1;
+        case 'p':
+            newPos.x = newPos.x + 2;
+        default:
+            break;
     }
-    else if(piece.name == 't2')
-    {
-        newPos.x = newPos.x +1;
-    }
+
     var controlPoints = [lastPos, point2, point3, newPos];
 
     piece.animation = new BezierAnimation(this.scene, controlPoints, 10);

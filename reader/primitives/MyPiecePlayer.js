@@ -20,7 +20,7 @@ function MyPiecePlayer(scene, color, posX, posY)
   }
   if(this.color == 1)
   {
-        this.name = "b";
+    this.name = "b";
   }
 
   this.appearance();
