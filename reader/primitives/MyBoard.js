@@ -11,8 +11,8 @@ function MyBoard(scene) {
     this.currentBoard = null;
     this.primitiveUndo = null;
     this.actual = null;
-    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2);
-    this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2);
+    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2, new Position(-2, 1, 0));
+    this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2,new Position(-2, 1, 1));
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);

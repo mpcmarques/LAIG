@@ -1,6 +1,6 @@
 
 
-function MyPiecePlayer(scene, color, posX, posY)
+function MyPiecePlayer(scene, color, posX, posY, startPos)
 {
   MyPiece.call(this,scene)
 
@@ -12,7 +12,7 @@ function MyPiecePlayer(scene, color, posX, posY)
   this.cyl = new MySphere(scene,arg);
   this.posX = posX;
   this.posY = posY;
-  this.startPos = null;
+  this.startPos = startPos;
   this.color = color;
   if(this.color == 0)
   {

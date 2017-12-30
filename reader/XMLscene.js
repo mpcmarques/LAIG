@@ -388,11 +388,6 @@ XMLscene.prototype.canMove = function () {
                 if (self.selectedPiece.name == 't2')
                     self.t2Moved = true;
 
-                if (self.selectedPiece.name == 'b')
-                    self.whiteMoved = true;
-
-                if (self.selectedPiece.name == 'p')
-                    self.blackMoved = true;
 
 
 
@@ -414,15 +409,7 @@ XMLscene.prototype.canMove = function () {
             this.needToSelectPiece = false;
             console.log('Selected worker:',this.selectedPiece);
         }
-        else if(this.pieceID == '1004')
-        {
-            this.selectedPiece = this.board.auxblack;
-            this.needToSelectPiece = false;
-        }else if(this.pieceID == '1003')
-        {
-            this.selectedPiece = this.board.auxwhite;
-            this.needToSelectPiece = false;
-        }
+
     }
 };
 
@@ -477,13 +464,13 @@ XMLscene.prototype.otherTurnsLogic = function(){
         // wait for player 1 to move worker
         if (this.selectedPiece.name == 't1' && this.t1Moved){
             // select black piece
-            this.selectedPiece.name = 'p';
+
             this.t1Moved = false;
             return;
         }
         else if (this.selectedPiece.name == 't2' && this.t2Moved){
             // select black piece
-            this.selectedPiece.name = 'b';
+
             this.t2Moved = false;
             return;
         }
