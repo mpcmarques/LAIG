@@ -70,9 +70,9 @@
 
 
         <!-- Floor -->
-        <TEXTURE id="moon">
-            <file path="images/moon.jpg"/>
-            <amplif_factor s="0.1" t="0.2"/>
+        <TEXTURE id="field">
+            <file path="images/field.jpg"/>
+            <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
         <!--Flag Texture-->
@@ -120,8 +120,8 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
-        <TEXTURE id="sand">
-            <file path="images/sandtext.jpg"/>
+        <TEXTURE id="football">
+            <file path="images/football.jpeg"/>
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
@@ -286,10 +286,13 @@
                 <NODEREF id="col3"/>
                 <NODEREF id="col4"/>
                 <NODEREF id="circle"/>
-                <NODEREF id="image"/>
+
                 <NODEREF id="bubble"/>
+                <NODEREF id="floor"/>
             </DESCENDANTS>
         </NODE>
+
+
 
 
         <NODE id="circle">
@@ -309,7 +312,7 @@
 
         <NODE id="floor">
             <MATERIAL id="null"/>
-            <TEXTURE id="sand"/>
+            <TEXTURE id="field"/>
 
             <TRANSLATION x="-50" y="-5" z="50"/>
             <ROTATION axis="x" angle="-90"/>
@@ -320,28 +323,13 @@
         </NODE>
 
 
-        <NODE id="image">
-            <MATERIAL id="null"/>
-            <TEXTURE id="fish1"/>
 
-
-            <ROTATION axis="y" angle="-90"/>
-
-            <ANIMATIONREFS>
-                <ANIMATIONREF id="voltaImage"/>
-            </ANIMATIONREFS>
-
-            <DESCENDANTS>
-                <LEAF type="rectangle" args="0 1 1 0"/>
-            </DESCENDANTS>
-
-        </NODE>
 
 
 
         <NODE id="bubble">
-          <MATERIAL id="bluePlasticMaterial"/>
-          <TEXTURE id="null" />
+          <MATERIAL id="null"/>
+          <TEXTURE id="football" />
 
           <TRANSLATION x="0" y="1" z="0"/>
 
