@@ -4,14 +4,14 @@ function MyBoard(scene) {
     this.point = new MyPoint(scene);
     this.whitePieces = [];
     this.blackPieces = [];
-    this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1',new Position(-1,1,0));
-    this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2',new Position(-1,1,0));
+    this.t1 = new MyPieceWorker(this.scene,'t1',new Position(-1,1,0));
+    this.t2 = new MyPieceWorker(this.scene,'t2',new Position(-1,1,0));
 
     this.lastBoard = null;
     this.currentBoard = null;
 
-    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2, new Position(0, 1, 0));
-    this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2,new Position(0, 1, 0));
+    this.auxblack = new MyPiecePlayer(this.scene, -2, new Position(0, 1, 0));
+    this.auxwhite = new MyPiecePlayer(this.scene, -2, new Position(0, 1, 0));
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
@@ -131,9 +131,6 @@ MyBoard.prototype.updateBoard = function (board) {
 
     this.actual = new Position(0,0,0);
 
-    // TODO: DEBUG
-   // console.log(this.lastBoard,this.currentBoard);
-
     if(this.lastBoard != null){
         for(var i = 0; i < this.lastBoard.length; i++)
         {
@@ -164,15 +161,9 @@ MyBoard.prototype.updateBoard = function (board) {
 
                             newPos = this.positions[i][j];
 
-                            if (piecePrimitive instanceof MyPiecePlayer){
-                                var newPiece = new MyPiecePlayer(this.scene, piecePrimitive.color, piecePrimitive.posX, piecePrimitive.posY, piecePrimitive.startPos);
+                            this.animatePiece(piecePrimitive, lastPos, newPos);
 
-                                this.animatePiece(piecePrimitive, lastPos, newPos);
-                                console.warn(newPiece);
-                            } else {
-
-                                this.animatePiece(piecePrimitive, lastPos, newPos);
-                            }
+                            
                         }
 
                     }
@@ -306,11 +297,11 @@ MyBoard.prototype.parsePiece = function(pieceName){
         case 't2':
             return this.t2;
         case 'b':
-            var whitePiece = new MyPiecePlayer(this.scene, 1, this.whiteStartPos.x+2, this.whiteStartPos.y-1, this.whiteStartPos);
+            var whitePiece = new MyPiecePlayer(this.scene, 1, this.whiteStartPos);
             this.whitePieces.push(whitePiece);
             return whitePiece;
         case 'p':
-            var blackPiece = new MyPiecePlayer(this.scene, 0, this.blackStartPos.x+2, this.blackStartPos.y, this.blackStartPos);
+            var blackPiece = new MyPiecePlayer(this.scene, 0, this.blackStartPos);
             this.blackPieces.push(blackPiece);
             return blackPiece;
         default:
@@ -337,8 +328,6 @@ MyBoard.prototype.update = function(currTime){
     // update all
     this.t1.update(currTime);
     this.t2.update(currTime);
-
-    //console.log(this.blackPieces, this.whitePieces);
 
     for(var i = 0; i < this.whitePieces.length; i++){
         this.whitePieces[i].update(currTime);

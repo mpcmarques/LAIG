@@ -347,13 +347,7 @@ XMLscene.prototype.undo = function () {
         
     }
     
-    /*
-    if(this.cacheBoards != null)
-    {
-        this.updateBoard(this.cacheBoards[this.cacheBoards.length-2]);
-        this.selectedPiece = this.board.primitiveUndo;
-        this.changePlayerTurn();
-    }*/
+  
 };
 
 
@@ -378,18 +372,20 @@ XMLscene.prototype.canMove = function () {
         var self = this;
 
         if (this.selectedPiece != null) {
+
+            console.log('Selected Piece ' + this.selectedPiece);
             
-            this.fabrik.canMovePiece(self.boardModel, this.selectedPiece.name, Line, Collumn, function (result) {
+            this.fabrik.canMovePiece(self.boardModel, this.selectedPiece, Line, Collumn, function (result) {
 
                 if (result){
 
-                    self.fabrik.movePiece(self.boardModel, self.selectedPiece.name, Line, Collumn, function (board) {
+                    self.fabrik.movePiece(self.boardModel, self.selectedPiece, Line, Collumn, function (board) {
                         
                         self.boardModel = board;
         
                         self.updateBoard(board);
                         
-                        switch (self.selectedPiece.name) {
+                        switch (self.selectedPiece) {
                             case 't1':
                                 self.t1Moved = true;
                             break;
@@ -417,12 +413,12 @@ XMLscene.prototype.canMove = function () {
 
         // select worker.
         if (this.pieceID == '1002') {
-            this.selectedPiece = this.board.t2;
+            this.selectedPiece = 't2';
             this.needToSelectPiece = false;
             console.log('Selected worker:',this.selectedPiece);
         }
         else if (this.pieceID == '1001'){
-            this.selectedPiece = this.board.t1;
+            this.selectedPiece = 't1';
             this.needToSelectPiece = false;
             console.log('Selected worker:',this.selectedPiece);
         }
@@ -442,12 +438,12 @@ XMLscene.prototype.updateLogic = function() {
 
 XMLscene.prototype.firstTurnLogic = function () {
     // first turn
-    this.selectedPiece = this.board.t1;
+    this.selectedPiece = 't1';
     var finishedFirstTurn = false;
 
     // wait for player 0 to move t1
     if (this.t1Moved) {
-        this.selectedPiece = this.board.t2;
+        this.selectedPiece = 't2';
         this.changePlayerTurn();
         this.t1Moved = false;
     }
@@ -479,16 +475,16 @@ XMLscene.prototype.otherTurnsLogic = function(){
         }
 
         // wait for player 1 to move worker
-        if (this.selectedPiece.name == 't1' && this.t1Moved){
+        if (this.selectedPiece == 't1' && this.t1Moved){
             // select black piece
-            this.selectedPiece = this.board.auxblack;
+            this.selectedPiece = 'p';
             this.t1Moved = false;
             
             return;
         }
-        else if (this.selectedPiece.name == 't2' && this.t2Moved){
+        else if (this.selectedPiece == 't2' && this.t2Moved){
             // select black piece
-            this.selectedPiece = this.board.auxblack;
+            this.selectedPiece = 'p';
             this.t2Moved = false;
            
             return;
@@ -511,15 +507,15 @@ XMLscene.prototype.otherTurnsLogic = function(){
         }
 
         // wait for player 2 to move worker
-        if (this.selectedPiece.name == 't1' && this.t1Moved){
+        if (this.selectedPiece == 't1' && this.t1Moved){
             // select white piece
-            this.selectedPiece = this.board.auxwhite;
+            this.selectedPiece = 'b';
             this.t1Moved = false;
             return;
         }
-        else if (this.selectedPiece.name == 't2' && this.t2Moved){
+        else if (this.selectedPiece == 't2' && this.t2Moved){
             // select white piece
-            this.selectedPiece = this.board.auxwhite;
+            this.selectedPiece = 'b';
             this.t2Moved = false;
             return;
         }
