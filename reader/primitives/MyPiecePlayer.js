@@ -1,8 +1,8 @@
 
 
-function MyPiecePlayer(scene, color, posX, posY, startPos)
+function MyPiecePlayer(scene, color, startPos)
 {
-  MyPiece.call(this,scene)
+  MyPiece.call(this,scene, startPos);
 
   this.material = new CGFappearance(scene);
   var arg = [];
@@ -10,9 +10,8 @@ function MyPiecePlayer(scene, color, posX, posY, startPos)
   arg[1]=20;
   arg[2]=20;
   this.cyl = new MySphere(scene,arg);
-  this.posX = posX;
-  this.posY = posY;
-  this.startPos = new Position(startPos.x, startPos.y, startPos.z);
+
+
   this.color = color;
   if(this.color == 0)
   {
