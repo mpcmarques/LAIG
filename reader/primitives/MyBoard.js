@@ -6,13 +6,12 @@ function MyBoard(scene) {
     this.blackPieces = [];
     this.t1 = new MyPieceWorker(this.scene, 0, 0, 't1',new Position(-1,1,0));
     this.t2 = new MyPieceWorker(this.scene, 0, 0, 't2',new Position(-1,1,0));
-    this.lastPrimitive = null;
+
     this.lastBoard = null;
     this.currentBoard = null;
-    this.primitiveUndo = null;
-    this.actual = null;
-    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, -2, new Position(-2, 1, 0));
-    this.auxwhite = new MyPiecePlayer(this.scene, 1, 1, -2,new Position(-2, 1, 1));
+
+    this.auxblack = new MyPiecePlayer(this.scene, 0, 0, 0, new Position(0, 1, 0));
+    this.auxwhite = new MyPiecePlayer(this.scene, 1, 0, 0,new Position(0, 1, 0));
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
@@ -56,7 +55,29 @@ MyBoard.prototype.display = function () {
     this.t2.display();
     this.scene.popMatrix();
 
+    // loop white pieces
+    for(var l = 0;  l < this.whitePieces.length; l++){
+        this.scene.pushMatrix();
 
+        if (this.whitePieces[l].animation != null)
+            this.whitePieces[l].animation.apply();
+
+        this.whitePieces[l].display();
+
+        this.scene.popMatrix();
+    }
+
+    // loop black pieces
+    for(var k = 0; k < this.blackPieces.length; k++){
+        this.scene.pushMatrix();
+
+        if (this.blackPieces[k].animation != null)
+            this.blackPieces[k].animation.apply();
+
+        this.blackPieces[k].display();
+
+        this.scene.popMatrix();
+    }
 
 
     this.scene.pushMatrix();
@@ -125,20 +146,22 @@ MyBoard.prototype.updateBoard = function (board) {
                 {
 
                     // usar find para ver a pos actual e ant
-                    currentPiece = this.currentBoard[i][j];
-                    lastPiece = this.lastBoard[i][j];
+                    var currentPiece = this.currentBoard[i][j];
+                    var lastPiece = this.lastBoard[i][j];
 
                     var posTab = this.findPiece(this.currentBoard, currentPiece);
                     var lastTabPos = this.findPiece(this.lastBoard, currentPiece);
                     
                     var piecePrimitive, lastPos, newPos;
 
-                    //console.log(currentPiece, lastPiece);
+                    console.log(posTab, lastTabPos);
                     
                     // caso da peca nao ter sido colocado no tabuleiro.
                     if (posTab != null && lastTabPos == null){
 
                         piecePrimitive = this.parsePiece(currentPiece);
+
+                        console.log('loaded piece', piecePrimitive);
                         
                         if (piecePrimitive != null){
 
@@ -146,10 +169,15 @@ MyBoard.prototype.updateBoard = function (board) {
 
                             newPos = this.positions[i][j];
 
-                            console.log(piecePrimitive);
+                            if (piecePrimitive instanceof MyPiecePlayer){
+                                var newPiece = new MyPiecePlayer(this.scene, piecePrimitive.color, piecePrimitive.posX, piecePrimitive.posY, piecePrimitive.startPos);
 
+                                this.animatePiece(piecePrimitive, lastPos, newPos);
+                                console.warn(newPiece);
+                            } else {
 
-                            this.animatePiece(piecePrimitive, lastPos, newPos);
+                                this.animatePiece(piecePrimitive, lastPos, newPos);
+                            }
                         }
 
                     }
@@ -256,15 +284,10 @@ MyBoard.prototype.fixFirstPlayPosition = function(piece,newPos){
         case 't2':
             newPos.x = newPos.x +1;
             break;
-        case 'b':
-            newPos.x = newPos.x + 2;
-            newPos.z = newPos.z - 1;
-        case 'p':
-            newPos.x = newPos.x + 2;
         default:
             break;
     }
-}
+};
 
 MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
     var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
@@ -283,13 +306,13 @@ MyBoard.prototype.parsePiece = function(pieceName){
         case 't2':
             return this.t2;
         case 'b':
-            var blackPiece = new MyPiecePlayer(this.scene, 0, this.blackStartPos.x, this.blackStartPos.y);
-            this.blackPieces.push(blackPiece);
-            return blackPiece;
-        case 'p':
-            var whitePiece = new MyPiecePlayer(this.scene, 1, this.whiteStartPos.x, this.whiteStartPos.y);
+            var whitePiece = new MyPiecePlayer(this.scene, 1, this.whiteStartPos.x+2, this.whiteStartPos.y-1, this.whiteStartPos);
             this.whitePieces.push(whitePiece);
             return whitePiece;
+        case 'p':
+            var blackPiece = new MyPiecePlayer(this.scene, 0, this.blackStartPos.x+2, this.blackStartPos.y, this.blackStartPos);
+            this.blackPieces.push(blackPiece);
+            return blackPiece;
         default:
             return null;
     }
@@ -320,6 +343,6 @@ MyBoard.prototype.update = function(currTime){
     }
 
     for(var j = 0; j < this.blackPieces.length; j++){
-        this.blackPieces.update(currTime);
+        this.blackPieces[i].update(currTime);
     }
 };
