@@ -1,7 +1,8 @@
 function MyPieceWorker(scene, posX, posY, name,startPos){
   MyPiece.call(this, scene);
 
-  this.material = new CGFappearance(scene);
+  this.material1 = new CGFappearance(scene);
+  this.material2 = new CGFappearance(scene);
   var arg = [];
   arg[0]=1.5;
   arg[1]=20;
@@ -12,28 +13,42 @@ function MyPieceWorker(scene, posX, posY, name,startPos){
   this.posY = posY;
   this.startPos = startPos;
   this.startPos = new Position(startPos.x, startPos.y, startPos.z);
-  this.appearance();
 
+
+
+    this.createAppearance();
 }
 
 MyPieceWorker.prototype = Object.create(MyPiece.prototype);
 MyPieceWorker.prototype.constructor = MyPieceWorker;
 
-MyPieceWorker.prototype.display = function(){
-  this.scene.pushMatrix();
-  //this.scene.translate(this.posY,1,this.posX);
-  this.scene.scale(0.25,0.20,0.25);
-  this.scene.rotate(90 *DEGREE_TO_RAD,1,0,0);
-  this.material.apply();
+MyPieceWorker.prototype.display = function() {
+    this.scene.pushMatrix();
+    //this.scene.translate(this.posY,1,this.posX);
+    this.scene.scale(0.25, 0.20, 0.25);
+    this.scene.rotate(90 * DEGREE_TO_RAD, 1, 0, 0);
+
+    if (!this.selected) {
+        this.material1.apply();
+    } else {
+        this.material2.apply();
+    }
+
   this.cyl.display();
   this.scene.popMatrix();
-
 };
 
-MyPieceWorker.prototype.appearance = function(){
-  this.material.setShininess(10);
-  this.material.setAmbient(0.3, 0, 0, 1);
-  this.material.setDiffuse(0.2, 0, 0, 1);
-  this.material.setSpecular(0.5, 0.4, 0.4, 1);
+MyPieceWorker.prototype.createAppearance = function(){
+
+    this.material1.setShininess(10);
+    this.material1.setAmbient(0.3, 0, 0, 1);
+    this.material1.setDiffuse(0.2, 0, 0, 1);
+    this.material1.setSpecular(0.5, 0.4, 0.4, 1);
+
+    this.material2.setShininess(10);
+    this.material2.setAmbient(0.3, 0, 0, 1);
+    this.material2.setDiffuse(0, 0, 0.2, 1);
+    this.material2.setSpecular(0.5, 0.4, 0.4, 1);
+
 };
 
