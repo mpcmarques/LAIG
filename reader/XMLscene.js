@@ -31,6 +31,8 @@ function XMLscene(myInterface) {
 
     this.cacheBoards = [];
     this.timePerTurn = 60;
+    this.blackPieceMoved = false;
+    this.whitePieceMoved = false;
 
     this.numberOfPlays = 0;
 
@@ -464,18 +466,26 @@ XMLscene.prototype.otherTurnsLogic = function(){
         // wait for player 1 to move worker
         if (this.selectedPiece.name == 't1' && this.t1Moved){
             // select black piece
-
+            this.selectedPiece = this.board.auxblack;
             this.t1Moved = false;
+            console.warn('black piece selected.');
             return;
         }
         else if (this.selectedPiece.name == 't2' && this.t2Moved){
             // select black piece
-
+            this.selectedPiece = this.board.auxblack;
             this.t2Moved = false;
+            console.warn('black piece selected.');
             return;
         }
 
         // wait for player 1 to put piece
+        if(this.blackPieceMoved){
+            this.numberOfPlays++;
+            this.selectedPiece = null;
+            this.changePlayerTurn();
+            this.updateLogic();
+        }
 
     } else if (this.playerTurn == 'White') {
         // wait for player 2 to select worker
@@ -487,20 +497,24 @@ XMLscene.prototype.otherTurnsLogic = function(){
         // wait for player 2 to move worker
         if (this.selectedPiece.name == 't1' && this.t1Moved){
             // select white piece
-
+            this.selectedPiece = this.board.auxwhite;
             this.t1Moved = false;
             return;
         }
         else if (this.selectedPiece.name == 't2' && this.t2Moved){
             // select white piece
-
+            this.selectedPiece = this.board.auxwhite;
             this.t2Moved = false;
             return;
         }
 
-
         // wait for player 2 to put piece
-
+        if (this.whitePieceMoved){
+            this.numberOfPlays++;
+            this.selectedPiece = null;
+            this.changePlayerTurn();
+            this.updateLogic();
+        }
     }
 };
 

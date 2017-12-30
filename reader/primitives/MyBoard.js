@@ -135,7 +135,7 @@ MyBoard.prototype.updateBoard = function (board) {
                     
                     var piecePrimitive, lastPos, newPos;
 
-                    console.log(currentPiece, lastPiece);
+                    //console.log(currentPiece, lastPiece);
                     
                     // caso da peca nao ter sido colocado no tabuleiro.
                     if (posTab != null && lastTabPos == null){
@@ -147,6 +147,8 @@ MyBoard.prototype.updateBoard = function (board) {
                             lastPos = piecePrimitive.startPos;
 
                             newPos = this.positions[i][j];
+
+                            console.log(piecePrimitive);
 
 
                             this.animatePiece(piecePrimitive, lastPos, newPos);
