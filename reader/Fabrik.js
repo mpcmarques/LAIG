@@ -49,6 +49,19 @@ Fabrik.prototype.movePiece = function(tab, piece, line, column, callback){
     );
 };
 
+Fabrik.prototype.canMovePiece = function(tab, piece, line, column, callback){
+    var stringTab = this.boardToString(tab);
+
+    var call = 'canMovePiece(' + stringTab + ',' + piece + ',' + line + ',' + column + ')';
+    var self = this;
+
+    this.getPrologRequest(call, function(data){
+        callback(data.target.response);
+    }, function(){
+        callback(false);
+    });
+};
+
 Fabrik.prototype.boardToString = function(board){
 
     var string = '[';

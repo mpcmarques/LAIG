@@ -115,7 +115,7 @@ parse_input(initialBoard, Res):-
 
 % ve se pode movimentar peca.
 parse_input(canMovePiece(Tab, Piece, Line, Column), Res):-
-    podeMoverPeca(Tab, Piece, Line, Column) -> (Res = true; Res = false).
+    (podeMoverPeca(Tab, Piece, Line, Column) -> Res = true; Res = false).
 
 % movimenta peca.
 parse_input(movePiece(Tab, Piece, Line, Column), TabOut):-

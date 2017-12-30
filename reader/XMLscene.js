@@ -381,23 +381,37 @@ XMLscene.prototype.canMove = function () {
         var self = this;
 
         if (this.selectedPiece != null) {
-            this.fabrik.movePiece(this.boardModel, this.selectedPiece.name, Line, Collumn, function (board) {
-                self.boardModel = board;
+            
+            this.fabrik.canMovePiece(self.boardModel, this.selectedPiece.name, Line, Collumn, function (result) {
+                
+                if (result){
 
-                self.updateBoard(board);
+                    self.fabrik.movePiece(self.boardModel, self.selectedPiece.name, Line, Collumn, function (board) {
+                        if(board == null)
+                        {
+                            return;
+                        }
+                        self.boardModel = board;
+        
+                        self.updateBoard(board);
+        
+        
+                        if (self.selectedPiece.name == 't1')
+                            self.t1Moved = true;
+        
+                        if (self.selectedPiece.name == 't2')
+                            self.t2Moved = true;
+        
+        
+        
+        
+                        self.updateLogic();
+                    });
 
+                }
 
-                if (self.selectedPiece.name == 't1')
-                    self.t1Moved = true;
-
-                if (self.selectedPiece.name == 't2')
-                    self.t2Moved = true;
-
-
-
-
-                self.updateLogic();
             });
+
         }
     }
 
