@@ -320,6 +320,9 @@ XMLscene.prototype.logPicking = function () {
     }
 };
 
+
+
+
 XMLscene.prototype.startGame = function () {
     // setup player turn
     if (this.startingPlayer == 0) {

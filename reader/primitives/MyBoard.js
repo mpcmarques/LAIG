@@ -16,8 +16,6 @@ function MyBoard(scene) {
 
     this.blackStartPos = new Position(-2, 1, 0);
     this.whiteStartPos = new Position(-2, 1, 1);
-
-
     
     this.positions = [];
 
@@ -188,7 +186,6 @@ MyBoard.prototype.updateBoard = function (board) {
                         
                     }
 
-                    break;
                 }
             }
         }
@@ -249,9 +246,8 @@ MyBoard.prototype.updateBoard = function (board) {
 
 };
 
-MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
-    var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
-    var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
+MyBoard.prototype.fixFirstPlayPosition = function(piece,newPos){
+
     switch(piece.name) {
         case 't1':
             newPos.x = newPos.x +1;
@@ -268,7 +264,12 @@ MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
         default:
             break;
     }
+}
 
+MyBoard.prototype.animatePiece = function(piece, lastPos, newPos){
+    var point2 = new Position(lastPos.x, lastPos.y + 5, lastPos.z);
+    var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
+    this.fixFirstPlayPosition(piece,newPos);
     var controlPoints = [lastPos, point2, point3, newPos];
 
     piece.animation = new BezierAnimation(this.scene, controlPoints, 10);
