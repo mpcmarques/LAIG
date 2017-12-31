@@ -4,18 +4,20 @@ function MyBoard(scene) {
     // point
     this.point = new MyPoint(scene);
 
-
     // grid pieces
     this.pieces = [];
 
     // pieces start position
-    this.pieceStartPosition = new Position(-2,1,-2);
+    this.auxBlack = new MyPiecePlayer(this.scene, 0, new Position(-2, 0, 0));
+    this.auxWhite = new MyPiecePlayer(this.scene, 1, new Position(-2, 0, 1));
 
     // create workers
     var t1 = new MyPieceWorker(this.scene, 't1', new Position(-1, 0, 0));
     var t2 = new MyPieceWorker(this.scene, 't2', new Position(-1, 0, 1));
     this.pieces.push(t1);
     this.pieces.push(t2);
+    this.pieces.push(this.auxBlack);
+    this.pieces.push(this.auxWhite);
 
     this.currentBoard = null;
     this.lastBoard = null;
@@ -56,7 +58,7 @@ MyBoard.prototype.displayGrid = function () {
 
             var pos = this.positions[i][j];
 
-            this.scene.translate(pos.x, pos.y, pos.z);
+            this.scene.translate(pos.x, pos.y-0.5, pos.z);
 
             this.scene.registerForPick(count, this.point);
             this.point.display();
@@ -103,20 +105,13 @@ MyBoard.prototype.updateBoard = function (board) {
                     // usar find para ver a pos actual e ant
                     var currentPiece = this.currentBoard[i][j];
                     var lastPiece = this.lastBoard[i][j];
-                    
-                    var posTab,lastTabPos;
-                    
-                    posTab = this.findPiece(this.currentBoard, currentPiece);
-                    if (currentPiece == 'e'){
-                        lastTabPos = this.findPiece(this.lastBoard, lastPiece);
-                        
-                    } else {
-                        lastTabPos = this.findPiece(this.lastBoard, currentPiece);
-                    }
+
+                    var posTab = this.findPiece(this.currentBoard, currentPiece);
+                    var lastTabPos = this.findPiece(this.lastBoard, currentPiece);
 
                     var piecePrimitive, lastPos, newPos;
 
-                    console.log(lastTabPos, posTab);
+                    console.log(posTab, lastTabPos);
 
                     // caso da peca nao ter sido colocado no tabuleiro.
                     if (posTab != null && lastTabPos == null) {
@@ -179,7 +174,10 @@ MyBoard.prototype.animatePiece = function (piece, lastPos, newPos) {
     var point3 = new Position(newPos.x, newPos.y + 5, newPos.z);
 
     if (piece instanceof MyPiecePlayer){
-        lastPos = this.pieceStartPosition;
+        if (piece.name == 'p')
+            lastPos = new Position(this.auxBlack.position.x, this.auxBlack.position.y, this.auxBlack.position.z);
+        else
+            lastPos = new Position(this.auxWhite.position.x, this.auxWhite.position.y, this.auxWhite.position.z);
     }
 
     var controlPoints = [lastPos, point2, point3, newPos];
@@ -196,11 +194,11 @@ MyBoard.prototype.parsePiece = function (pieceName) {
         case 't2':
             return this.findWorker('t2');
         case 'b':
-            var whitePiece = new MyPiecePlayer(this.scene, 1, new Position(this.pieceStartPosition.x, this.pieceStartPosition.y, this.pieceStartPosition.z));
+            var whitePiece = new MyPiecePlayer(this.scene, 1, new Position(this.auxWhite.position.x, this.auxWhite.position.y, this.auxWhite.position.z));
             this.pieces.push(whitePiece);
             return whitePiece;
         case 'p':
-            var blackPiece = new MyPiecePlayer(this.scene, 0, new Position(this.pieceStartPosition.x, this.pieceStartPosition.y, this.pieceStartPosition.z));
+            var blackPiece = new MyPiecePlayer(this.scene, 0, new Position(this.auxBlack.position.x, this.auxBlack.position.y, this.auxBlack.position.z));
             this.pieces.push(blackPiece);
             return blackPiece;
         default:
@@ -209,22 +207,15 @@ MyBoard.prototype.parsePiece = function (pieceName) {
 
 };
 
-
 MyBoard.prototype.findWorker = function(name){
-
     for(var i = 0; i < this.pieces.length; i++){
-
         if (this.pieces[i].name == name) {
-            console.log('found');
             return this.pieces[i];
         }
     }
 };
 
 MyBoard.prototype.findPiece = function (board, piece) {
-
-    if (piece == 'e')
-        return null;
 
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
