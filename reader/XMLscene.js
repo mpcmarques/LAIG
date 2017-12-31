@@ -26,7 +26,7 @@ function XMLscene(myInterface) {
     this.lastSelectedCamera = 0;
     this.difficulty = 0;
     this.needToUpdateCamera = false;
-    
+
     this.selectedPiece = null;
     
     this.cacheBoards = [];
@@ -34,8 +34,8 @@ function XMLscene(myInterface) {
     this.blackPieceMoved = false;
     this.whitePieceMoved = false;
     
-    this.playerMoved = false;
-    
+    this.playerMoved = null;
+    this.computerMoved = false;
     this.numberOfPlays = 0;
     
     this.t1Moved = false;
@@ -306,7 +306,7 @@ XMLscene.prototype.logPicking = function () {
                     
                     var customId = this.pickResults[i][1];
                     this.pieceID = customId;
-                    console.log(customId + " picked");
+                    //console.log(customId + " picked");
                     this.canMove();
                 }
             }
@@ -357,8 +357,8 @@ XMLscene.prototype.undo = function () {
 
 XMLscene.prototype.updateBoard = function (board) {
     if (this.board != null) {
-        console.log('New Board: ');
-        console.log(board);
+        //console.log('New Board: ');
+        //console.log(board);
         this.board.updateBoard(board);
         this.cacheBoards.push(board);
     }
@@ -419,12 +419,12 @@ XMLscene.prototype.canMove = function () {
         if (this.pieceID == '1002') {
             this.selectedPiece = 't2';
             this.needToSelectPiece = false;
-            console.log('Selected worker:',this.selectedPiece);
+           //console.log('Selected worker:',this.selectedPiece);
         }
         else if (this.pieceID == '1001'){
             this.selectedPiece = 't1';
             this.needToSelectPiece = false;
-            console.log('Selected worker:',this.selectedPiece);
+            //console.log('Selected worker:',this.selectedPiece);
         }
         
     }
@@ -522,6 +522,7 @@ XMLscene.prototype.playerVsComputerFirstTurnLogic = function () {
 
             // call next turn recursively
             self.updateLogic();
+
         });
     }
     
@@ -632,7 +633,12 @@ XMLscene.prototype.otherTurnsPlayerVsPlayerLogic = function () {
 
 XMLscene.prototype.otherTurnsPlayerVsComputerLogic = function () {
     var self = this;
-    
+    if(this.computerMoved==false)
+    {
+        this.playerMoved = false;
+    }
+
+
     if (!this.playerMoved){
         console.log('Player turn.');
         
@@ -655,7 +661,8 @@ XMLscene.prototype.otherTurnsPlayerVsComputerLogic = function () {
 
         if (this.blackPieceMoved){
             self.changePlayerTurn();
-            this.playerMoved = true;
+            self.playerMoved = true;
+
         }
         
     } else {
@@ -668,7 +675,9 @@ XMLscene.prototype.otherTurnsPlayerVsComputerLogic = function () {
             // finished turn.
             self.numberOfPlays++;
             self.changePlayerTurn();
+            self.computerMoved = true;
         });
+
     }    
 };
 

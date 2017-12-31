@@ -207,6 +207,7 @@ MyBoard.prototype.parsePiece = function (pieceName) {
 
 };
 
+
 MyBoard.prototype.findWorker = function(name){
     for(var i = 0; i < this.pieces.length; i++){
         if (this.pieces[i].name == name) {
@@ -216,6 +217,9 @@ MyBoard.prototype.findWorker = function(name){
 };
 
 MyBoard.prototype.findPiece = function (board, piece) {
+
+    if (piece == 'e')
+        return null;
 
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
