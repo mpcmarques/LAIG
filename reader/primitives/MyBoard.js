@@ -4,28 +4,7 @@ function MyBoard(scene) {
     // point
     this.point = new MyPoint(scene);
 
-    /*
-     var t1 = new MyPieceWorker(this.scene,'t1',new Position(-1,1,0));
-     var t2 = new MyPieceWorker(this.scene,'t2',new Position(-1,1,0));
 
-     this.lastBoard = null;
-     this.currentBoard = null;
-
-     this.auxblack = new MyPiecePlayer(this.scene, -2, new Position(0, 1, 0));
-     this.auxwhite = new MyPiecePlayer(this.scene, -2, new Position(0, 1, 0));
-
-     this.blackStartPos = new Position(-2, 1, 0);
-     this.whiteStartPos = new Position(-2, 1, 1);
-
-     this.positions = [];
-
-     for (var i=0; i<11 ;i++) {
-     this.positions[i]= [];
-     for (var j=0;j<11;j++) {
-     this.positions[i][j]= new Position(i,0,j);
-     }
-     }
-     */
     // grid pieces
     this.pieces = [];
 
