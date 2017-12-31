@@ -43,6 +43,8 @@ GameController.prototype.updateBoard = function(board){
     this.gameView.updateBoard(board);
 };
 
+/*****  First plays ******/
+
 GameController.prototype.makeFirstPlay = function(onFinished){
 
     switch (this.gameModel.selectedMode){
@@ -63,33 +65,38 @@ GameController.prototype.makeFirstPlayPlayerVsPlayer = function(onFinish){
     var self = this;
 
     // Player select worker to move
-    var player1SelectedWorkerPiece;
-
-    // Player select place to move worker
-    var player1SelectedPlayerPosition;
-
-    // 1o jogador move trabalhador
-    this.playerMoveWorker(player1SelectedWorkerPiece, player1SelectedPlayerPosition, function(board){
-        // update board
-        self.updateBoard(board);
-
-        // 2o select other worker to move
-        var player2SelectedWorkerPiece;
+    this.gameView.onWorkerSelected(function(worker){
 
         // Player select place to move worker
-        var player2SelectedPlayerPosition;
+        self.gameView.OnSlotSelected(function(Line, Column){
 
-        // 2o jogador move trabalhador
-        self.playerMoveWorker(player2SelectedWorkerPiece, player2SelectedPlayerPosition, function(board2){
+            // 1o jogador move trabalhador
+            self.playerMoveWorker(player1SelectedWorkerPiece, player1SelectedPlayerPosition, function(board){
+                // update board
+                self.updateBoard(board);
 
-            // update board
-            self.updateBoard(board2);
+                // 2o select other worker to move
+                self.gameView.onWorkerSelected(function(worker2){
 
-            // finished turn
-            onFinish();
+                });
+
+                // Player select place to move worker
+                var player2SelectedPlayerPosition;
+
+                // 2o jogador move trabalhador
+                self.playerMoveWorker(player2SelectedWorkerPiece, player2SelectedPlayerPosition, function(board2){
+
+                    // update board
+                    self.updateBoard(board2);
+
+                    // finished turn
+                    onFinish();
+                });
+            });
         });
     });
 };
+
 
 // RETORNA UMA BOARD APOS O PLAYER MOVIMENTAR TRABALHADOR.
 GameController.prototype.playerMoveWorker = function(workerPiece, position, callback){

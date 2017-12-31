@@ -19,7 +19,7 @@ MyPieceWorker.prototype.constructor = MyPieceWorker;
 
 MyPieceWorker.prototype.display = function() {
     this.scene.pushMatrix();
-    //this.scene.translate(this.posY,1,this.posX);
+    this.scene.translate(0,1,0);
     this.scene.scale(0.25, 0.20, 0.25);
     this.scene.rotate(90 * DEGREE_TO_RAD, 1, 0, 0);
 
