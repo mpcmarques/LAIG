@@ -105,13 +105,20 @@ MyBoard.prototype.updateBoard = function (board) {
                     // usar find para ver a pos actual e ant
                     var currentPiece = this.currentBoard[i][j];
                     var lastPiece = this.lastBoard[i][j];
-
-                    var posTab = this.findPiece(this.currentBoard, currentPiece);
-                    var lastTabPos = this.findPiece(this.lastBoard, currentPiece);
+                    
+                    var posTab,lastTabPos;
+                    
+                    posTab = this.findPiece(this.currentBoard, currentPiece);
+                    if (currentPiece == 'e'){
+                        lastTabPos = this.findPiece(this.lastBoard, lastPiece);
+                        
+                    } else {
+                        lastTabPos = this.findPiece(this.lastBoard, currentPiece);
+                    }
 
                     var piecePrimitive, lastPos, newPos;
 
-                    console.log(posTab, lastTabPos);
+                    console.log(lastTabPos, posTab);
 
                     // caso da peca nao ter sido colocado no tabuleiro.
                     if (posTab != null && lastTabPos == null) {
