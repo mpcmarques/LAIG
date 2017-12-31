@@ -24,10 +24,11 @@ GameController.prototype.startGame = function(){
         self.updateBoard(board);
 
         // make first play
-        self.makeFirstPlay(function (board2){
+        self.makeFirstPlay(function (){
 
-            // update board
-            self.updateBoard(board2);
+            // game loop
+
+
 
         });
 
@@ -42,23 +43,23 @@ GameController.prototype.updateBoard = function(board){
     this.gameView.updateBoard(board);
 };
 
-GameController.prototype.makeFirstPlay = function(callback){
+GameController.prototype.makeFirstPlay = function(onFinished){
 
     switch (this.gameModel.selectedMode){
         case GameModes.PLAYER_VS_PLAYER:
-            this.makeFirstPlayPlayerVsPlayer(callback);
+            this.makeFirstPlayPlayerVsPlayer(onFinished);
             break;
         case GameModes.PLAYER_VS_COMPUTER:
-            this.makeFirstPlayPlayerVsComputer(callback);
+            this.makeFirstPlayPlayerVsComputer(onFinished);
             break;
         case GameModes.COMPUTER_VS_COMPUTER:
-            this.makeFirstPlayComputerVsComputer(callback);
+            this.makeFirstPlayComputerVsComputer(onFinished);
             break;
     }
 
 };
 
-GameController.prototype.makeFirstPlayPlayerVsPlayer = function(callback){
+GameController.prototype.makeFirstPlayPlayerVsPlayer = function(onFinish){
     var self = this;
 
     // Player select worker to move
@@ -69,6 +70,8 @@ GameController.prototype.makeFirstPlayPlayerVsPlayer = function(callback){
 
     // 1o jogador move trabalhador
     this.playerMoveWorker(player1SelectedWorkerPiece, player1SelectedPlayerPosition, function(board){
+        // update board
+        self.updateBoard(board);
 
         // 2o select other worker to move
         var player2SelectedWorkerPiece;
@@ -77,9 +80,14 @@ GameController.prototype.makeFirstPlayPlayerVsPlayer = function(callback){
         var player2SelectedPlayerPosition;
 
         // 2o jogador move trabalhador
-        this.playerMoveWorker(player2SelectedWorkerPiece, player2S)
+        self.playerMoveWorker(player2SelectedWorkerPiece, player2SelectedPlayerPosition, function(board2){
 
+            // update board
+            self.updateBoard(board2);
 
+            // finished turn
+            onFinish();
+        });
     });
 };
 
