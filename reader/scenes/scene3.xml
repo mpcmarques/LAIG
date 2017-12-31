@@ -50,17 +50,6 @@
     <!-- Textures -->
     <TEXTURES>
 
-        <!-- Screen -->
-        <TEXTURE id="pc-screen">
-            <file path="images/pc-screen.jpg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
-
-        <!-- Keyboard -->
-        <TEXTURE id="keyboard">
-            <file path="images/keyboard.png"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
 
         <!--Clock-->
         <TEXTURE id="space2">
@@ -75,23 +64,6 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
-        <!--Flag Texture-->
-        <TEXTURE id="flag">
-            <file path="images/flag.png"/>
-            <amplif_factor s="0.5" t="1"/>
-        </TEXTURE>
-
-        <!-- Metal -->
-        <TEXTURE id="metal">
-            <file path="images/metal.jpg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
-
-        <!-- Haste Texture-->
-        <TEXTURE id="haste">
-            <file path="images/haste.jpg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
 
         <TEXTURE id="space">
             <file path="images/space.jpg"/>
@@ -103,18 +75,6 @@
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
-        <!-- golden tin foil -->
-        <TEXTURE id="tin_foil">
-            <file path="images/tin_foil.jpg"/>
-            <amplif_factor s="0.5" t="0.5"/>
-        </TEXTURE>
-
-        <!-- aluminium -->
-        <TEXTURE id="aluminium">
-            <file path="images/aluminium.jpg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
-
         <TEXTURE id="basalt">
             <file path="images/basalt.jpg"/>
             <amplif_factor s="1" t="1"/>
@@ -122,11 +82,6 @@
 
         <TEXTURE id="football">
             <file path="images/football.jpeg"/>
-            <amplif_factor s="1" t="1"/>
-        </TEXTURE>
-
-        <TEXTURE id="sea">
-            <file path="images/sea.jpg"/>
             <amplif_factor s="1" t="1"/>
         </TEXTURE>
 
