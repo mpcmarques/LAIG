@@ -592,6 +592,7 @@ XMLscene.prototype.otherTurnsPlayerVsPlayerLogic = function () {
 
         // wait for player 1 to put piece
         if(this.blackPieceMoved){
+            this.numberBlackPieces++;
             this.selectedPiece = null;
             this.changePlayerTurn();
             this.updateLogic();
@@ -621,6 +622,7 @@ XMLscene.prototype.otherTurnsPlayerVsPlayerLogic = function () {
 
         // wait for player 2 to put piece
         if (this.whitePieceMoved){
+            this.numberWhitePieces++;
             this.numberOfPlays++;
             this.selectedPiece = null;
             this.changePlayerTurn();
@@ -655,7 +657,8 @@ XMLscene.prototype.otherTurnsPlayerVsComputerLogic = function () {
 
         if (this.blackPieceMoved){
             self.changePlayerTurn();
-            this.playerMoved = true;
+            self.playerMoved = true;
+            self.numberBlackPieces++;
         }
 
     } else {
@@ -679,6 +682,7 @@ XMLscene.prototype.otherTurnsComputerVsComputerTurnLogic = function () {
     // TODO: wait for computer to move t1
     this.fabrik.pcMakePlay(this.boardModel, this.difficulty, 'p', function (board){
         self.updateBoard(board);
+        self.numberBlackPieces++;
 
         // change turn
         self.changePlayerTurn();
@@ -686,6 +690,7 @@ XMLscene.prototype.otherTurnsComputerVsComputerTurnLogic = function () {
         // TODO: wait for computer to move t2
         self.fabrik.pcMakePlay(self.boardModel, self.difficulty, 'b', function(board2){
             self.updateBoard(board2);
+            self.numberWhitePieces++;
 
             // finished turn.
             self.numberOfPlays++;

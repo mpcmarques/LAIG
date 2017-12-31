@@ -150,6 +150,8 @@ MyInterface.prototype.addGameProperties = function(){
     this.playerTurn = this.gameOptions.add(this.scene, 'playerTurn').name('Player turn: ');
 
     // disable changes
+    this.numberBlackPieces.listen();
+    this.numberWhitePieces.listen();
     this.numberBlackPieces.domElement.style.pointerEvents = 'none';
     this.numberWhitePieces.domElement.style.pointerEvents = 'none';
     this.timeLeft.domElement.style.pointerEvents = 'none';
