@@ -60,6 +60,47 @@ Fabrik.prototype.canMovePiece = function(tab, piece, line, column, callback){
     });
 };
 
+Fabrik.prototype.pcMoveWorker = function(tab, worker, callback){
+    var stringTab = this.boardToString(tab);
+
+    var call = 'pcMoveWorker(' +  stringTab + ',' +  worker +')';
+
+    var self = this;
+
+    this.getPrologRequest(call, function(data){
+        var newBoard = self.parseBoard(data.target.response);
+        callback(newBoard);
+    });
+};
+
+Fabrik.prototype.pcMakePlay = function(tab, difficulty, pcPiece, callback) {
+    var stringTab = this.boardToString(tab);
+
+    var call = 'pcMakePlay(' + stringTab + ',' + difficulty + ','  + pcPiece + ')';
+
+    var self = this;
+
+    this.getPrologRequest(call, function(data){
+        var newBoard = self.parseBoard(data.target.response);
+        callback(newBoard);
+    });
+
+};
+
+Fabrik.prototype.isGameOver = function(tab, callback) {
+    var stringTab = this.boardToString(tab);
+
+    var call = 'isGameOver('+ stringTab + ')';
+
+    var self = this;
+
+    this.getPrologRequest(call, function(data){
+        callback(data.target.response == 'true');
+    });
+};
+
+/* Auxiliar functions */
+
 Fabrik.prototype.boardToString = function(board){
 
     var string = '[';

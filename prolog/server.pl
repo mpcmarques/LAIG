@@ -119,8 +119,19 @@ parse_input(canMovePiece(Tab, Piece, Line, Column), Res):-
 
 % movimenta peca.
 parse_input(movePiece(Tab, Piece, Line, Column), TabOut):-
-    write('mover peca called.'),nl,
     moverPeca(Tab, Piece, Line, Column, TabOut).
+
+% computador movimenta trabalhador.
+parse_input(pcMoveWorker(Tab, Worker), TabOut):-
+	computadorEscolheTrabalhador(Worker, Tab, TabOut).
+
+% computador faz jogada.
+parse_input(pcMakePlay(Tab, Difficulty, PcPiece), TabOut):-
+	computadorFazJogada(Difficulty, PcPiece, Tab, TabOut).
+
+% checa se o jogo acabou.
+parse_input(isGameOver(Tab), Winner):-
+	gameOver(Tab, Winner).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
