@@ -166,6 +166,13 @@ MyInterface.prototype.addGameProperties = function(){
     undo.name('Undo last play');
 };
 
+MyInterface.prototype.gameOver = function(){
+    this.gameOptions.remove(this.timeLeft);
+    this.gameOptions.remove(this.playerTurn);
+    this.gameOptions.add(this.scene, 'winnerString').name('Winner');
+};
+
+
 MyInterface.prototype.onCameraChange = function(value){
 
     // check if selected camera has changed.

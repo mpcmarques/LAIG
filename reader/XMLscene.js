@@ -252,8 +252,8 @@ XMLscene.prototype.update = function (currTime) {
         // update time left
         this.timeLeft -= 1 / 30;
         if (this.timeLeft < 0) {
-            // change player turn
-            this.changePlayerTurn();
+            // end game
+            this.gameOver();
         }
 
     }
@@ -487,6 +487,18 @@ XMLscene.prototype.playerVsPlayerFirstTurnLogic = function (){
         this.updateLogic();
     }
 
+};
+
+XMLscene.prototype.gameOver = function (){
+    this.winnerString = 'Tied!';
+
+    if (this.numberBlackPieces > this.numberWhitePieces){
+        this.winnerString = 'Black player won!';
+    } else {
+        this.winnerString = 'White player won!';
+    } 
+
+    this.interface.gameOver();
 };
 
 XMLscene.prototype.playerVsComputerFirstTurnLogic = function () {
