@@ -38,7 +38,7 @@ MyPiecePlayer.prototype.display = function(){
   this.material.apply();
   this.cyl.display();
   this.scene.popMatrix();
-};
+}
 
 MyPiecePlayer.prototype.appearance = function(){
   if(this.color){
@@ -52,6 +52,6 @@ MyPiecePlayer.prototype.appearance = function(){
     this.material.setDiffuse(0.01, 0.01, 0.01, 1);
     this.material.setSpecular(0.5, 0.5, 0.5, 1);
   }
-};
+}
 
 
