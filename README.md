@@ -4,7 +4,8 @@ Developed for LAIG classes - Faculdade de Engenharia do Porto.
 
 ## Group members:
 
-Mateus Pedroza
+Mateus Pedroza    
+
 Diogo Mota
 
 
